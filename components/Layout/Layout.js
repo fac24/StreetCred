@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Navbar from "./Navbar";
 
 function Layout({ children }) {
   return (
@@ -7,13 +8,13 @@ function Layout({ children }) {
         <title>Street Cred</title>
         <meta
           name="description"
-          content="a website that helps people give away, borrow and lend things"
+          content="A website that helps people give away, borrow and lend things."
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <header></header>
+      <Navbar />
       <main>{children}</main>
     </>
   );
 }
-export default { Layout };
+
+export default Layout;

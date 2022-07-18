@@ -7,7 +7,7 @@ function Navbar() {
 
   async function handleLogOut() {
     const { error } = await supabase.auth.signOut();
-    router.push("/sign-up");
+    router.push("/login");
   }
 
   return <button onClick={handleLogOut}>Log Out</button>;
