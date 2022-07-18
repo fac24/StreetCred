@@ -9,27 +9,7 @@ import { useState, useRouter } from "next/router";
 //router.push to page
 
 function upload() {
-    const [productName, setProductName] = useState("");
-    const [productInput, setProductInput] = useState("");
-    
-
-    async function addProduct(inputs) {
-        setProductInput(inputs);
-        const {data, error } = await supabase
-        .from("products")
-        .insert([
-            {
-                selectedProduct:
-                enteredCategory:
-                enteredProductName:
-                enteredDescription:
-                enteredCondition:
-            }
-        ])
-    }
-    return (
-        <ProductUpload />
-    )
+  return <ProductUpload />;
 }
 
 export default upload;
