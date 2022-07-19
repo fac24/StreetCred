@@ -1,7 +1,7 @@
 import React from "react";
 import GroupsForm from "../components/Groups/GroupsForm";
 
-function Groups() {
+function AddGroup() {
   return (
     <div>
       <h2>Create your group</h2>
@@ -10,4 +10,4 @@ function Groups() {
   );
 }
 
-export default Groups;
+export default AddGroup;
