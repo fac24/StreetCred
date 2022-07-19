@@ -2,7 +2,6 @@ import ShareLink from "../../components/ShareLink/ShareLink";
 import supabase from "../../utils/supabaseClient";
 import {useState, useEffect} from "react";
 import React from "react";
-import { withCoalescedInvoke } from "next/dist/lib/coalesced-function";
 
 function Product(props) {
   const [productOwner, setProductOwner] = useState("");
