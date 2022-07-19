@@ -1,3 +1,5 @@
+import AddNewProductButton from "../../components/Products/AddNewProductButton";
+
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
 
@@ -45,6 +47,8 @@ function Group(props) {
           <li>Product 2</li>
         </ul>
       </div>
+
+      <AddNewProductButton />
     </section>
   );
 }

@@ -1,11 +1,15 @@
 import ListGroups from "../../components/Groups/ListGroups";
+import AddNewGroupButton from "../../components/Groups/AddNewGroupButton";
+import FilterGroups from "../../components/Groups/FilterGroups";
 
 import supabase from "../../utils/supabaseClient";
 
 function Groups(props) {
   return (
     <div>
+      <FilterGroups />
       <ListGroups groups={props.groups} />
+      <AddNewGroupButton />
     </div>
   );
 }
