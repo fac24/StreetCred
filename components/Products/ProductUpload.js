@@ -34,7 +34,6 @@ function ProductUpload() {
       body: formData,
     };
     const cloudinary = await fetch(API_ENDPOINT, options).then((response) => {
-      console.log("picture is uploaded to cloudinary");
       return response.json();
     });
 
