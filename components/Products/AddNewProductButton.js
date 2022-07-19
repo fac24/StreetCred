@@ -1,10 +1,13 @@
 import { useRouter } from "next/router";
 
-function AddNewProductButton() {
+function AddNewProductButton(props) {
   const router = useRouter();
 
   function handleRedirect() {
-    router.push("/products/product-upload");
+    router.push({
+      pathname: "/products/product-upload",
+      state: { groupId: props.groupId },
+    });
   }
   return <button onClick={handleRedirect}>Add new product</button>;
 }

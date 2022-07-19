@@ -48,7 +48,7 @@ function Group(props) {
         </ul>
       </div>
 
-      <AddNewProductButton />
+      <AddNewProductButton groupId={props.group[0].id} />
     </section>
   );
 }

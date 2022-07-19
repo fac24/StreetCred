@@ -5,12 +5,6 @@ supabase;
 function ListGroups(props) {
   const router = useRouter();
 
-  /*   function redirectToPage(event) {
-    event.preventDefault();
-    router.push(`/groups/${id}`);
-    console.log(event);
-  } */
-
   return (
     <div>
       <ul>
