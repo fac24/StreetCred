@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
+import supabase from "../../";
 
-function ProductUpload(props) {
+function ProductUpload() {
   // const [category, setCategory] = useState("");
   // const [productName, setProductName] = useState("");
   // const [description, setDescription] = useState("");
@@ -22,44 +23,56 @@ function ProductUpload(props) {
     const enteredDescription = description.current.value;
     const enteredCondition = condition.current.value;
     const altText = `Image of Product ${selectedProduct.name}`;
-    const API_ENDPOINT =
-      "https://api.cloudinary.com/v1_1/streetcred/image/upload";
+
     const formData = new FormData();
     formData.append("file", selectedProduct);
     formData.append("upload_preset", "vwz7spwe");
 
-    const cloudinary = await fetch(API_ENDPOINT, {
+    // upload picture to cloudinary
+    const API_ENDPOINT =
+      "https://api.cloudinary.com/v1_1/streetcred/image/upload";
+    const options = {
       method: "POST",
       body: formData,
-    }).then((response) => response.json());
+    };
+    const cloudinary = await fetch(API_ENDPOINT, options).then((response) => {
+      console.log("picture is uploaded to cloudinary");
+      return response.json();
+    });
 
+    // for image preview
     setImageSrc(cloudinary.secure_url);
 
-    const uploadProduct = {
-      title: enteredProductName,
-      category: enteredCategory,
-      alt: altText,
-      description: enteredDescription,
-      condition: enteredCondition,
-      img: cloudinary.secure_url,
-    };
+    // const uploadProduct = {
+    //   title: enteredProductName,
+    //   category: enteredCategory,
+    //   alt: altText,
+    //   description: enteredDescription,
+    //   condition: enteredCondition,
+    //   img: cloudinary.secure_url,
+    // };
+
+    const { data, error } = await supabase.from("products").insert([
+      {
+        name: "cup",
+        image: "image",
+        description: "desc",
+        availability: true,
+        location: "london",
+        borrow_count: 0,
+        category: "lend",
+        condition: "poor",
+      },
+    ]);
 
     // props.addProduct(uploadProduct);
   }
 
-  // console.log(selectedProduct);
-  //     async function handleProductSubmit(event) {
-  //         event.preventDefault();
-  //         console.log(productName)
-  //     }
-
   function previewHandler(display) {
     const reader = new FileReader();
-
     reader.onload = function (onLoadEvent) {
       setImageSrc(onLoadEvent.target.result);
     };
-
     reader.readAsDataURL(display.target.files[0]);
   }
 
@@ -124,7 +137,7 @@ function ProductUpload(props) {
         </div>
 
         <div>
-          <label htmlFor="condition">Item's condition:</label>
+          <label htmlFor="condition">Item&apos;s condition:</label>
           <select
             name="condition"
             id="condition"

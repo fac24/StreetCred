@@ -9,7 +9,33 @@ import { useState, useRouter } from "next/router";
 //router.push to page
 
 function upload() {
+
+
+  
   return <ProductUpload />;
 }
 
 export default upload;
+
+
+
+
+// export async function getServerSideProps(context) {
+//   const user = (await supabase.auth.api.getUserByCookie(context.req)) || [];
+
+//   const { data, error } = await supabase
+//     .from("arts")
+//     .select()
+//     .eq("email", user.user.email);
+
+//   if (!user.user) {
+//     return { props: {}, redirect: { destination: "/login" } };
+//   }
+
+//   return {
+//     props: {
+//       arts: data,
+//       user: user.user,
+//     },
+//   };
+// }
