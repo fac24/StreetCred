@@ -1,11 +1,8 @@
 import { useRef, useState } from "react";
-import supabase from "../../";
+import supabase from "../../utils/supabaseClient";
+import { useRouter } from "next/router";
 
 function ProductUpload() {
-  // const [category, setCategory] = useState("");
-  // const [productName, setProductName] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [condition, setCondition] = useState("");
   const [imageSrc, setImageSrc] = useState("");
 
   const productImg = useRef();
@@ -13,6 +10,7 @@ function ProductUpload() {
   const productName = useRef();
   const description = useRef();
   const condition = useRef();
+  const router = useRouter();
 
   async function handleProductSubmit(event) {
     event.preventDefault();
@@ -22,7 +20,7 @@ function ProductUpload() {
     const enteredProductName = productName.current.value.toLowerCase();
     const enteredDescription = description.current.value;
     const enteredCondition = condition.current.value;
-    const altText = `Image of Product ${selectedProduct.name}`;
+    // const altText = `Image of Product ${selectedProduct.name}`;
 
     const formData = new FormData();
     formData.append("file", selectedProduct);
@@ -43,29 +41,26 @@ function ProductUpload() {
     // for image preview
     setImageSrc(cloudinary.secure_url);
 
-    // const uploadProduct = {
-    //   title: enteredProductName,
-    //   category: enteredCategory,
-    //   alt: altText,
-    //   description: enteredDescription,
-    //   condition: enteredCondition,
-    //   img: cloudinary.secure_url,
-    // };
-
+    // insert products input to supabase
     const { data, error } = await supabase.from("products").insert([
       {
-        name: "cup",
-        image: "image",
-        description: "desc",
-        availability: true,
-        location: "london",
+        name: enteredProductName,
+        image: cloudinary.secure_url,
+        description: enteredDescription,
         borrow_count: 0,
-        category: "lend",
-        condition: "poor",
+        category: enteredCategory,
+        condition: enteredCondition,
       },
     ]);
 
-    // props.addProduct(uploadProduct);
+    if (data) {
+      console.log(data);
+    } else if (error) {
+      console.log(error.message);
+    }
+
+    // to move to the exact product page with id
+    router.push(`/products/${data[0].id}`);
   }
 
   function previewHandler(display) {
