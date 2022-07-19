@@ -16,7 +16,7 @@ function UsersLocation() {
 
     const postJson = await postcode.json();
     let userPostcode = postJson.result[0].postcode;
-
+    console.log(userPostcode.slice(0, 3));
     setPostcode(userPostcode);
   }
 
