@@ -90,7 +90,7 @@ function ProductUpload() {
             type="radio"
             id="pass-on"
             name="category"
-            value="pass on"
+            value="pass-on"
             ref={category}
             // onChange={(event) => setCategory(event.target.value)}
           />
@@ -100,7 +100,7 @@ function ProductUpload() {
             type="radio"
             id="give-away"
             name="category"
-            value="give away"
+            value="give-away"
             ref={category}
             // onChange={(event) => setCategory(event.target.value)}
           />
@@ -140,7 +140,7 @@ function ProductUpload() {
           >
             <option value="poor">Poor</option>
             <option value="good">Good</option>
-            <option value="brand new">Brand New</option>
+            <option value="brand-new">Brand New</option>
           </select>
         </div>
 
