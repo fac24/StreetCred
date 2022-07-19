@@ -59,7 +59,7 @@ function ProductUpload() {
       console.log(error.message);
     }
 
-    // to move to the exact product page with id
+    // if user click submit then it will be redirected to product page
     router.push(`/products/${data[0].id}`);
   }
 
