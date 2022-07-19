@@ -18,6 +18,14 @@ function GroupsForm() {
     reader.readAsDataURL(display.target.files[0]);
   }
 
+  const cloudinary = await fetch(
+    "https://api.cloudinary.com/v1_1/streetcred/image/upload",
+    {
+      method: "POST",
+      body: formData,
+    }
+  ).then((response) => response.json());
+
   async function handleFormSubmit(event) {
     event.preventDefault();
 
