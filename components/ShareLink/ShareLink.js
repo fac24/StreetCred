@@ -10,7 +10,7 @@ export default function ShareLink() {
 
   return (
     <div className="share-link">
-      <button onClick={copy}>{!copied ? "Copy Link" : "Copied!"}</button>
+      <button onClick={copy}>{!copied ? "Copy Link" : "Link Copied!"}</button>
     </div>
   );
 }
