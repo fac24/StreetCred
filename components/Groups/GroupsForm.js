@@ -25,6 +25,7 @@ function GroupsForm() {
     reader.readAsDataURL(display.target.files[0]);
   }
 
+  console.log(supabase.auth.user());
   async function handleFormSubmit(event) {
     event.preventDefault();
 
@@ -46,12 +47,12 @@ function GroupsForm() {
         description: groupDescription,
         location: groupLocation,
         avatar: cloudinary.secure_url,
-        members: [],
+        members: [supabase.auth.user().id],
         public: publicity,
       },
     ]);
 
-    router.push(`/${data[0].id}`);
+    router.push(`/groups/${data[0].id}`);
   }
 
   return (
