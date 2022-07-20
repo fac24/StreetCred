@@ -3,9 +3,12 @@ import JoinGroup from "../../components/Groups/JoinGroup";
 
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
+import { useRouter } from "next/router";
 
 function Group(props) {
   const [groupAdmin, setGroupAdmin] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     async function admin() {
@@ -19,6 +22,10 @@ function Group(props) {
 
     admin();
   }, [props.group]);
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section>

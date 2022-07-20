@@ -1,4 +1,5 @@
-import ProductUpload from "../components/Products/ProductUpload";
+
+import ProductUpload from "../../components/Products/ProductUpload";
 
 //write an 'upload' function to handle the uploaded item
 //set state => productImg, setProductImg
@@ -12,3 +13,4 @@ function upload() {
 }
 
 export default upload;
+
