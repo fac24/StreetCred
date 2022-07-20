@@ -15,7 +15,7 @@ function CurrentLocation(props) {
     );
 
     const postJson = await postcode.json();
-    let userPostcode = postJson.result[0].outcode;
+    let userPostcode = postJson.result[0].postcode;
     setPostcode(userPostcode);
     if (props.postcode) {
       props.postcode(userPostcode);
