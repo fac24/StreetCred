@@ -1,4 +1,5 @@
 import AddNewProductButton from "../../components/Products/AddNewProductButton";
+import JoinGroup from "../../components/Groups/JoinGroup";
 
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
@@ -30,6 +31,8 @@ function Group(props) {
 
       <h3>Description:</h3>
       <p>{props.group[0].description}</p>
+
+      <JoinGroup groupId={props.group[0].id} members={props.group[0].members} />
 
       <div>
         <h3>Members</h3>
