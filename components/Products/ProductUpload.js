@@ -82,7 +82,6 @@ function ProductUpload() {
             name="category"
             value="lend"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="lend">Lend</label>
 
@@ -102,7 +101,6 @@ function ProductUpload() {
             name="category"
             value="give away"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="give-away">Give away</label>
         </div>
