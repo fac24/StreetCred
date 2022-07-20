@@ -2,10 +2,11 @@ import ShareLink from "../../components/ShareLink/ShareLink";
 import supabase from "../../utils/supabaseClient";
 import {useState, useEffect} from "react";
 import React from "react";
+import SocialShare from "../../components/ShareLink/SocialShare";
 
 function Product(props) {
   const [productOwner, setProductOwner] = useState("");
-
+  console.log(props)
   useEffect(() => {
     async function owner() {
       const { data: owner, error } = await supabase
@@ -35,6 +36,7 @@ function Product(props) {
         <button>Contact {productOwner}</button>
       </div>
       <ShareLink/>
+      <SocialShare/>
     </>
   );
 }
