@@ -1,3 +1,4 @@
+
 import ProductUpload from "../../components/Products/ProductUpload";
 
 //write an 'upload' function to handle the uploaded item
@@ -12,3 +13,4 @@ function upload() {
 }
 
 export default upload;
+
