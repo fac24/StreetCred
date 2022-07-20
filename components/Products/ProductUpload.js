@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
-import { getDisplayName } from "next/dist/shared/lib/utils";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
