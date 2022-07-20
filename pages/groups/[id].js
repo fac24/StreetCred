@@ -11,16 +11,14 @@ function Group(props) {
 
   const router = useRouter();
 
-  async function getMemberName(id) {
-    const { data: member, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", id);
+  // async function getMemberName(id) {
+  //   const { data: member, error } = await supabase
+  //     .from("profiles")
+  //     .select()
+  //     .eq("id", id);
 
-    return member[0].name;
-  }
-
-  groupMembers.map((id) => getMemberName(id));
+  //   return member[0].name;
+  // }
 
   useEffect(() => {
     async function admin() {
@@ -54,9 +52,8 @@ function Group(props) {
       <JoinGroup groupId={props.group[0].id} members={props.group[0].members} />
 
       <div>
-        <h3>Members</h3>
+        <h3>Members({props.group[0].members.length})</h3>
         <p>Admin: {groupAdmin.name}</p>
-        <ul></ul>
       </div>
 
       <div>
