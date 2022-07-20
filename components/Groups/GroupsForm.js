@@ -1,5 +1,6 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 import supabase from "../../utils/supabaseClient";
 import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
@@ -10,6 +11,8 @@ function GroupsForm() {
   const [avatarPreview, setAvatarPreview] = useState("");
   const [groupAvatar, setGroupAvatar] = useState("");
   const [publicity, setPublicity] = useState(true);
+
+  const router = useRouter();
 
   async function handleAvatarChange(display) {
     const reader = new FileReader();
@@ -48,10 +51,9 @@ function GroupsForm() {
         public: publicity,
       },
     ]);
-  }
 
-  //Borrow fishing related items from our group
-  // Lake Street Fishers
+    router.push(`/${data[0].id}`);
+  }
 
   return (
     <>
