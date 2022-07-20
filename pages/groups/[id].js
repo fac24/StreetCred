@@ -58,7 +58,7 @@ function Group(props) {
 
 export async function getStaticPaths() {
   const { data, error } = await supabase.from("groups").select();
-  const groups = data ? data : [0];
+  const groups = data ? data : ["db774228-29f3-432c-a618-bba7807c942f"];
 
   const paths = groups.map((group) => ({
     params: { id: `${group.id}` },
