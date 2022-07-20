@@ -7,7 +7,7 @@ function JoinGroup(props) {
 
   const user = supabase.auth.user();
   const groupId = props.groupId;
-  const members = props.members;
+  const members = props.members ? [...props.members] : [];
 
   async function handleJoin() {
     members.push(user.id);

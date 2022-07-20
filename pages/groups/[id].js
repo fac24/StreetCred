@@ -7,8 +7,20 @@ import { useRouter } from "next/router";
 
 function Group(props) {
   const [groupAdmin, setGroupAdmin] = useState("");
+  const [groupMembers, setGroupMembers] = useState(props.group[0].members);
 
   const router = useRouter();
+
+  async function getMemberName(id) {
+    const { data: member, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", id);
+
+    return member[0].name;
+  }
+
+  groupMembers.map((id) => getMemberName(id));
 
   useEffect(() => {
     async function admin() {
@@ -44,10 +56,7 @@ function Group(props) {
       <div>
         <h3>Members</h3>
         <p>Admin: {groupAdmin.name}</p>
-        <ul>
-          <li>Bill</li>
-          <li>Nick</li>
-        </ul>
+        <ul></ul>
       </div>
 
       <div>
