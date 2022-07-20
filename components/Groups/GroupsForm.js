@@ -25,7 +25,6 @@ function GroupsForm() {
     reader.readAsDataURL(display.target.files[0]);
   }
 
-  console.log(supabase.auth.user());
   async function handleFormSubmit(event) {
     event.preventDefault();
 
