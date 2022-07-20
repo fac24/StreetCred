@@ -1,6 +1,13 @@
+import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
 function Profile(props) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section>
       <h1>Profile</h1>
