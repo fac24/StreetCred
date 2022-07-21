@@ -27,6 +27,7 @@ function ListMembers(props) {
 
   return (
     <section>
+      <h3>Members ({members.length})</h3>
       <ul>
         {members.map((member) => {
           const avatar = member.avatar_url;
