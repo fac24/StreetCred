@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
-  const [groupId, setGroupId] = useState("");
 
   const productImg = useRef();
   const category = useRef();
@@ -61,8 +60,8 @@ function ProductUpload(props) {
       console.log(error.message);
     }
 
-    // if user click submit then it will be redirected to product page
-    router.push(`/products/${data[0].id}`);
+    // if user click submit then it will be redirected to group page
+    router.push(`/products/${groupId}`);
   }
 
   function previewHandler(display) {
@@ -85,7 +84,6 @@ function ProductUpload(props) {
             name="category"
             value="lend"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="lend">Lend</label>
 
@@ -95,7 +93,6 @@ function ProductUpload(props) {
             name="category"
             value="pass on"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="pass-on">Pass on</label>
 
@@ -105,7 +102,6 @@ function ProductUpload(props) {
             name="category"
             value="give away"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="give-away">Give away</label>
         </div>
@@ -117,7 +113,6 @@ function ProductUpload(props) {
             id="item-name"
             name="item-name"
             ref={productName}
-            // onChange={(event) => setProductName(event.target.value)}
           />
         </div>
 
@@ -129,18 +124,12 @@ function ProductUpload(props) {
             id="item-description"
             name="item-description"
             ref={description}
-            // onChange={(event) => setDescription(event.target.value)}
           />
         </div>
 
         <div>
           <label htmlFor="condition">Item&apos;s condition:</label>
-          <select
-            name="condition"
-            id="condition"
-            ref={condition}
-            // onChange={(event) => setCondition(event.target.value)}
-          >
+          <select name="condition" id="condition" ref={condition}>
             <option value="poor">Poor</option>
             <option value="good">Good</option>
             <option value="brand new">Brand New</option>

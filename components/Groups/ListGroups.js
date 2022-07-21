@@ -1,3 +1,5 @@
+import RandomKey from "../Hooks/RandomKey";
+
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 supabase;
@@ -11,7 +13,7 @@ function ListGroups(props) {
         {props.groups.map((group) => {
           return (
             <li
-              key={group.id}
+              key={RandomKey()}
               onMouseDown={(event) => {
                 event.preventDefault();
                 router.push(`/groups/${group.id}`);

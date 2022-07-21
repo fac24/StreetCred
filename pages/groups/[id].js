@@ -1,5 +1,7 @@
 import AddNewProductButton from "../../components/Products/AddNewProductButton";
 import JoinGroup from "../../components/Groups/JoinGroup";
+import ListMembers from "../../components/Groups/ListMembers";
+import ListProducts from "../../components/Products/ListProducts";
 
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
@@ -43,19 +45,17 @@ function Group(props) {
 
       <div>
         <h3>Members</h3>
-        <p>Admin: {groupAdmin.name}</p>
-        <ul>
-          <li>Bill</li>
-          <li>Nick</li>
-        </ul>
+        <div>
+          <h4>Admin: </h4>
+          <img src={groupAdmin.avatar_url} alt="avatar of group admin" />
+          <p>{groupAdmin.name}</p>
+        </div>
+        <ListMembers groupMembers={props.group[0].members} />
       </div>
 
       <div>
         <h3>Available Items</h3>
-        <ul>
-          <li>Product 1</li>
-          <li>Product 2</li>
-        </ul>
+        <ListProducts groupId={props.group[0].id} />
       </div>
 
       <AddNewProductButton groupId={props.group[0].id} />
