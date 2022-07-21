@@ -2,6 +2,7 @@ import ShareLink from "../../components/ShareLink/ShareLink";
 import supabase from "../../utils/supabaseClient";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import SocialShare from "../../components/ShareLink/SocialShare";
 
 function Product(props) {
   const [productOwner, setProductOwner] = useState("");
@@ -39,6 +40,7 @@ function Product(props) {
         <button>Contact {productOwner}</button>
       </div>
       <ShareLink />
+      <SocialShare />
     </>
   );
 }
