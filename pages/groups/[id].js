@@ -1,8 +1,14 @@
+import AddNewProductButton from "../../components/Products/AddNewProductButton";
+import JoinGroup from "../../components/Groups/JoinGroup";
+
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
+import { useRouter } from "next/router";
 
 function Group(props) {
   const [groupAdmin, setGroupAdmin] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     async function admin() {
@@ -17,6 +23,10 @@ function Group(props) {
     admin();
   }, [props.group]);
 
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section>
       <h1>Group Profile</h1>
@@ -28,6 +38,8 @@ function Group(props) {
 
       <h3>Description:</h3>
       <p>{props.group[0].description}</p>
+
+      <JoinGroup groupId={props.group[0].id} members={props.group[0].members} />
 
       <div>
         <h3>Members</h3>
@@ -45,13 +57,15 @@ function Group(props) {
           <li>Product 2</li>
         </ul>
       </div>
+
+      <AddNewProductButton groupId={props.group[0].id} />
     </section>
   );
 }
 
 export async function getStaticPaths() {
   const { data, error } = await supabase.from("groups").select();
-  const groups = data ? data : [0];
+  const groups = data ? data : ["db774228-29f3-432c-a618-bba7807c942f"];
 
   const paths = groups.map((group) => ({
     params: { id: `${group.id}` },

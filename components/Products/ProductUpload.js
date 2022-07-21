@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
 
-function ProductUpload() {
+function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
+  const [groupId, setGroupId] = useState("");
 
   const productImg = useRef();
   const category = useRef();
@@ -20,6 +21,7 @@ function ProductUpload() {
     const enteredProductName = productName.current.value.toLowerCase();
     const enteredDescription = description.current.value;
     const enteredCondition = condition.current.value;
+    const groupId = props.groupId;
     // const altText = `Image of Product ${selectedProduct.name}`;
 
     const formData = new FormData();
@@ -49,11 +51,12 @@ function ProductUpload() {
         borrow_count: 0,
         category: enteredCategory,
         condition: enteredCondition,
+        group: groupId,
       },
     ]);
 
     if (data) {
-      console.log(data);
+      console.log("uploaded");
     } else if (error) {
       console.log(error.message);
     }
@@ -91,7 +94,6 @@ function ProductUpload() {
             name="category"
             value="pass on"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="pass-on">Pass on</label>
 
@@ -112,7 +114,6 @@ function ProductUpload() {
             id="item-name"
             name="item-name"
             ref={productName}
-            // onChange={(event) => setProductName(event.target.value)}
           />
         </div>
 
@@ -124,7 +125,6 @@ function ProductUpload() {
             id="item-description"
             name="item-description"
             ref={description}
-            // onChange={(event) => setDescription(event.target.value)}
           />
         </div>
 
@@ -134,7 +134,6 @@ function ProductUpload() {
             name="condition"
             id="condition"
             ref={condition}
-            // onChange={(event) => setCondition(event.target.value)}
           >
             <option value="poor">Poor</option>
             <option value="good">Good</option>

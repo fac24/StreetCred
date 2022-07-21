@@ -1,7 +1,10 @@
+import CurrentLocation from "../components/CurrentLocation/CurrentLocation";
+
 function Home() {
   return (
     <>
-      <h1>hiya!</h1>
+      <label htmlFor="search-location">Where do you live?</label>
+      <CurrentLocation />
     </>
   );
 }

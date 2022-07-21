@@ -1,6 +1,8 @@
-import React from "react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+
 import supabase from "../../utils/supabaseClient";
+import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
 function GroupsForm() {
   const [groupName, setGroupName] = useState("");
@@ -9,6 +11,8 @@ function GroupsForm() {
   const [avatarPreview, setAvatarPreview] = useState("");
   const [groupAvatar, setGroupAvatar] = useState("");
   const [publicity, setPublicity] = useState(true);
+
+  const router = useRouter();
 
   async function handleAvatarChange(display) {
     const reader = new FileReader();
@@ -47,10 +51,9 @@ function GroupsForm() {
         public: publicity,
       },
     ]);
-  }
 
-  //Borrow fishing related items from our group
-  // Lake Street Fishers
+    router.push(`/${data[0].id}`);
+  }
 
   return (
     <>
@@ -65,17 +68,8 @@ function GroupsForm() {
           onChange={(event) => setGroupName(event.target.value)}
           required
         />
-
-        <label htmlFor="group-location">Location</label>
-        <input
-          type="text"
-          id="group-location"
-          name="group-location"
-          placeholder="e.g. N16 5RT"
-          value={groupLocation}
-          onChange={(event) => setGroupLocation(event.target.value)}
-          required
-        />
+        <label htmlFor="group-location">Group Location</label>
+        <CurrentLocation postcode={(postcode) => setGroupLocation(postcode)} />
 
         <label htmlFor="group-description">Description</label>
         <textarea

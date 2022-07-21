@@ -1,6 +1,13 @@
+import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
 function Profile(props) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section>
       <h1>Profile</h1>
@@ -38,7 +45,7 @@ function Profile(props) {
 
 export async function getStaticPaths() {
   const { data, error } = await supabase.from("profiles").select();
-  const profiles = data ? data : [0];
+  const profiles = data ? data : ["20352919-b6ad-46e9-972d-6e086e7c7580"];
 
   const paths = profiles.map((profile) => ({
     params: { id: `${profile.id}` },
