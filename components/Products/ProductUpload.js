@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
-  const [groupId, setGroupId] = useState("");
 
   const productImg = useRef();
   const category = useRef();
@@ -61,8 +60,8 @@ function ProductUpload(props) {
       console.log(error.message);
     }
 
-    // if user click submit then it will be redirected to product page
-    router.push(`/products/${data[0].id}`);
+    // if user click submit then it will be redirected to group page
+    router.push(`/products/${groupId}`);
   }
 
   function previewHandler(display) {
@@ -130,11 +129,9 @@ function ProductUpload(props) {
 
         <div>
           <label htmlFor="condition">Item&apos;s condition:</label>
-          <select
-            name="condition"
-            id="condition"
-            ref={condition}
-          >
+          group-page-lists
+          <select name="condition" id="condition" ref={condition}>
+
             <option value="poor">Poor</option>
             <option value="good">Good</option>
             <option value="brand new">Brand New</option>
