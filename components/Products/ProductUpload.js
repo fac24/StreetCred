@@ -85,7 +85,6 @@ function ProductUpload(props) {
             name="category"
             value="lend"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="lend">Lend</label>
 
@@ -95,7 +94,6 @@ function ProductUpload(props) {
             name="category"
             value="pass on"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="pass-on">Pass on</label>
 
@@ -105,7 +103,6 @@ function ProductUpload(props) {
             name="category"
             value="give away"
             ref={category}
-            // onChange={(event) => setCategory(event.target.value)}
           />
           <label htmlFor="give-away">Give away</label>
         </div>
@@ -117,7 +114,6 @@ function ProductUpload(props) {
             id="item-name"
             name="item-name"
             ref={productName}
-            // onChange={(event) => setProductName(event.target.value)}
           />
         </div>
 
@@ -129,7 +125,6 @@ function ProductUpload(props) {
             id="item-description"
             name="item-description"
             ref={description}
-            // onChange={(event) => setDescription(event.target.value)}
           />
         </div>
 
@@ -139,7 +134,6 @@ function ProductUpload(props) {
             name="condition"
             id="condition"
             ref={condition}
-            // onChange={(event) => setCondition(event.target.value)}
           >
             <option value="poor">Poor</option>
             <option value="good">Good</option>
