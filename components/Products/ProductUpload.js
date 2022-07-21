@@ -129,7 +129,9 @@ function ProductUpload(props) {
 
         <div>
           <label htmlFor="condition">Item&apos;s condition:</label>
+          group-page-lists
           <select name="condition" id="condition" ref={condition}>
+
             <option value="poor">Poor</option>
             <option value="good">Good</option>
             <option value="brand new">Brand New</option>

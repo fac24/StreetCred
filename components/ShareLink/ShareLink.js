@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function ShareLink() {
+ function ShareLink() {
   const [copied, setCopied] = useState(false);
 
   function copy() {
@@ -15,3 +15,4 @@ export default function ShareLink() {
   );
 }
 
+export default ShareLink;
