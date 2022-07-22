@@ -1,16 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: rgb(255, 255, 255);
+  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.header {
+  width: 100%;
+  height: 100px;
+  padding: 0 100px;
+  display: flex;
+  flex: row;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(43, 17, 73);
+}
+
+.logo-div {
+  width: 200px;
+}
+
+.logo {
+}
+
+.web-login-button {
+  padding: 8px 40px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(132, 0, 148);
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  border: none;
+}
+
+.web-login-button:hover {
+  color: rgb(236, 170, 40);
+}
+
+.menu-item {
+  color: rgb(255, 255, 255);
+  font-size: 1.2em;
+  font-weight: 600;
+  word-spacing: 1.5px;
+}
+
+/* About section */
+
+.about-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-div {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-div1 {
+  background-color: rgb(232, 232, 232);
+}
+
+.about-div2 {
+  background-color: rgb(209, 244, 251);
+}
+
+.about-div3 {
+  background-color: rgb(255, 255, 255);
+}
+
+.about-text {
+  width: 30%;
+}
+
+/* LOGIN PAGE */
+
+.login-page {
+  background-color: rgb(43, 17, 73);
+  color: rgb(255, 255, 255);
+  font-weight: 600;
+  font-size: 1.2em;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-buttons {
+  display: flex;
+  margin-top: 40px;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.login-button {
+  cursor: pointer;
+  padding: 8px 40px;
+  color: rgb(255, 255, 255);
+  background-color: rgb(132, 0, 148);
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-button:hover {
+  color: rgb(236, 170, 40);
+}
+
+img {
+  max-width: 500px;
+}
+
+/* Media Queries for Standard Devices */
+
+/* ----------- iPhone X ----------- */
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+}
+
+/* ----------- iPad Pro 10.5" ----------- */
+
+@media only screen and (min-device-width: 834px) and (max-device-width: 1112px) and (-webkit-min-device-pixel-ratio: 2) {
 }

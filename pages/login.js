@@ -1,3 +1,7 @@
+import Image from "next/image";
+import logo from "../public/logo.svg";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
+
 import supabase from "../utils/supabaseClient.js";
 
 function Login() {
@@ -14,11 +18,28 @@ function Login() {
   }
 
   return (
-    <>
-      <h1>Login</h1>
-      <button onClick={handleGoogleLogin}>Log in with Google</button>
-      <button onClick={handleFacebookLogin}>Log in with Facebook</button>
-    </>
+    <div className="login-page">
+      <header>
+        <Image
+          src={logo}
+          alt="StreetCred logo"
+          layout="intrinsic"
+          className="logo"
+        />
+        <p>Start sharing.</p>
+        <p>Start caring.</p>
+      </header>
+      <section className="login-buttons">
+        <button onClick={handleGoogleLogin} className="login-button google">
+          <FaGoogle />
+          Log in with Google
+        </button>
+        <button onClick={handleFacebookLogin} className="login-button facebook">
+          <FaFacebook />
+          Log in with Facebook
+        </button>
+      </section>
+    </div>
   );
 }
 
