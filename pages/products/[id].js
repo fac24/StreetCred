@@ -3,9 +3,12 @@ import supabase from "../../utils/supabaseClient";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import SocialShare from "../../components/ShareLink/SocialShare";
+import Link from "next/link";
 
 function Product(props) {
   const [productOwner, setProductOwner] = useState("");
+  const [conversationId, setConversationId] = useState("");
+  const conversationPath = `/chat/${conversationId}`;
 
   const router = useRouter();
 
@@ -23,6 +26,21 @@ function Product(props) {
     owner();
   }, [props.product]);
 
+  async function createConversation() {
+    const { data, error } = await supabase
+      .from("conversations")
+      .insert([{ product_id: props.product[0].id }]);
+
+    if (data) {
+      setConversationId(data[0].id);
+      console.log(data[0].id);
+    } else {
+      console.error;
+    }
+
+    router.push(`/chat/${data[0].id}`);
+  }
+
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
@@ -37,7 +55,6 @@ function Product(props) {
         <p>{props.product[0].location}</p>
         <p>{props.product[0].create_at}</p>
         <p>{props.product[0].availability}</p>
-        <button>Contact {productOwner}</button>
       </div>
       <ShareLink />
       <SocialShare />

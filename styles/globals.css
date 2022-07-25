@@ -333,6 +333,12 @@ img {
   background-color: var(--off-white);
 }
 
+/* CHAT PAGE */
+
+.chat-container {
+  margin-top: 100px;
+}
+
 /* Media Queries for Standard Devices */
 
 /* ----------- iPhone X ----------- */
