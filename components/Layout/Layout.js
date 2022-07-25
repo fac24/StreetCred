@@ -1,7 +1,10 @@
 import Head from "next/head";
-import Navbar from "./Navbar";
+import { useState } from "react";
 
 function Layout({ children }) {
+  const [authenticatedState, setAuthenticatedState] =
+    useState("not-authenticated");
+
   return (
     <>
       <Head>
@@ -11,7 +14,7 @@ function Layout({ children }) {
           content="A website that helps people give away, borrow and lend things."
         />
       </Head>
-      <Navbar />
+
       <main>{children}</main>
     </>
   );
