@@ -50,16 +50,10 @@ function Home() {
     if (!user) {
       return;
     }
-    if (
-      user &&
-      user.name &&
-      user.avatar_url &&
-      user.location &&
-      user.user_bio
-    ) {
+    if (user && user.created) {
       router.push("/groups");
     } else {
-      router.push("/profile-settings");
+      router.push("/create-profile");
       // if (user) {
       //   router.push(`profiles/${user.id}/edit`);
       //   if (user.name && user.avatar_url && user.location && user.user_bio) {
