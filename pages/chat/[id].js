@@ -31,7 +31,11 @@ function Conversation(props) {
       <h2>Chat</h2>
       <ul>
         {messages.map((message) => {
-          return <li key={message.id}>{message.content}</li>;
+          return (
+            <li key={message.id}>
+              <p>{message.content}</p>
+            </li>
+          );
         })}
       </ul>
       <MessageForm conversationId={conversationId} />
