@@ -11,6 +11,8 @@ import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
 function ProfileSettings(props) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [location, setUserLocation] = useState(null);
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -46,23 +48,22 @@ function ProfileSettings(props) {
     getUser();
   }, []);
 
-  console.log(user);
-
   if (user) {
-    // const verify_location = user.location ? user.location : null;
     return (
       <section>
-        <h2>Edit your profile</h2>
-        <h3>{user.name}</h3>
-        <p>Upload a photo</p>
-        <img src={user.avatar_url} />
+        <h2>Create your profile</h2>
+        <h3>Hi, {user.name}</h3>
+        <p>To complete the sign up process, follow these steps:</p>
+        <h4>1. Upload your photo</h4>
         <UserPhotoUpload />
-        <label>Set your location </label>
-        <p>{user.location}</p>
-        <CurrentLocation />
-        <label>Add a bio:</label>
-        <textarea>{user.user_bio}</textarea>
-        <button type="submit">Submit</button>
+        <h4>2. Set your location</h4>
+        <CurrentLocation postcode={(postcode) => setUserLocation(postcode)} />
+        <h4>3. Add a short bio</h4>
+        <textarea
+          value={bio}
+          onChange={(event) => setBio(event.target.value)}
+        ></textarea>
+        <button type="submit">Create your profile</button>
       </section>
     );
   }

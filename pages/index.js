@@ -47,6 +47,9 @@ function Home() {
   }, []);
 
   useEffect(() => {
+    if (!user) {
+      return;
+    }
     if (
       user &&
       user.name &&

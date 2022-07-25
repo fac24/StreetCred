@@ -14,12 +14,6 @@ function CurrentLocation(props) {
     let lat = coordinates.latitude;
     let lon = coordinates.longitude;
 
-    // let { data, error } = await supabase.rpc("searchGroupsByLocation", {
-    //   lat_param: 51.525881,
-    //   lon_param: -0.357245,
-    //   radius_param: 1000000,
-    // });
-
     //uses postcodes API to convert user's coordinates to a postcode
     const postcode = await fetch(
       `https://api.postcodes.io/postcodes?lon=${lon}&lat=${lat}`
@@ -52,7 +46,7 @@ function CurrentLocation(props) {
     <>
       <input
         type="search"
-        placeholder="Enter your postcode or area"
+        placeholder="Enter your postcode..."
         value={postcode}
         onChange={(event) => setPostcode(event.target.value)}
       ></input>
