@@ -5,62 +5,12 @@ import useViewport from "../components/Hooks/useViewport";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import supabase from "../utils/supabaseClient";
+import { useAuthContext } from "../context/auth";
 
 function Home() {
-  const router = useRouter();
+  const auth = useAuthContext();
   const { width } = useViewport();
   const breakpoint = 620;
-  const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true);
-
-  async function fetchUser(userId) {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", userId);
-
-    setUser(data[0]);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    // Check active sessions and sets the user
-    const user = supabase.auth.user();
-    const session = supabase.auth.session();
-
-    if (session) {
-      fetchUser(user.id);
-    }
-
-    // Listen for changes on auth state (logged in, signed out, etc.)
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        if (session && session.user) {
-          fetchUser(session.user.id);
-        }
-      }
-    );
-
-    return () => {
-      listener?.unsubscribe();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    if (user && user.created) {
-      router.push("/groups");
-    } else {
-      router.push("/create-profile");
-      // if (user) {
-      //   router.push(`profiles/${user.id}/edit`);
-      //   if (user.name && user.avatar_url && user.location && user.user_bio) {
-      //     router.push("/groups");
-      //   }
-    }
-  }, [user]);
 
   return width < breakpoint ? <LandingMobile /> : <LandingWeb />;
 }
