@@ -1,8 +1,21 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 
-function UserPhotoUpload(props) {
+function UserPhotoUpload({ user_id }) {
+  const [user, setUser] = useState(user_id);
   const [imageSrc, setImageSrc] = useState("");
+
+  useEffect(() => {
+    async function getUser() {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select()
+        .eq("id", user);
+      setUser(data[0]);
+    }
+    getUser();
+  }, []);
+
   const userImg = useRef();
 
   async function handleUserPhotoUpload(event) {
@@ -16,6 +29,7 @@ function UserPhotoUpload(props) {
     // upload picture to cloudinary
     const API_ENDPOINT =
       "https://api.cloudinary.com/v1_1/streetcred/image/upload";
+
     const options = {
       method: "POST",
       body: formData,
@@ -60,6 +74,7 @@ function UserPhotoUpload(props) {
           width={200}
           height={200}
         />
+        <button type="button">Change profile picture</button>
       </form>
     );
   }
