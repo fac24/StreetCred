@@ -1,16 +1,346 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+  --aubergine: rgb(43, 17, 73);
+  --mustard: rgb(236, 170, 40);
+  --off-white: rgb(255, 255, 255);
+  --purple: rgb(132, 0, 148);
+  --light-blue: rgb(209, 244, 251);
+  --light-grey: rgb(232, 232, 232);
+  --light-pink: rgb(239, 205, 237);
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--off-white);
+  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
+  color: var(--aubergine);
 }
 
 a {
-  color: inherit;
   text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* LANDING PAGE */
+
+/* Web - landing */
+
+.header {
+  width: 100%;
+  height: 100px;
+  padding: 0 100px;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex: row;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--aubergine);
+}
+
+.logo-div {
+  width: 200px;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+.web-login-button {
+  padding: 8px 40px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  border: none;
+}
+
+.web-login-button:hover {
+  color: var(--mustard);
+}
+
+.menu-item {
+  color: var(--off-white);
+  font-size: 1.2em;
+  font-weight: 600;
+  word-spacing: 1.5px;
+}
+
+/* About section */
+
+.about-section {
+  margin-top: 100px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-div {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+#section-title-1 {
+  font-size: 2rem;
+  font-size: clamp(2rem, 1.6rem + 0.9999999999999999vw, 2.8rem);
+}
+
+.about-div1 {
+  background: url(../public/illustrations/road-maps/road-pattern-v1.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 125%;
+  background-blend-mode: multiply; /* 'screen' is the original */
+  background-color: var(--light-grey);
+}
+
+.about-div2 {
+  background-color: var(--light-blue);
+}
+
+.about-div3 {
+  background-color: var(--off-white);
+}
+
+.about-div4 {
+  background: url(../public/illustrations/road-maps/road-pattern-v1.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: 0;
+  background-position-y: 85%;
+  background-size: 125%;
+  background-blend-mode: screen;
+  background-color: var(--light-pink);
+  height: 600px;
+}
+
+.about-text {
+  width: 30%;
+  margin: 0 30px;
+}
+
+.about-text-title {
+  font-size: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-text-button {
+  cursor: pointer;
+  margin-top: 35px;
+}
+
+/* footer */
+
+.landing-footer {
+  height: 180px;
+  background-color: var(--aubergine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile - landing */
+
+.landing-mobile {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--light-grey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.mob-about-div {
+  width: 100%;
+  margin-top: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mob-about-text {
+  padding: 0 38px;
+  /* text-align: center; */
+}
+
+.mob-about-text h2 {
+  font-size: 1.6em;
+  font-weight: 600;
+}
+
+.mob-about-text p {
+  font-size: 0.85em;
+}
+
+.status-bar {
+  margin-top: 30px;
+  letter-spacing: 5px;
+  font-size: 1.2em;
+}
+
+.grey-dot {
+  color: rgb(204, 204, 204);
+}
+
+.landing-next-button {
+  width: 320px;
+  padding: 10px 40px;
+  margin-bottom: 20px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  border: none;
+}
+
+.control-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  padding: 30px 0;
+}
+
+/* LOGIN PAGE */
+
+.login-page {
+  color: var(--off-white);
+  font-weight: 600;
+  font-size: 1.2em;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url(../public/illustrations/road-maps/road-pattern-v3.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: 75%;
+  background-position-y: 40%;
+  background-size: 210%;
+  background-blend-mode: screen;
+  background-color: var(--aubergine);
+}
+
+.login-logo-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-bottom: 70px;
+}
+
+.login-buttons {
+  display: flex;
+  margin-top: 40px;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.login-button {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 40px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-size: 0.85em;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-button:hover {
+  color: var(--mustard);
+}
+
+.social-logo {
+  font-size: 1.3em;
+}
+
+img {
+  max-width: 500px;
+}
+
+/* GROUPS PAGE */
+
+/* Group List */
+
+.group-list-main {
+  margin-top: 100px;
+  background-color: var(--off-white);
+}
+
+.group-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  row-gap: 30px;
+}
+
+.group-list-elem {
+  width: 450px;
+  height: 400px;
+  background-color: var(--light-grey);
+  list-style: none;
+  border-radius: 10px;
+}
+
+.list-group-avatar {
+  width: 150px;
+  vertical-align: middle;
+  height: 150px;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
+/* Media Queries for Standard Devices */
+
+/* ----------- iPhone X ----------- */
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+}
+
+/* ----------- iPad Pro 10.5" ----------- */
+
+@media only screen and (min-device-width: 834px) and (max-device-width: 1112px) and (-webkit-min-device-pixel-ratio: 2) {
 }

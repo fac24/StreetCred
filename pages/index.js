@@ -3,8 +3,14 @@ import CurrentLocation from "../components/CurrentLocation/CurrentLocation";
 import { useRouter } from "next/router";
 import { Link } from "next/link";
 import supabase from "../utils/supabaseClient";
+import "../styles/Home.module.css";
+import LandingWeb from "../components/About/LandingWeb";
+import LandingMobile from "../components/About/LandingMobile";
+import useViewport from "../components/Hooks/useViewport";
 
 function Home({ props }) {
+  const { width } = useViewport();
+  const breakpoint = 620;
   const [userId, setUserId] = useState();
   const [userData, setUserData] = useState();
   const user = supabase.auth.user();
@@ -36,23 +42,7 @@ function Home({ props }) {
   //2 if they dont' have location
   // redirect them to profile setting page
 
-  return (
-    <>
-      <label htmlFor="search-location">Where do you live?</label>
-      <p>{userId}</p>
-      <CurrentLocation />
-    </>
-  );
+  return width < breakpoint ? <LandingMobile /> : <LandingWeb />;
 }
-
-/* export async function getStaticProps() {
-  const user = await supabase.auth.user();
-  const { data, error } = await supabase
-    .from("profiles")
-    .select()
-    .eq("id", user.id);
-
-  return { props: { profile: data } };
-} */
 
 export default Home;
