@@ -22,10 +22,6 @@ function Conversation(props) {
     getMessages();
   }, [messages]);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="chat-container">
       <h2>Chat</h2>
@@ -51,7 +47,7 @@ export async function getStaticPaths() {
     params: { id: `${convo.id}` },
   }));
 
-  return { paths, fallback: true };
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps(context) {

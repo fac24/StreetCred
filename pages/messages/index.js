@@ -38,9 +38,9 @@ function Messages() {
 
       <ul>
         {requests.map((request) => {
-          const href = `/chat/${request.id}`;
+          const href = `/messages/${request.id}`;
           return (
-            <li>
+            <li key={request.id}>
               <a href={href}>Open requested conversation</a>
             </li>
           );
@@ -49,9 +49,9 @@ function Messages() {
 
       <ul>
         {sentMessages.map((sentmessage) => {
-          const href = `/chat/${sentmessage.id}`;
+          const href = `/messages/${sentmessage.id}`;
           return (
-            <li>
+            <li key={sentmessage.id}>
               <a href={href}>Open sent conversation</a>
             </li>
           );
