@@ -15,7 +15,7 @@ function Layout({ children }) {
         />
       </Head>
 
-      <main>{children}</main>
+      <main className="margin-top">{children}</main>
     </>
   );
 }

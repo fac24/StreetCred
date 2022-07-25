@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
+import Link from "next/link";
 
 function Profile(props) {
   const router = useRouter();
@@ -39,6 +40,9 @@ function Profile(props) {
           <li>Product 2</li>
         </ul>
       </div>
+      <Link href={`${props.profile[0].id}/edit`}>
+        <a>Edit</a>
+      </Link>
     </section>
   );
 }

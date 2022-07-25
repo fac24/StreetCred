@@ -46,8 +46,6 @@ function ProfileSettings(props) {
     getUser();
   }, []);
 
-  console.log(user);
-
   if (user) {
     // const verify_location = user.location ? user.location : null;
     return (
@@ -56,7 +54,9 @@ function ProfileSettings(props) {
         <h3>{user.name}</h3>
         <p>Upload a photo</p>
         <img src={user.avatar_url} />
-        <UserPhotoUpload />
+
+        <UserPhotoUpload user={user} />
+        <br />
         <label>Set your location </label>
         <p>{user.location}</p>
         <CurrentLocation />

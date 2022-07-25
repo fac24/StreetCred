@@ -47,16 +47,11 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (
-      user &&
-      user.name &&
-      user.avatar_url &&
-      user.location &&
-      user.user_bio
-    ) {
-      router.push("/groups");
-    } else {
-      router.push("/profile-settings");
+    if (user) {
+      router.push(`profiles/${user.id}/edit`);
+      if (user.name && user.avatar_url && user.location && user.user_bio) {
+        router.push("/groups");
+      }
     }
   }, [user]);
 
