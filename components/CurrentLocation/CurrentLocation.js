@@ -1,13 +1,24 @@
 import { useState } from "react";
+import supabase from "../../utils/supabaseClient";
 
 function CurrentLocation(props) {
   const [locError, setLocError] = useState(false);
   const [postcode, setPostcode] = useState("");
+  const [distance, setDistance] = useState(0);
+  const [lon, setLon] = useState(0);
+  const [lat, setLat] = useState(0);
+
   async function handleSearchFromLocation(pos) {
     //extracts longitude and latitude from geolocation info from locator function
-    const crd = pos.coords;
-    let lat = crd.latitude;
-    let lon = crd.longitude;
+    const coordinates = pos.coords;
+    let lat = coordinates.latitude;
+    let lon = coordinates.longitude;
+
+    // let { data, error } = await supabase.rpc("searchGroupsByLocation", {
+    //   lat_param: 51.525881,
+    //   lon_param: -0.357245,
+    //   radius_param: 1000000,
+    // });
 
     //uses postcodes API to convert user's coordinates to a postcode
     const postcode = await fetch(
@@ -51,5 +62,4 @@ function CurrentLocation(props) {
     </>
   );
 }
-
 export default CurrentLocation;
