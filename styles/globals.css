@@ -103,7 +103,7 @@ a {
 }
 
 .about-div1 {
-  background: url(../public/illustrations/road-maps/road-pattern-v1.svg);
+  background: url("/illustrations/road-maps/road-pattern-v1.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
@@ -121,7 +121,7 @@ a {
 }
 
 .about-div4 {
-  background: url(../public/illustrations/road-maps/road-pattern-v1.svg);
+  background: url("/illustrations/road-maps/road-pattern-v1.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position-x: 0;
@@ -240,7 +240,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: url(../public/illustrations/road-maps/road-pattern-v3.svg);
+  background: url("/illustrations/road-maps/road-pattern-v3.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position-x: 75%;
