@@ -15,25 +15,25 @@ function Home({ props }) {
   const [userData, setUserData] = useState();
   const user = supabase.auth.user();
 
-  useEffect(() => {
-    for (const key in user) {
-      if (key == "id") {
-        setUserId(user[key]);
-      }
-      // console.log(`${key}: ${user[key]}`);
-    }
+  // useEffect(() => {
+  //   for (const key in user) {
+  //     if (key == "id") {
+  //       setUserId(user[key]);
+  //     }
+  //     // console.log(`${key}: ${user[key]}`);
+  //   }
 
-    async function getLoc() {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select()
-        .eq("id", userId);
+  //   async function getLoc() {
+  //     const { data, error } = await supabase
+  //       .from("profiles")
+  //       .select()
+  //       .eq("id", userId);
 
-      setUserData(data[0].location);
-    }
+  //     setUserData(data[0].location);
+  //   }
 
-    getLoc();
-  }, []);
+  //   getLoc();
+  // }, []);
 
   // check supabase currentuser location
   //1 if they have location

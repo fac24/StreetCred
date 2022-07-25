@@ -4,6 +4,32 @@ import CurrentLocation from "../../components/CurrentLocation/CurrentLocation";
 import { useEffect, useState } from "react";
 import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
 
+// useEffect(() => {
+//   /* fires when a user signs in or out */
+//   const { data: authListener } = supabase.auth.onAuthStateChange(
+//     (event, session) => {
+//       handleAuthChange(event, session);
+//       if (event === "SIGNED_IN") {
+//         setAuthenticatedState("authenticated");
+//         router.push("/profile-settings");
+//       }
+//       if (event === "SIGNED_OUT") {
+//         setAuthenticatedState("not-authenticated");
+//         router.push("/login");
+//       }
+//     }
+//   );
+
+//   checkUser();
+//   return () => {
+//     authListener.unsubscribe();
+//   };
+// }, []);
+
+// 1. To verify user's information (name, avatar_url, location, bio) is 100% filled.
+// 2. if(user information is 100%) then { redirect user to /groups}
+// 3. if(user infromation is missing something) then { return the edit form }
+
 function ProfileSettings(props) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,12 +69,11 @@ function ProfileSettings(props) {
     getUser();
   }, []);
 
-  //create a new column in the DB? created for example (boolean).
-  //if it's false --> sign-up, if true --> the profile has been set up
-  //when receive the user from the DB, have to check if it has been created
-  //problem: when login the user is null. Probably because the authentication doesn't happen instantly, so the user doesn't exist.
+  console.log(user);
 
   if (user) {
+    const verify_location = user.location ? user.location : null;
+    console.log(verify_location);
     return (
       <section>
         <h2>Edit your profile</h2>
@@ -57,14 +82,16 @@ function ProfileSettings(props) {
         <img src={user.avatar_url} />
         <UserPhotoUpload />
         <label>Set your location </label>
+        <p>{user.location}</p>
         <CurrentLocation />
         <label>Add a bio:</label>
-        <textarea></textarea>
+        <textarea>{user.user_bio}</textarea>
         <button type="submit">Submit</button>
       </section>
     );
   }
 
+  // if there is no user information(like null)
   return <div>Loading...</div>;
 }
 
