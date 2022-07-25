@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 import CurrentLocation from "../../components/CurrentLocation/CurrentLocation";
 import { useEffect, useState } from "react";
@@ -53,9 +53,8 @@ function ProfileSettings(props) {
     };
   }, []);
 
-  console.log(user);
-
-  //get currently authenticated user
+  //if the user just logged in this will be null, so we need to rely on the onAuthChanged,
+  //if the user has logged in before, supabase.auth.user() will have a user
   useEffect(() => {
     async function getUser() {
       const user = supabase.auth.user();
@@ -71,9 +70,16 @@ function ProfileSettings(props) {
 
   console.log(user);
 
+  useEffect(() => {
+    if (user.name && user.avatar_url) {
+      router.push("/groups");
+    } else {
+      router.push("/profile-settings");
+    }
+  }, []);
+
   if (user) {
-    const verify_location = user.location ? user.location : null;
-    console.log(verify_location);
+    // const verify_location = user.location ? user.location : null;
     return (
       <section>
         <h2>Edit your profile</h2>
