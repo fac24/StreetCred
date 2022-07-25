@@ -299,6 +299,40 @@ img {
   max-width: 500px;
 }
 
+/* GROUPS PAGE */
+
+/* Group List */
+
+.group-list-main {
+  margin-top: 100px;
+  background-color: var(--off-white);
+}
+
+.group-list-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  row-gap: 30px;
+}
+
+.group-list-elem {
+  width: 450px;
+  height: 400px;
+  background-color: var(--light-grey);
+  list-style: none;
+  border-radius: 10px;
+}
+
+.list-group-avatar {
+  width: 150px;
+  vertical-align: middle;
+  height: 150px;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
 /* Media Queries for Standard Devices */
 
 /* ----------- iPhone X ----------- */

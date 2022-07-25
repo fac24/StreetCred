@@ -1,32 +1,33 @@
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
+import supabase from "../../utils/supabaseClient";
+
 import logo from "../../public/full-logo.svg";
 import illust1 from "../../public/illustrations/woman-globe.svg";
 import illust2 from "../../public/illustrations/people-web.svg";
 import illust3 from "../../public/illustrations/house-hopping.svg";
 import mobileView from "../../public/street-cred-mobile-view.png";
-import Link from "next/link";
+import LandingNav from "../Layout/LandingNav";
 
 function LandingWeb() {
+  const [authenticatedState, setAuthenticatedState] =
+    useState("not-authenticated");
+
+  useEffect(() => {
+    async function checkUser() {
+      const user = await supabase.auth.user();
+      if (user) {
+        setAuthenticatedState("authenticated");
+      }
+    }
+
+    checkUser();
+  }, []);
+
   return (
     <>
-      <header className="header">
-        <div className="logo-div">
-          <Link href="/">
-            <Image
-              src={logo}
-              alt="StreetCred logo"
-              layout="intrinsic"
-              className="logo"
-            />
-          </Link>
-        </div>
-        <nav>
-          <Link href="/login">
-            <a className="web-login-button">Log in or sign up</a>
-          </Link>
-        </nav>
-      </header>
-
+      {authenticatedState !== "authenticated" && <LandingNav />}
       <section className="about-section">
         <div className="about-div about-div1">
           <div className="about-text">
