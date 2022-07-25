@@ -3,7 +3,7 @@ import logo from "../../public/full-logo.svg";
 import illust1 from "../../public/illustrations/woman-globe.svg";
 import illust2 from "../../public/illustrations/people-web.svg";
 import illust3 from "../../public/illustrations/house-hopping.svg";
-// import { BiLeftArrowCircle } from "react-icons/bi";
+import mobileView from "../../public/street-cred-mobile-view.png";
 import Link from "next/link";
 
 function LandingWeb() {
@@ -11,12 +11,14 @@ function LandingWeb() {
     <>
       <header className="header">
         <div className="logo-div">
-          <Image
-            src={logo}
-            alt="StreetCred logo"
-            layout="intrinsic"
-            className="logo"
-          />
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="StreetCred logo"
+              layout="intrinsic"
+              className="logo"
+            />
+          </Link>
         </div>
         <nav>
           <Link href="/login">
@@ -28,7 +30,9 @@ function LandingWeb() {
       <section className="about-section">
         <div className="about-div about-div1">
           <div className="about-text">
-            <h2>Exchange items and build-up your Street Cred</h2>
+            <h2 id="section-title-1">
+              Exchange items and build-up your Street Cred
+            </h2>
             <p>
               Extend the life of items and waste less! Share from house to house
               and build up points for sharing.
@@ -55,7 +59,7 @@ function LandingWeb() {
           />
           <div className="about-text">
             <h2>
-              Set up a group for your local area, and invite others to join.{" "}
+              Set up a group for your local area, and invite others to join.
             </h2>
             <p>
               Groups are initially based on location but anyone can join groups.
@@ -82,10 +86,46 @@ function LandingWeb() {
             className="illust illust3"
           />
         </div>
-        {/*         <button>
-          <BiLeftArrowCircle />
-        </button> */}
+
+        <div className="about-div about-div4">
+          <Image
+            src={mobileView}
+            alt="mobile preview of the app"
+            /* layout="intrinsic" */
+            width={400}
+            height={400}
+            className="illust illust3"
+          />
+          <div className="about-text">
+            <h2 className="about-text-title">
+              <span>Start sharing.</span>
+              <span>Start caring.</span>
+            </h2>
+            <p>
+              Access Street Cred through the app. Manage items and exchange with
+              your neighbours.
+            </p>
+            <Link href="/login">
+              <button className="web-login-button about-text-button">
+                Sign up now
+              </button>
+            </Link>
+          </div>
+        </div>
       </section>
+
+      <footer className="landing-footer">
+        <div className="logo-div">
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="StreetCred logo"
+              layout="intrinsic"
+              className="logo"
+            />
+          </Link>
+        </div>
+      </footer>
     </>
   );
 }
