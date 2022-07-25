@@ -4,28 +4,6 @@ import CurrentLocation from "../../components/CurrentLocation/CurrentLocation";
 import { useEffect, useState } from "react";
 import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
 
-// useEffect(() => {
-//   /* fires when a user signs in or out */
-//   const { data: authListener } = supabase.auth.onAuthStateChange(
-//     (event, session) => {
-//       handleAuthChange(event, session);
-//       if (event === "SIGNED_IN") {
-//         setAuthenticatedState("authenticated");
-//         router.push("/profile-settings");
-//       }
-//       if (event === "SIGNED_OUT") {
-//         setAuthenticatedState("not-authenticated");
-//         router.push("/login");
-//       }
-//     }
-//   );
-
-//   checkUser();
-//   return () => {
-//     authListener.unsubscribe();
-//   };
-// }, []);
-
 // 1. To verify user's information (name, avatar_url, location, bio) is 100% filled.
 // 2. if(user information is 100%) then { redirect user to /groups}
 // 3. if(user infromation is missing something) then { return the edit form }
@@ -69,14 +47,6 @@ function ProfileSettings(props) {
   }, []);
 
   console.log(user);
-
-  useEffect(() => {
-    if (user.name && user.avatar_url) {
-      router.push("/groups");
-    } else {
-      router.push("/profile-settings");
-    }
-  }, []);
 
   if (user) {
     // const verify_location = user.location ? user.location : null;

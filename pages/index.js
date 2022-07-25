@@ -1,46 +1,64 @@
-import { useState, useEffect } from "react";
-import CurrentLocation from "../components/CurrentLocation/CurrentLocation";
-import { useRouter } from "next/router";
-import { Link } from "next/link";
-import supabase from "../utils/supabaseClient";
 import "../styles/Home.module.css";
 import LandingWeb from "../components/About/LandingWeb";
 import LandingMobile from "../components/About/LandingMobile";
 import useViewport from "../components/Hooks/useViewport";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import supabase from "../utils/supabaseClient";
 
-function Home({ props }) {
+function Home() {
+  const router = useRouter();
   const { width } = useViewport();
   const breakpoint = 620;
-  const [userId, setUserId] = useState();
-  const [userData, setUserData] = useState();
-  const user = supabase.auth.user();
+  const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   for (const key in user) {
-  //     if (key == "id") {
-  //       setUserId(user[key]);
-  //     }
-  //     // console.log(`${key}: ${user[key]}`);
-  //   }
+  async function fetchUser(userId) {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select()
+      .eq("id", userId);
 
-  //   async function getLoc() {
-  //     const { data, error } = await supabase
-  //       .from("profiles")
-  //       .select()
-  //       .eq("id", userId);
+    setUser(data[0]);
+    setLoading(false);
+  }
 
-  //     setUserData(data[0].location);
-  //   }
+  useEffect(() => {
+    // Check active sessions and sets the user
+    const user = supabase.auth.user();
+    const session = supabase.auth.session();
 
-  //   getLoc();
-  // }, []);
+    if (session) {
+      fetchUser(user.id);
+    }
 
-  // check supabase currentuser location
-  //1 if they have location
-  // render the group they have joined
+    // Listen for changes on auth state (logged in, signed out, etc.)
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (session && session.user) {
+          fetchUser(session.user.id);
+        }
+      }
+    );
 
-  //2 if they dont' have location
-  // redirect them to profile setting page
+    return () => {
+      listener?.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      user &&
+      user.name &&
+      user.avatar_url &&
+      user.location &&
+      user.user_bio
+    ) {
+      router.push("/groups");
+    } else {
+      router.push("/profile-settings");
+    }
+  }, [user]);
 
   return width < breakpoint ? <LandingMobile /> : <LandingWeb />;
 }
