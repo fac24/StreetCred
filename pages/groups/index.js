@@ -3,33 +3,30 @@ import AddNewGroupButton from "../../components/Groups/AddNewGroupButton";
 import FilterGroups from "../../components/Groups/FilterGroups";
 import Link from "next/link";
 import supabase from "../../utils/supabaseClient";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useAuthContext } from "../../context/auth";
+import router, { Router } from "next/router";
 
 function Groups(props) {
-  const [user, setUser] = useState(null);
+  const { user } = useAuthContext();
+  const [groups, setGroups] = useState([]);
 
   useEffect(() => {
-    async function getUser() {
-      const user = supabase.auth.user();
-      //find in the db the matching profile
-      const { data, error } = await supabase
-        .from("profiles")
-        .select()
-        .eq("id", user.id);
-      setUser(data[0]);
+    if (user) {
+      setGroups(
+        props.groups.filter((group) => group.members.includes(user.id))
+      );
     }
-    getUser();
-  }, []);
-  if (user) {
-    return (
-      <div>
-        <Link href={`/profiles/${user.id}`}>profile</Link>
-        <FilterGroups />
-        <ListGroups groups={props.groups} />
-        <AddNewGroupButton />
-      </div>
-    );
-  }
+  }, [user]);
+
+  return (
+    <div>
+      {/* <Link href={`/profiles/${user.id}`}>profile</Link> */}
+      <FilterGroups />
+      <ListGroups groups={groups} />
+      <AddNewGroupButton />
+    </div>
+  );
 }
 
 export async function getServerSideProps() {
