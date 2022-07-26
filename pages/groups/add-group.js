@@ -3,10 +3,10 @@ import GroupsForm from "../../components/Groups/GroupsForm";
 
 function AddGroup() {
   return (
-    <div>
+    <section className="add-new-group-container">
       <h2>Create your group</h2>
       <GroupsForm />
-    </div>
+    </section>
   );
 }
 

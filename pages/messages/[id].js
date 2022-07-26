@@ -1,11 +1,16 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
+
 import MessageForm from "../../components/Chat/MessageForm";
+import GetSender from "../../components/Chat/GetSender";
+import SetHeader from "../../components/Chat/SetHeader";
 
 function Conversation(props) {
   const [messages, setMessages] = useState([]);
   const router = useRouter();
+
+  //console.log();
 
   const conversationId = props.conversation[0].id;
 
@@ -22,13 +27,21 @@ function Conversation(props) {
     getMessages();
   }, [messages]);
 
+  function getTheDate(dateOfMessage) {
+    const date = new Date(dateOfMessage).toLocaleString();
+    return date.slice(0, 17);
+  }
+
   return (
     <div className="chat-container">
       <h2>Chat</h2>
+      <SetHeader product={props.conversation[0].product_id} />
       <ul>
         {messages?.map((message) => {
           return (
             <li key={message.id}>
+              <GetSender sender={message.sender} />
+              <p>{getTheDate(message.created_at)}</p>
               <p>{message.content}</p>
             </li>
           );

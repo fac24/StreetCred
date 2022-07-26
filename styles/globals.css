@@ -333,10 +333,30 @@ img {
   background-color: var(--off-white);
 }
 
+/* ADD GROUP PAGE */
+
+.add-new-group-container {
+  margin-top: 100px;
+}
+
+/* PRODUCT PAGE */
+
+.product-available {
+  background-color: rgb(200, 242, 200);
+}
+
+.product-unavailable {
+  background-color: rgb(243, 150, 150);
+}
+
 /* CHAT PAGE */
 
 .chat-container {
   margin-top: 100px;
+}
+
+.conversation-avatar {
+  width: 80px;
 }
 
 /* Media Queries for Standard Devices */

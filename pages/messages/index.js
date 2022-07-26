@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+
+import GetRequester from "../../components/Chat/GetRequester";
+import GetProduct from "../../components/Chat/GetProduct";
+
 import supabase from "../../utils/supabaseClient";
 
 function Messages() {
@@ -14,7 +18,7 @@ function Messages() {
         .eq("owner_id", user.id);
 
       setRequests(conversations);
-      console.log(conversations);
+      //console.log(conversations);
     }
 
     getRequests();
@@ -26,7 +30,7 @@ function Messages() {
         .eq("requester_id", user.id);
 
       setSentMessages(conversations);
-      console.log(conversations);
+      //console.log(conversations);
     }
 
     getSentMessages();
@@ -37,22 +41,30 @@ function Messages() {
       <h2>Messages</h2>
 
       <ul>
+        <h2>Requests received</h2>
         {requests?.map((request) => {
           const href = `/messages/${request.id}`;
           return (
             <li key={request.id}>
-              <a href={href}>Open requested conversation</a>
+              <a href={href}>
+                <GetRequester requester={request.requester_id} />
+                <GetProduct product={request.product_id} />
+              </a>
             </li>
           );
         })}
       </ul>
 
       <ul>
+        <h2>Requests sent</h2>
         {sentMessages?.map((sentmessage) => {
           const href = `/messages/${sentmessage.id}`;
           return (
             <li key={sentmessage.id}>
-              <a href={href}>Open sent conversation</a>
+              <a href={href}>
+                <GetRequester requester={sentmessage.owner_id} />
+                <GetProduct product={sentmessage.product_id} />
+              </a>
             </li>
           );
         })}
