@@ -47,7 +47,9 @@ a {
   align-items: center;
   background-color: var(--aubergine);
 }
-
+.margin-top {
+  margin-top: 100px;
+}
 .logo-div {
   width: 200px;
 }
