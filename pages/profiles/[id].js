@@ -13,6 +13,11 @@ function Profile(props) {
     <section>
       <h1>Profile</h1>
       <img src={props.profile[0].avatar_url} />
+      <br />
+      <Link href={`${props.profile[0].id}/edit`}>
+        <a>Edit</a>
+      </Link>
+
       <h2>{props.profile[0].name}</h2>
       <p>{props.profile[0].points} points</p>
       <p>Location: {props.profile[0].location}</p>
@@ -40,9 +45,6 @@ function Profile(props) {
           <li>Product 2</li>
         </ul>
       </div>
-      <Link href={`${props.profile[0].id}/edit`}>
-        <a>Edit</a>
-      </Link>
     </section>
   );
 }

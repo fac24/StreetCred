@@ -52,14 +52,12 @@ function ProfileSettings(props) {
       <section>
         <h2>Edit your profile</h2>
         <h3>{user.name}</h3>
-        <p>Upload a photo</p>
-        <img src={user.avatar_url} />
-
-        <UserPhotoUpload user={user} />
+        <UserPhotoUpload user_id={user.id} />
         <br />
         <label>Set your location </label>
         <p>{user.location}</p>
         <CurrentLocation />
+        <br />
         <label>Add a bio:</label>
         <textarea>{user.user_bio}</textarea>
         <button type="submit">Submit</button>

@@ -25,7 +25,7 @@ function ProductUpload(props) {
 
     const formData = new FormData();
     formData.append("file", selectedProduct);
-    formData.append("upload_preset", "vwz7spwe");
+    formData.append("upload_preset", "product");
 
     // upload picture to cloudinary
     const API_ENDPOINT =
@@ -131,7 +131,6 @@ function ProductUpload(props) {
           <label htmlFor="condition">Item&apos;s condition:</label>
           group-page-lists
           <select name="condition" id="condition" ref={condition}>
-
             <option value="poor">Poor</option>
             <option value="good">Good</option>
             <option value="brand new">Brand New</option>

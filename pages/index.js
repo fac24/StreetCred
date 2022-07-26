@@ -48,7 +48,7 @@ function Home() {
 
   useEffect(() => {
     if (user) {
-      router.push(`profiles/${user.id}/edit`);
+      router.push("/profile-settings");
       if (user.name && user.avatar_url && user.location && user.user_bio) {
         router.push("/groups");
       }
