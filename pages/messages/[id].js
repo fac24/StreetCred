@@ -10,8 +10,6 @@ function Conversation(props) {
   const [messages, setMessages] = useState([]);
   const router = useRouter();
 
-  //console.log();
-
   const conversationId = props.conversation[0].id;
 
   useEffect(() => {

@@ -8,6 +8,9 @@ import supabase from "../../utils/supabaseClient";
 function Messages() {
   const [sentMessages, setSentMessages] = useState([]);
   const [requests, setRequests] = useState([]);
+
+  const [allMessages, setAllMessages] = useState([]);
+
   const user = supabase.auth.user();
 
   useEffect(() => {
@@ -34,6 +37,29 @@ function Messages() {
     }
 
     getSentMessages();
+
+    /*     const collectCOnvos = [];
+
+    sentMessages.map((convo) => {
+      collectCOnvos.push(convo.id);
+    });
+
+    requests.map((convo) => {
+      collectCOnvos.push(convo.id);
+    });
+
+    async function getAll(convoId) {
+      const { data: conversations, error } = await supabase
+        .from("messages")
+        .select()
+        .eq("conversation_id", convoId);
+
+      console.log(conversations);
+    }
+
+    collectCOnvos.map((convo) => {
+      getAll(convo);
+    }); */
   }, []);
 
   return (
