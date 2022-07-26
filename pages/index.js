@@ -48,10 +48,15 @@ function Home() {
 
   useEffect(() => {
     if (user) {
-      router.push("/profile-settings");
-      if (user.name && user.avatar_url && user.location && user.user_bio) {
+      router.push("/create-profile");
+      if (user.location && user.user_bio && user.name && user.avatar_url) {
         router.push("/groups");
       }
+      // if (user) {
+      //   router.push(`profiles/${user.id}/edit`);
+      //   if (user.name && user.avatar_url && user.location && user.user_bio) {
+      //     router.push("/groups");
+      //   }
     }
   }, [user]);
 

@@ -11,6 +11,9 @@ import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
 function ProfileSettings(props) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [postcode, setPostcode] = useState(null);
+  const [avatar, setAvatar] = useState("");
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     // Check active sessions and sets the user
@@ -46,22 +49,43 @@ function ProfileSettings(props) {
     getUser();
   }, []);
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const { data, error } = await supabase
+      .from("profiles")
+      .update({
+        user_bio: bio,
+        location: postcode,
+        created: true,
+        avatar_url: avatar,
+      })
+      .eq("id", user.id);
+
+    router.push(`/profiles/${user.id}`);
+  }
+
   if (user) {
-    // const verify_location = user.location ? user.location : null;
     return (
-      <section>
-        <h2>Edit your profile</h2>
-        <h3>{user.name}</h3>
-        <UserPhotoUpload user_id={user.id} />
-        <br />
-        <label>Set your location </label>
-        <p>{user.location}</p>
-        <CurrentLocation />
-        <br />
-        <label>Add a bio:</label>
-        <textarea>{user.user_bio}</textarea>
-        <button type="submit">Submit</button>
-      </section>
+      <form onSubmit={handleSubmit}>
+        <h2>Create your profile</h2>
+        <h3>Hi, {user.name}</h3>
+        <p>To complete the sign up process, follow these steps:</p>
+
+        <UserPhotoUpload
+          user_id={user.id}
+          avatar={avatar}
+          setAvatar={setAvatar}
+        />
+
+        <h4>2. Set your location</h4>
+        <CurrentLocation postcode={(postcode) => setPostcode(postcode)} />
+        <h4>3. Add a short bio</h4>
+        <textarea
+          value={bio}
+          onChange={(event) => setBio(event.target.value)}
+        ></textarea>
+        <button type="submit">Create your profile</button>
+      </form>
     );
   }
 

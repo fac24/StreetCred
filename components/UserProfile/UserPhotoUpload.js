@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
-function UserPhotoUpload({ user_id }) {
+function UserPhotoUpload({ user_id, avatar, setAvatar }) {
   const [user, setUser] = useState(user_id);
-  const [imageSrc, setImageSrc] = useState("");
   const router = useRouter();
 
   // check user object from user id that is given as prop.
@@ -29,7 +28,7 @@ function UserPhotoUpload({ user_id }) {
   // 2. upload image file to cloudinary as formdata via api
   // 3. Get cloudinary image url
   // 4. insert users input to supabase
-  // 5. Redirect to user's profile page
+
   async function handleUserPhotoUpload(event) {
     event.preventDefault();
     const selectedUserImg = userImg.current.files[0];
@@ -51,35 +50,28 @@ function UserPhotoUpload({ user_id }) {
       return response.json();
     });
 
-    const { data, error } = await supabase
-      .from("profiles")
-      .update({
-        avatar_url: cloudinary.secure_url,
-      })
-      .eq("id", user.id);
-
-    router.push(`/profiles/${user_id}`);
+    setAvatar(cloudinary.secure_url);
   }
 
   function previewHandler(event) {
     const reader = new FileReader();
     reader.onload = function (onLoadEvent) {
-      setImageSrc(onLoadEvent.target.result);
+      setAvatar(onLoadEvent.target.result);
     };
     reader.readAsDataURL(event.target.files[0]);
   }
 
   return (
     <>
-      <h4>Update Profile picture</h4>
+      <h4>1. Upload your avatar</h4>
       <img
-        src={imageSrc ? imageSrc : user.avatar_url}
+        src={avatar ? avatar : user.avatar_url}
         alt="preview uploaded image"
         width={200}
         height={200}
       />
       <form encType="multipart/form-data" onSubmit={handleUserPhotoUpload}>
-        <label htmlFor="user-img">Chnage user avatar</label>
+        <label htmlFor="user-img">Upload user avatar</label>
         <input
           type="file"
           accept="image/png, image/jpeg, image/jpg"
@@ -88,8 +80,6 @@ function UserPhotoUpload({ user_id }) {
           ref={userImg}
           onChange={previewHandler}
         />
-
-        <button type="submit">Update profile picture</button>
       </form>
     </>
   );
