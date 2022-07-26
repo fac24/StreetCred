@@ -32,8 +32,15 @@ export function AuthWrapper({ children }) {
     // Listen for changes on auth state (logged in, signed out, etc.)
     const { data: listener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        handleAuthChange(event, session);
+
         if (session && session.user) {
           fetchUser(session.user.id);
+        }
+
+        if (event === "SIGNED_OUT") {
+          setUser(null);
+          router.push("/login");
         }
       }
     );
@@ -59,7 +66,46 @@ export function AuthWrapper({ children }) {
     //   }
   }, [user]);
 
-  let auth = { user, setUser, loading, setLoading };
+  //   useEffect(() => {
+  //     /* fires when a user signs in or out */
+  //     const { data: authListener } = supabase.auth.onAuthStateChange(
+  //       (event, session) => {
+  //         handleAuthChange(event, session);
+  //         if (event === "SIGNED_IN") {
+  //           setAuthenticatedState("authenticated");
+  //         }
+  //         if (event === "SIGNED_OUT") {
+  //           setAuthenticatedState("not-authenticated");
+  //           router.push("/login");
+  //         }
+  //       }
+  //     );
+
+  //     checkUser();
+  //     return () => {
+  //       authListener.unsubscribe();
+  //     };
+  //   }, []);
+
+  //   async function checkUser() {
+  //     /* when the component loads, checks user to show or hide Sign In link */
+  //     const user = await supabase.auth.user();
+  //     if (user) {
+  //       setAuthenticatedState("authenticated");
+  //     }
+  //   }
+
+  async function handleAuthChange(event, session) {
+    /* sets and removes the Supabase cookie */
+    await fetch("/api/auth", {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      credentials: "same-origin",
+      body: JSON.stringify({ event, session }),
+    });
+  }
+
+  let auth = { user, loading };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

@@ -8,7 +8,6 @@ import supabase from "../utils/supabaseClient";
 import { useAuthContext } from "../context/auth";
 
 function Home() {
-  const auth = useAuthContext();
   const { width } = useViewport();
   const breakpoint = 620;
 

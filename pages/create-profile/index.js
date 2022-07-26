@@ -21,6 +21,7 @@ function ProfileSettings(props) {
       .from("profiles")
       .update({ user_bio: bio, location: postcode, created: true })
       .eq("id", user.id);
+    router.push("/groups");
   }
 
   if (user) {
@@ -42,8 +43,6 @@ function ProfileSettings(props) {
       </form>
     );
   }
-
-  // if there is no user information(like null)
   return <div>Loading...</div>;
 }
 
