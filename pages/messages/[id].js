@@ -26,7 +26,7 @@ function Conversation(props) {
     <div className="chat-container">
       <h2>Chat</h2>
       <ul>
-        {messages.map((message) => {
+        {messages?.map((message) => {
           return (
             <li key={message.id}>
               <p>{message.content}</p>
@@ -43,7 +43,7 @@ export async function getStaticPaths() {
   const { data, error } = await supabase.from("conversations").select();
   const conversations = data ? data : ["58d92d5b-4d59-4c2b-9f65-e31476b3420a"];
 
-  const paths = conversations.map((convo) => ({
+  const paths = conversations?.map((convo) => ({
     params: { id: `${convo.id}` },
   }));
 

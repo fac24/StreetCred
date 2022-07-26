@@ -29,7 +29,7 @@ function ListMembers(props) {
     <section>
       <h3>Members ({members.length})</h3>
       <ul>
-        {members.map((member) => {
+        {members?.map((member) => {
           const avatar = member.avatar_url;
           return (
             <li key={RandomKey()}>

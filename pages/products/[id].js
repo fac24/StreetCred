@@ -45,7 +45,7 @@ function Product(props) {
       console.error;
     }
 
-    router.push(`/chat/${data[0].id}`);
+    router.push(`/messages/${data[0].id}`);
   }
 
   if (router.isFallback) {
@@ -74,7 +74,7 @@ export async function getStaticPaths() {
   const { data, error } = await supabase.from("products").select();
   const products = data ? data : ["022a7185-2aea-4d50-83e2-64229cd0f367"];
 
-  const paths = products.map((product) => ({
+  const paths = products?.map((product) => ({
     params: { id: `${product.id}` },
   }));
 

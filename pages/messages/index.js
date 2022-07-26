@@ -37,7 +37,7 @@ function Messages() {
       <h2>Messages</h2>
 
       <ul>
-        {requests.map((request) => {
+        {requests?.map((request) => {
           const href = `/messages/${request.id}`;
           return (
             <li key={request.id}>
@@ -48,7 +48,7 @@ function Messages() {
       </ul>
 
       <ul>
-        {sentMessages.map((sentmessage) => {
+        {sentMessages?.map((sentmessage) => {
           const href = `/messages/${sentmessage.id}`;
           return (
             <li key={sentmessage.id}>
