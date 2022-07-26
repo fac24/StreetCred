@@ -23,6 +23,8 @@ export function AuthWrapper({ children }) {
   useEffect(() => {
     // Check active sessions and sets the user
     const user = supabase.auth.user();
+    console.log(user);
+    console.log(user.id);
     const session = supabase.auth.session();
 
     if (session) {
@@ -51,12 +53,6 @@ export function AuthWrapper({ children }) {
     if (user && user.created) {
       router.push("/groups");
     }
-
-    // if (user) {
-    //   router.push(`profiles/${user.id}/edit`);
-    //   if (user.name && user.avatar_url && user.location && user.user_bio) {
-    //     router.push("/groups");
-    //   }
   }, [user]);
 
   let auth = { user, setUser, loading, setLoading };

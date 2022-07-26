@@ -5,6 +5,7 @@ import Navbar from "../components/Layout/Navbar";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import supabase from "../utils/supabaseClient";
 import { AuthWrapper } from "../context/auth";
@@ -55,12 +56,17 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <AuthWrapper>
-      <Layout>
-        {authenticatedState === "authenticated" && <Navbar></Navbar>}
-        <Component {...pageProps} />
-      </Layout>
-    </AuthWrapper>
+    <Layout>
+      {authenticatedState === "authenticated" && (
+        <Navbar>
+          <Link href="/protected">
+            <a>Protected</a>
+          </Link>
+        </Navbar>
+      )}
+
+      <Component {...pageProps} />
+    </Layout>
   );
 }
 

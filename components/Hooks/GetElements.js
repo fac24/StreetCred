@@ -7,7 +7,7 @@ async function GetElements(table, column, criteria) {
     .select()
     .eq(column, criteria);
 
-  data.map((item) => {
+  data?.map((item) => {
     items.push(item);
   });
 
