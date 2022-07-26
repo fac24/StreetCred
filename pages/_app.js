@@ -56,17 +56,19 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      {authenticatedState === "authenticated" && (
-        <Navbar>
-          <Link href="/protected">
-            <a>Protected</a>
-          </Link>
-        </Navbar>
-      )}
+    <AuthWrapper>
+      <Layout>
+        {authenticatedState === "authenticated" && (
+          <Navbar>
+            <Link href="/protected">
+              <a>Protected</a>
+            </Link>
+          </Navbar>
+        )}
 
-      <Component {...pageProps} />
-    </Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </AuthWrapper>
   );
 }
 
