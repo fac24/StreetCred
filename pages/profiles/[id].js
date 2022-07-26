@@ -47,7 +47,7 @@ export async function getStaticPaths() {
   const { data, error } = await supabase.from("profiles").select();
   const profiles = data ? data : ["20352919-b6ad-46e9-972d-6e086e7c7580"];
 
-  const paths = profiles.map((profile) => ({
+  const paths = profiles?.map((profile) => ({
     params: { id: `${profile.id}` },
   }));
 

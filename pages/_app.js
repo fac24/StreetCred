@@ -5,6 +5,7 @@ import Navbar from "../components/Layout/Navbar";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import supabase from "../utils/supabaseClient";
 
@@ -21,7 +22,6 @@ function MyApp({ Component, pageProps }) {
         handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
           setAuthenticatedState("authenticated");
-          router.push("/groups");
         }
         if (event === "SIGNED_OUT") {
           setAuthenticatedState("not-authenticated");
@@ -56,7 +56,14 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Layout>
-      {authenticatedState === "authenticated" && <Navbar></Navbar>}
+      {authenticatedState === "authenticated" && (
+        <Navbar>
+          <Link href="/protected">
+            <a>Protected</a>
+          </Link>
+        </Navbar>
+      )}
+
       <Component {...pageProps} />
     </Layout>
   );
