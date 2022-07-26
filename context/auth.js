@@ -35,6 +35,10 @@ export function AuthWrapper({ children }) {
         if (session && session.user) {
           fetchUser(session.user.id);
         }
+        if (event === "SIGNED_OUT") {
+          setUser(null);
+          router.push("/login");
+        }
       }
     );
 
@@ -53,7 +57,17 @@ export function AuthWrapper({ children }) {
     }
   }, [user]);
 
-  let auth = { user, setUser, loading, setLoading };
+  async function handleAuthChange(event, session) {
+    /* sets and removes the Supabase cookie */
+    await fetch("/api/auth", {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      credentials: "same-origin",
+      body: JSON.stringify({ event, session }),
+    });
+  }
+
+  let auth = { user, loading };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }

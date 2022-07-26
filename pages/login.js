@@ -22,10 +22,10 @@ function Login() {
     const { user, session, error } = await supabase.auth.signIn(
       {
         provider: "facebook",
+      },
+      {
+        redirectTo: "http://localhost:3000/groups",
       }
-      // {
-      //   redirectTo: "http://localhost:3000/groups",
-      // }
     );
   }
 
