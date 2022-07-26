@@ -19,7 +19,7 @@ function ListProducts(props) {
 
   return (
     <ul>
-      {products.map((product) => {
+      {products?.map((product) => {
         return (
           <li
             key={RandomKey()}

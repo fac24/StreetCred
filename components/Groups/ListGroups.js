@@ -2,25 +2,41 @@ import RandomKey from "../Hooks/RandomKey";
 
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
+import Link from "next/link";
 supabase;
 
 function ListGroups(props) {
   const router = useRouter();
 
   return (
-    <div>
-      <ul>
-        {props.groups.map((group) => {
+    <div className="group-list-main">
+      <h2>My groups</h2>
+      <ul className="group-list-container">
+        {props.groups?.map((group) => {
+          const href = `/groups/${group.id}`;
           return (
             <li
               key={RandomKey()}
-              onMouseDown={(event) => {
+              className="group-list-elem"
+              /* onMouseDown={(event) => {
                 event.preventDefault();
                 router.push(`/groups/${group.id}`);
-              }}
+              }} */
             >
-              <p>{group.name}</p>
-              <img src={group.avatar} />
+              <img src={group.avatar} className="list-group-avatar" />
+              <h3>{group.name}</h3>
+              <p>
+                {group.location} {/* should be: Admin location XY miles away */}
+              </p>
+              <Link href={href}>
+                <button>See Group</button>
+              </Link>
+              <div>
+                <h4>Members</h4>
+              </div>
+              <div>
+                <h4>Items</h4>
+              </div>
             </li>
           );
         })}
