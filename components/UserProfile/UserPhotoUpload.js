@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
-function UserPhotoUpload({ user_id }) {
+function UserPhotoUpload({ user_id, avatar, setAvatar }) {
   const [user, setUser] = useState(user_id);
-  const [imageSrc, setImageSrc] = useState("");
+  const router = useRouter();
+
+  // check user object from user id that is given as prop.
 
   useEffect(() => {
     async function getUser() {
@@ -11,12 +14,20 @@ function UserPhotoUpload({ user_id }) {
         .from("profiles")
         .select()
         .eq("id", user);
-      setUser(data[0]);
+      if (data === null) console.log("user data is null");
+      else setUser(data[0]);
     }
     getUser();
   }, []);
 
+  // get img reference from user's input
   const userImg = useRef();
+
+  // when user click update button
+  // 1. check the user's input to update user data
+  // 2. upload image file to cloudinary as formdata via api
+  // 3. Get cloudinary image url
+  // 4. insert users input to supabase
 
   async function handleUserPhotoUpload(event) {
     event.preventDefault();
@@ -24,7 +35,7 @@ function UserPhotoUpload({ user_id }) {
 
     const formData = new FormData();
     formData.append("file", selectedUserImg);
-    formData.append("upload_preset", "vwz7spwe");
+    formData.append("upload_preset", "user_avatar");
 
     // upload picture to cloudinary
     const API_ENDPOINT =
@@ -39,26 +50,28 @@ function UserPhotoUpload({ user_id }) {
       return response.json();
     });
 
-    // for image preview
-    setImageSrc(cloudinary.secure_url);
-    // insert products input to supabase
-    const { data, error } = await supabase.from("avatar_url").update([
-      {
-        image: cloudinary.secure_url,
-      },
-    ]);
+    setAvatar(cloudinary.secure_url);
+  }
 
-    function previewHandler(display) {
-      const reader = new FileReader();
-      reader.onload = function (onLoadEvent) {
-        setImageSrc(onLoadEvent.target.result);
-      };
-      reader.readAsDataURL(display.target.files[0]);
-    }
+  function previewHandler(event) {
+    const reader = new FileReader();
+    reader.onload = function (onLoadEvent) {
+      setAvatar(onLoadEvent.target.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }
 
-    return (
+  return (
+    <>
+      <h4>1. Upload your avatar</h4>
+      <img
+        src={avatar ? avatar : user.avatar_url}
+        alt="preview uploaded image"
+        width={200}
+        height={200}
+      />
       <form encType="multipart/form-data" onSubmit={handleUserPhotoUpload}>
-        <label htmlFor="user-img">User Image</label>
+        <label htmlFor="user-img">Upload user avatar</label>
         <input
           type="file"
           accept="image/png, image/jpeg, image/jpg"
@@ -67,17 +80,9 @@ function UserPhotoUpload({ user_id }) {
           ref={userImg}
           onChange={previewHandler}
         />
-        <p>Preview:</p>
-        <img
-          src={imageSrc}
-          alt="preview uploaded image"
-          width={200}
-          height={200}
-        />
-        <button type="button">Change profile picture</button>
       </form>
-    );
-  }
+    </>
+  );
 }
 
 export default UserPhotoUpload;

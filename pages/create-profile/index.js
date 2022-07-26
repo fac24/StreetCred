@@ -12,15 +12,22 @@ import { useAuthContext } from "../../context/auth";
 function ProfileSettings(props) {
   const { user } = useAuthContext();
   const [postcode, setPostcode] = useState(null);
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState("");
   const [bio, setBio] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
     const { data, error } = await supabase
       .from("profiles")
-      .update({ user_bio: bio, location: postcode, created: true })
+      .update({
+        user_bio: bio,
+        location: postcode,
+        created: true,
+        avatar_url: avatar,
+      })
       .eq("id", user.id);
+
+    router.push(`/profiles/${user.id}`);
   }
 
   if (user) {
@@ -29,8 +36,13 @@ function ProfileSettings(props) {
         <h2>Create your profile</h2>
         <h3>Hi, {user.name}</h3>
         <p>To complete the sign up process, follow these steps:</p>
-        <h4>1. Upload your photo</h4>
-        {/* <UserPhotoUpload /> */}
+
+        <UserPhotoUpload
+          user_id={user.id}
+          avatar={avatar}
+          setAvatar={setAvatar}
+        />
+
         <h4>2. Set your location</h4>
         <CurrentLocation postcode={(postcode) => setPostcode(postcode)} />
         <h4>3. Add a short bio</h4>

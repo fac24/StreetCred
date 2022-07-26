@@ -53,7 +53,7 @@ function CurrentLocation(props) {
       <input
         type="search"
         placeholder="Enter your postcode..."
-        value={postcode}
+        value={props.value ? props.value : postcode}
         onChange={(event) => updatePostcode(event.target.value)}
       ></input>
       <button type="button" onClick={locator}>
