@@ -23,8 +23,6 @@ export function AuthWrapper({ children }) {
   useEffect(() => {
     // Check active sessions and sets the user
     const user = supabase.auth.user();
-    console.log(user);
-    console.log(user.id);
     const session = supabase.auth.session();
 
     if (session) {
