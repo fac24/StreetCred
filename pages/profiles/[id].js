@@ -41,9 +41,9 @@ function Profile(props) {
         </Link>
       ) : null}
 
-      <button onClick={handleLogOut} className="web-login-button">
+      {/* <button onClick={handleLogOut} className="web-login-button">
         Log Out
-      </button>
+      </button> */}
 
       <h2>{props.profile[0].name}</h2>
       <p>{props.profile[0].points} points</p>

@@ -26,7 +26,6 @@ function Product(props) {
       setProductOwner(owner[0].name);
       setProductOwnerId(props.product.owner);
     }
-    //console.log(window.location.href);
 
     owner();
   }, [props.product]);
@@ -34,7 +33,7 @@ function Product(props) {
   async function createConversation() {
     const { data, error } = await supabase.from("conversations").insert([
       {
-        product_id: props.product[0].id,
+        product_id: props.product.id,
         owner_id: productOwnerId,
         requester_id: user.id,
       },
@@ -42,7 +41,6 @@ function Product(props) {
 
     if (data) {
       setConversationId(data[0].id);
-      console.log(data[0].id);
     } else {
       console.error;
     }
@@ -99,7 +97,6 @@ export async function getServerSideProps({ req, params }) {
     data[0].longitude,
     "K"
   );
-  console.log(distance);
 
   return { props: { product: data[0], distance: Math.round(distance) } };
 }
