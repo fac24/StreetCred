@@ -2,9 +2,6 @@ import Head from "next/head";
 import { useState } from "react";
 
 function Layout({ children }) {
-  const [authenticatedState, setAuthenticatedState] =
-    useState("not-authenticated");
-
   return (
     <>
       <Head>

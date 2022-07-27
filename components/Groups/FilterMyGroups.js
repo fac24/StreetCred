@@ -15,12 +15,14 @@ function FilterMyGroups(props) {
   const groups = props.groups;
 
   useEffect(() => {
-    const filteredByAdmin = groups.filter((group) => group.admin === user.id);
+    const filteredByAdmin = groups.filter(
+      (group) => group.admin === props.userId
+    );
     const filteredByJoinedGroups = [];
 
     groups.map((group) => {
       const membersArray = group.members;
-      if (membersArray.includes(user.id)) {
+      if (membersArray.includes(props.userId)) {
         filteredByJoinedGroups.push(group);
       }
     });

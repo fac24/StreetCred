@@ -7,8 +7,17 @@ const AuthContext = createContext();
 export function AuthWrapper({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const router = useRouter();
+
+  async function handleAuthChange(event, session) {
+    /* sets and removes the Supabase cookie */
+    await fetch("/api/auth", {
+      method: "POST",
+      headers: new Headers({ "Content-Type": "application/json" }),
+      credentials: "same-origin",
+      body: JSON.stringify({ event, session }),
+    });
+  }
 
   async function fetchUser(userId) {
     const { data, error } = await supabase
@@ -34,6 +43,7 @@ export function AuthWrapper({ children }) {
       async (event, session) => {
         if (session && session.user) {
           fetchUser(session.user.id);
+          handleAuthChange(event, session);
         }
         if (event === "SIGNED_OUT") {
           setUser(null);
@@ -48,6 +58,7 @@ export function AuthWrapper({ children }) {
   }, []);
 
   useEffect(() => {
+    console.log(user);
     if (user && !user.created) {
       router.push("/create-profile");
     }

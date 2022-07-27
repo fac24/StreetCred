@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useAuthContext } from "../../context/auth";
 import supabase from "../../utils/supabaseClient";
 
 function Messages() {
   const [sentMessages, setSentMessages] = useState([]);
   const [requests, setRequests] = useState([]);
-  const user = supabase.auth.user();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     async function getRequests() {
@@ -17,8 +18,6 @@ function Messages() {
       console.log(conversations);
     }
 
-    getRequests();
-
     async function getSentMessages() {
       const { data: conversations, error } = await supabase
         .from("conversations")
@@ -29,8 +28,11 @@ function Messages() {
       console.log(conversations);
     }
 
-    getSentMessages();
-  }, []);
+    if (user) {
+      getRequests();
+      getSentMessages();
+    }
+  }, [user]);
 
   return (
     <div className="chat-container">

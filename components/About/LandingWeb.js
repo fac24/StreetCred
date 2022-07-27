@@ -9,25 +9,14 @@ import illust2 from "../../public/illustrations/people-web.svg";
 import illust3 from "../../public/illustrations/house-hopping.svg";
 import mobileView from "../../public/street-cred-mobile-view.png";
 import LandingNav from "../Layout/LandingNav";
+import { useAuthContext } from "../../context/auth";
 
 function LandingWeb() {
-  const [authenticatedState, setAuthenticatedState] =
-    useState("not-authenticated");
-
-  useEffect(() => {
-    async function checkUser() {
-      const user = await supabase.auth.user();
-      if (user) {
-        setAuthenticatedState("authenticated");
-      }
-    }
-
-    checkUser();
-  }, []);
+  const { user } = useAuthContext();
 
   return (
     <>
-      {authenticatedState !== "authenticated" && <LandingNav />}
+      {!user && <LandingNav />}
       <section className="about-section">
         <div className="about-div about-div1">
           <div className="about-text">
