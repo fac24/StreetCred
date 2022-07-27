@@ -109,7 +109,7 @@ function ProfileSettings(props) {
 
   // if there is no user information(like null)
   // or other users try to access user's edit page by url
-  return <div>You can't access to this page.</div>;
+  return <div>You cannot access this page.</div>;
   // return <div>Loading...</div>;
 }
 

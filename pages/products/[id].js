@@ -1,9 +1,11 @@
 import ShareLink from "../../components/ShareLink/ShareLink";
+import SocialShare from "../../components/ShareLink/SocialShare";
+import ProductAvailability from "../../components/Products/ProductAvailability";
+
 import supabase from "../../utils/supabaseClient";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import SocialShare from "../../components/ShareLink/SocialShare";
-import Link from "next/link";
 
 function Product(props) {
   const [productOwner, setProductOwner] = useState("");
@@ -60,10 +62,13 @@ function Product(props) {
         <img src={props.product[0].image} />
         <p>{props.product[0].description}</p>
         <p>{props.product[0].location}</p>
-        <p>{props.product[0].create_at}</p>
-        <p>{props.product[0].availability}</p>
-        <p>Distance: {props.distance} kms</p>
-        <button onClick={createConversation}>Contact {productOwner}</button>
+        <p>{props.product[0].created_at}</p>
+        <ProductAvailability
+          availability={props.product[0].availability}
+          producId={props.product[0].id}
+          productOwner={props.product[0].owner}
+        />
+        <button onClick={createConversation}>Contact {productOwner}!</button>
       </div>
       <ShareLink />
       <SocialShare />

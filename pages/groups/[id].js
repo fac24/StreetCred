@@ -47,7 +47,7 @@ function Group(props) {
         <span>|</span>
         <p>Private</p>
       </div>
-      <p id="group-id-desc">"{props.group[0].description}"</p>
+      <p id="group-id-desc">{props.group[0].description}</p>
 
       <JoinGroup groupId={props.group[0].id} members={props.group[0].members} />
 

@@ -52,7 +52,8 @@ a {
 /* Navigation Mobile */
 
 .navigation-mobile {
-  width: 100%; /* 390px */
+  width: 100%;
+  /* 390px */
   height: 80px;
   background-color: var(--light-grey);
   display: flex;
@@ -96,9 +97,11 @@ a {
   align-items: center;
   background-color: var(--aubergine);
 }
+
 .margin-top {
   margin-top: 100px;
 }
+
 .logo-div {
   width: 200px;
 }
@@ -153,7 +156,8 @@ a {
   background-attachment: fixed;
   background-position: center;
   background-size: 125%;
-  background-blend-mode: multiply; /* 'screen' is the original */
+  background-blend-mode: multiply;
+  /* 'screen' is the original */
   background-color: var(--light-grey);
 }
 
@@ -368,6 +372,7 @@ img {
 .members-of-groups-div {
   margin-bottom: 100px;
 }
+
 .group-list-container {
   width: 100%;
   padding: 10px 0%;
@@ -379,6 +384,7 @@ img {
   gap: 20px;
   row-gap: 25px;
 }
+
 .group-list-title {
   padding: 30px 0 0 1%;
   font-size: 1.5em;
@@ -424,6 +430,24 @@ img {
   border-radius: 50%;
   background-color: var(--off-white);
 }
+
+
+/* ADD GROUP PAGE */
+
+.add-new-group-container {
+  margin-top: 100px;
+}
+
+/* PRODUCT PAGE */
+
+.product-available {
+  background-color: rgb(200, 242, 200);
+}
+
+.product-unavailable {
+  background-color: rgb(243, 150, 150);
+}
+
 
 .group-name-title {
   margin: 4px 0;
@@ -738,6 +762,7 @@ img {
   gap: 5px;
   justify-content: space-evenly;
 }
+
 .bullet-inputs label {
   font-weight: 500;
 }
@@ -834,6 +859,10 @@ img {
   margin-top: 100px;
 }
 
+.conversation-avatar {
+  width: 80px;
+}
+
 /* Media Queries for Standard Devices */
 
 /* ----------- iPhone X ----------- */
@@ -858,6 +887,7 @@ img {
     width: 850px;
     justify-content: center;
   }
+
   .add-button-container {
     position: fixed;
     bottom: 80px;

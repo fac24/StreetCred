@@ -7,10 +7,6 @@ function Profile(props) {
   const router = useRouter();
   const [access, setAccess] = useState(false);
 
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
   // to check if user can access to edit button
   let user_id;
   if (supabase.auth.user()) {
@@ -28,6 +24,10 @@ function Profile(props) {
   async function handleLogOut() {
     const { error } = await supabase.auth.signOut();
     router.push("/login");
+  }
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
   }
 
   return (
