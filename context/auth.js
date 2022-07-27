@@ -51,10 +51,6 @@ export function AuthWrapper({ children }) {
     if (user && !user.created) {
       router.push("/create-profile");
     }
-
-    if (user && user.created) {
-      router.push("/groups");
-    }
   }, [user]);
 
   async function handleAuthChange(event, session) {
