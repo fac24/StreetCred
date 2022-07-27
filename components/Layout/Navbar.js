@@ -1,11 +1,12 @@
-import supabase from "../../utils/supabaseClient";
-
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+
+import supabase from "../../utils/supabaseClient";
 import { useAuthContext } from "../../context/auth";
 import NavWeb from "./NavWeb";
 import NavMobile from "./NavMobile";
+import LandingNav from "./LandingNav";
 import useViewport from "../Hooks/useViewport";
-import { useEffect, useState } from "react";
 
 function Navbar() {
   const router = useRouter();
@@ -14,7 +15,9 @@ function Navbar() {
   const { width } = useViewport();
   const breakpoint = 620;
 
-  console.log(user);
+  if (!user) {
+    return <LandingNav />;
+  }
 
   return width < breakpoint ? (
     <NavMobile userId={user?.id} />
