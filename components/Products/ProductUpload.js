@@ -190,8 +190,3 @@ function ProductUpload(props) {
 }
 
 export default ProductUpload;
-
-/* export async function getServerSideProps(context) {
-  console.log(context.req.headers.referer);
-}
- */

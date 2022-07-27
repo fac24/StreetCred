@@ -5,8 +5,10 @@ import Navbar from "../components/Layout/Navbar";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import supabase from "../utils/supabaseClient";
+import { AuthWrapper, useAuthContext } from "../context/auth";
 
 function MyApp({ Component, pageProps }) {
   const [authenticatedState, setAuthenticatedState] =
@@ -54,10 +56,16 @@ function MyApp({ Component, pageProps }) {
   }
 
   return (
-    <Layout>
-      {authenticatedState === "authenticated" && <Navbar></Navbar>}
-      <Component {...pageProps} />
-    </Layout>
+    <AuthWrapper>
+      <Layout>
+        <Navbar>
+          <Link href="/protected">
+            <a>Protected</a>
+          </Link>
+        </Navbar>
+        <Component {...pageProps} />
+      </Layout>
+    </AuthWrapper>
   );
 }
 
