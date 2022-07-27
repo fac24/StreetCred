@@ -17,6 +17,17 @@ function ProfileSettings(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const postcodeRequest = await fetch(
+      `https://api.postcodes.io/postcodes/${postcode}`
+    );
+    const postcodeDetails = await postcodeRequest.json();
+
+    if (postcodeDetails.status !== 200) {
+      console.error("Postcode invalid");
+      return;
+    }
+
     const { data, error } = await supabase
       .from("profiles")
       .update({
@@ -24,6 +35,8 @@ function ProfileSettings(props) {
         location: postcode,
         created: true,
         avatar_url: avatar,
+        longitude: postcodeDetails.result.longitude,
+        latitude: postcodeDetails.result.latitude,
       })
       .eq("id", user.id);
 
