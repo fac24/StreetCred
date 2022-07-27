@@ -91,103 +91,116 @@ function ProductUpload(props) {
   return (
     <main className="upload-section">
       <Link href={`/groups/${group}`}>
-        <a onClick={backToGroups}>
+        <a onClick={backToGroups} className="back-to-pages-button">
           <BsArrowLeftCircle />
-          Back to the group
+          <span>Back to the group</span>
         </a>
       </Link>
       <h2>Upload a product</h2>
-      <form
-        encType="multipart/form-data"
-        onSubmit={handleProductSubmit}
-        className="upload-form"
-      >
-        <div className="form-div">
-          <p>Select a category*</p>
+      <div className="forms-div">
+        <form
+          encType="multipart/form-data"
+          onSubmit={handleProductSubmit}
+          className="upload-form"
+        >
+          <p id="select-category-label">Select a category*</p>
+          <div className=" bullet-inputs">
+            <div>
+              <input
+                type="radio"
+                id="lend"
+                name="category"
+                value="lend"
+                ref={category}
+              />
+              <label htmlFor="lend">Lend</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="pass-on"
+                name="category"
+                value="pass on"
+                ref={category}
+              />
+              <label htmlFor="pass-on">Pass on</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="give-away"
+                name="category"
+                value="give away"
+                ref={category}
+              />
+              <label htmlFor="give-away">Give away</label>
+            </div>
+          </div>
 
-          <input
-            type="radio"
-            id="lend"
-            name="category"
-            value="lend"
-            ref={category}
-          />
-          <label htmlFor="lend">Lend</label>
+          <div className="form-div">
+            <label htmlFor="item-name">Product Name*</label>
+            <input
+              type="text"
+              id="item-name"
+              name="item-name"
+              required
+              ref={productName}
+            />
+          </div>
 
-          <input
-            type="radio"
-            id="pass-on"
-            name="category"
-            value="pass on"
-            ref={category}
-          />
-          <label htmlFor="pass-on">Pass on</label>
+          <div className="form-div">
+            <label htmlFor="item-description">Description*</label>
+            <textarea
+              placeholder="Tell us about this item."
+              id="item-description"
+              name="item-description"
+              ref={description}
+              required
+            />
+          </div>
 
-          <input
-            type="radio"
-            id="give-away"
-            name="category"
-            value="give away"
-            ref={category}
-          />
-          <label htmlFor="give-away">Give away</label>
-        </div>
+          <div className="form-div">
+            <label htmlFor="condition">Item&apos;s condition*</label>
+            <select
+              name="condition"
+              id="condition"
+              ref={condition}
+              required
+              className="select-input-field"
+            >
+              <option value="poor">Poor</option>
+              <option value="good">Good</option>
+              <option value="brand new">Brand New</option>
+            </select>
+          </div>
 
-        <div className="form-div">
-          <label htmlFor="item-name">Product Name*</label>
-          <input
-            type="text"
-            id="item-name"
-            name="item-name"
-            required
-            ref={productName}
-          />
-        </div>
+          <div className="form-div">
+            <label htmlFor="item-img">Product image*</label>
+            <div className="form-div-avatar">
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                id="group-avatar"
+                name="item-img"
+                ref={productImg}
+                onChange={previewHandler}
+                required
+              />
+              <div className="form-div">
+                <img
+                  src={imageSrc ? imageSrc : "/only-logo.svg"}
+                  alt="preview uploaded image"
+                  className="img-preview"
+                />
+              </div>
+            </div>
+          </div>
 
-        <div className="form-div">
-          <label htmlFor="item-description">Description*</label>
-          <textarea
-            placeholder="Tell us about this item."
-            id="item-description"
-            name="item-description"
-            ref={description}
-            required
-          />
-        </div>
-
-        <div className="form-div">
-          <label htmlFor="condition">Item&apos;s condition*</label>
-          group-page-lists
-          <select name="condition" id="condition" ref={condition} required>
-            <option value="poor">Poor</option>
-            <option value="good">Good</option>
-            <option value="brand new">Brand New</option>
-          </select>
-        </div>
-
-        <div className="form-div">
-          <label htmlFor="item-img">Product image*</label>
-          <input
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            id="item-img"
-            name="item-img"
-            ref={productImg}
-            onChange={previewHandler}
-            required
-          />
-
-          <img
-            src={imageSrc}
-            alt="preview uploaded image"
-            className="img-preview"
-          />
-        </div>
-
-        <button type="submit" value="submit">
-          Submit
-        </button>
-      </form>
+          <button type="submit" value="submit">
+            Submit
+          </button>
+        </form>
+      </div>
     </main>
   );
 }
