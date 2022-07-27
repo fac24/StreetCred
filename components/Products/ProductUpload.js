@@ -6,11 +6,14 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
-  const [group, setGroup] = useState(() => {
+  const [group, setGroup] = useState("");
+
+  useEffect(() => {
     const storage = localStorage.getItem("group");
     const initialValue = JSON.parse(storage);
-    return initialValue || "";
-  });
+    setGroup(initialValue || "");
+    console.log(initialValue);
+  }, [group]);
 
   const productImg = useRef();
   const category = useRef();
