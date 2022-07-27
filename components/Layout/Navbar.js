@@ -1,37 +1,36 @@
 import supabase from "../../utils/supabaseClient";
-import Link from "next/link";
+
 import { useRouter } from "next/router";
 
-import Image from "next/image";
-import logo from "../../public/full-logo.svg";
+import { useEffect, useState } from "react";
+import NavWeb from "./NavWeb";
+import NavMobile from "./NavMobile";
+import useViewport from "../Hooks/useViewport";
+import Link from "next/link";
 
-function Navbar() {
-  const router = useRouter();
+function Navbar(props) {
+  const [user, setUser] = useState("");
 
-  async function handleLogOut() {
-    const { error } = await supabase.auth.signOut();
-    router.push("/login");
+  const { width } = useViewport();
+  const breakpoint = 620;
+
+  useEffect(() => {
+    checkUser();
+  }, [user]);
+
+  async function checkUser() {
+    const user = await supabase.auth.user();
+    if (user) {
+      setUser(user.id);
+    } else {
+      console.log("no user");
+    }
   }
 
-  return (
-    <header className="header">
-      <div className="logo-div">
-        <Image
-          src={logo}
-          alt="StreetCred logo"
-          layout="intrinsic"
-          className="logo"
-        />
-      </div>
-      <nav>
-        <Link href="/groups">
-          <a className="menu-item">Groups</a>
-        </Link>
-      </nav>
-      <button onClick={handleLogOut} className="web-login-button">
-        Log Out
-      </button>
-    </header>
+  return width < breakpoint ? (
+    <NavMobile userId={user} />
+  ) : (
+    <NavWeb userId={user} />
   );
 }
 

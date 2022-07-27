@@ -1,10 +1,12 @@
 import RandomKey from "../Hooks/RandomKey";
 
 import { useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
 function ListMembers(props) {
   const [members, setMembers] = useState([]);
+  const router = useRouter();
 
   const groupMembers = props.groupMembers;
 
@@ -28,13 +30,19 @@ function ListMembers(props) {
   return (
     <section>
       <h3>Members ({members.length})</h3>
-      <ul>
+      <ul className="group-page-members">
         {members.map((member) => {
           const avatar =
             member === undefined ? "/only-logo.svg" : member.avatar_url;
+          const url =
+            member === undefined ? "/groups" : `/profiles/${member.id}`;
           return (
-            <li key={RandomKey()}>
-              <img src={avatar} alt="image" />
+            <li key={RandomKey()} className="group-page-member">
+              <img
+                src={avatar}
+                alt="image"
+                className="group-page-members-avatar"
+              />
               <p>{member === undefined ? "Deleted user" : member.name}</p>
             </li>
           );

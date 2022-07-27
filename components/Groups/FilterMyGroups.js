@@ -11,16 +11,17 @@ function FilterMyGroups(props) {
   const [joinedGroups, setJoinedGroups] = useState([]);
   const [adminedGroups, setAdminedGroups] = useState([]);
 
-  const user = supabase.auth.user();
   const groups = props.groups;
 
   useEffect(() => {
-    const filteredByAdmin = groups.filter((group) => group.admin === user.id);
+    const filteredByAdmin = groups.filter(
+      (group) => group.admin === props.userId
+    );
     const filteredByJoinedGroups = [];
 
     groups.map((group) => {
       const membersArray = group.members;
-      if (membersArray.includes(user.id)) {
+      if (membersArray.includes(props.userId)) {
         filteredByJoinedGroups.push(group);
       }
     });

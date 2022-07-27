@@ -25,6 +25,11 @@ function Profile(props) {
     setAccess(props.profile[0].id == user_id);
   }, []);
 
+  async function handleLogOut() {
+    const { error } = await supabase.auth.signOut();
+    router.push("/login");
+  }
+
   return (
     <section>
       <h1>Profile</h1>
@@ -35,6 +40,10 @@ function Profile(props) {
           <a>Edit</a>
         </Link>
       ) : null}
+
+      <button onClick={handleLogOut} className="web-login-button">
+        Log Out
+      </button>
 
       <h2>{props.profile[0].name}</h2>
       <p>{props.profile[0].points} points</p>

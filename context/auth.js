@@ -53,7 +53,6 @@ export function AuthWrapper({ children }) {
     }
 
     if (user && user.created) {
-      router.push("/groups");
     }
   }, [user]);
 

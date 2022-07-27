@@ -25,21 +25,29 @@ function Group(props) {
     admin();
   }, [props.group]);
 
+  function getTheDate(dateOfMessage) {
+    const date = new Date(dateOfMessage).toLocaleString();
+    return date.slice(0, 10);
+  }
+
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
   return (
-    <section>
-      <h1>Group Profile</h1>
-      <img src={props.group[0].avatar} />
+    <section className="group-id-section">
+      <img src={props.group[0].avatar} className="group-page-avatar" />
+      <div className="group-id-title">
+        <h2>{props.group[0].name}</h2>
 
-      <h2>{props.group[0].name}</h2>
-
-      <p>Location: {props.group[0].location}</p>
-
-      <h3>Description:</h3>
-      <p>{props.group[0].description}</p>
+        <p>({props.group[0].location})</p>
+      </div>
+      <div className="group-id-title">
+        <p>Since {getTheDate(props.group[0].created_at)}</p>
+        <span>|</span>
+        <p>Private</p>
+      </div>
+      <p id="group-id-desc">"{props.group[0].description}"</p>
 
       <JoinGroup groupId={props.group[0].id} members={props.group[0].members} />
 
@@ -47,7 +55,11 @@ function Group(props) {
         <h3>Members</h3>
         <div>
           <h4>Admin: </h4>
-          <img src={groupAdmin.avatar_url} alt="avatar of group admin" />
+          <img
+            src={groupAdmin.avatar_url}
+            alt="avatar of group admin"
+            className="group-page-members-avatar"
+          />
           <p>{groupAdmin.name}</p>
         </div>
         <ListMembers groupMembers={props.group[0].members} />
@@ -58,7 +70,10 @@ function Group(props) {
         <ListProducts groupId={props.group[0].id} />
       </div>
 
-      <AddNewProductButton groupId={props.group[0].id} />
+      <AddNewProductButton
+        groupId={props.group[0].id}
+        className="add-new-product"
+      />
     </section>
   );
 }
