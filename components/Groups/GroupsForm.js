@@ -60,63 +60,69 @@ function GroupsForm() {
   return (
     <main className="upload-section">
       <Link href="/groups">
-        <a>
+        <a className="back-to-pages-button">
           <BsArrowLeftCircle />
-          Back to the groups
+          <span>Back to the groups</span>
         </a>
       </Link>
       <h2>Create your group</h2>
-      <form onSubmit={handleFormSubmit} className="upload-form">
-        <div className="form-div">
-          <label htmlFor="group-name">Your group&apos;s name*</label>
-          <input
-            type="text"
-            id="group-name"
-            name="group-name"
-            placeholder="e.g. N16 Cyclists"
-            value={groupName}
-            onChange={(event) => setGroupName(event.target.value)}
-            required
-          />
-        </div>
-
-        <div className="form-div">
-          <label htmlFor="group-location">Group Location*</label>
-          <CurrentLocation
-            postcode={(postcode) => setGroupLocation(postcode)}
-          />
-        </div>
-
-        <div className="form-div">
-          <label htmlFor="group-description">Description*</label>
-          <textarea
-            id="group-description"
-            name="group-description"
-            placeholder="Describe the purpose of your group."
-            value={groupDescription}
-            onChange={(event) => setGroupDescription(event.target.value)}
-            required
-          ></textarea>
-        </div>
-
-        <div className="form-div">
-          <label htmlFor="group-avatar">Group avatar*</label>
-          <div className="form-div-avatar">
+      <div className="forms-div">
+        <form onSubmit={handleFormSubmit} className="upload-form">
+          <div className="form-div">
+            <label htmlFor="group-name">Your group&apos;s name*</label>
             <input
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              id="group-avatar"
-              name="group-avatar"
-              onChange={handleAvatarChange}
+              type="text"
+              id="group-name"
+              name="group-name"
+              placeholder="e.g. N16 Cyclists"
+              value={groupName}
+              onChange={(event) => setGroupName(event.target.value)}
               required
             />
+          </div>
 
-            <div className="form-div">
-              <img src={avatarPreview} alt="preview" className="img-preview" />
+          <div className="form-div">
+            <label htmlFor="group-location">Group Location*</label>
+            <CurrentLocation
+              postcode={(postcode) => setGroupLocation(postcode)}
+            />
+          </div>
+
+          <div className="form-div">
+            <label htmlFor="group-description">Description*</label>
+            <textarea
+              id="group-description"
+              name="group-description"
+              placeholder="Describe the purpose of your group."
+              value={groupDescription}
+              onChange={(event) => setGroupDescription(event.target.value)}
+              required
+            ></textarea>
+          </div>
+
+          <div className="form-div">
+            <label htmlFor="group-avatar">Group avatar*</label>
+            <div className="form-div-avatar">
+              <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                id="group-avatar"
+                name="group-avatar"
+                onChange={handleAvatarChange}
+                required
+              />
+
+              <div className="form-div">
+                <img
+                  src={avatarPreview ? avatarPreview : "/only-logo.svg"}
+                  alt="preview"
+                  className="img-preview"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        {/* 
+
+          {/* 
         <div>
           <input
             type="radio"
@@ -138,8 +144,9 @@ function GroupsForm() {
         </div>
         */}
 
-        <button type="submit">Create Group</button>
-      </form>
+          <button type="submit">Create Group</button>
+        </form>
+      </div>
     </main>
   );
 }
