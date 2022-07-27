@@ -1,9 +1,11 @@
 import { useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
+import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
+  const [postcode, setPostcode] = useState(null);
 
   const productImg = useRef();
   const category = useRef();
@@ -41,6 +43,16 @@ function ProductUpload(props) {
     // for image preview
     setImageSrc(cloudinary.secure_url);
 
+    const postcodeRequest = await fetch(
+      `https://api.postcodes.io/postcodes/${postcode}`
+    );
+    const postcodeDetails = await postcodeRequest.json();
+
+    if (postcodeDetails.status !== 200) {
+      console.error("Postcode invalid");
+      return;
+    }
+
     // insert products input to supabase
     const { data, error } = await supabase.from("products").insert([
       {
@@ -51,17 +63,18 @@ function ProductUpload(props) {
         category: enteredCategory,
         condition: enteredCondition,
         group: groupId,
+        location: postcode,
+        longitude: postcodeDetails.result.longitude,
+        latitude: postcodeDetails.result.latitude,
       },
     ]);
 
     if (data) {
-      console.log("uploaded");
+      console.log("uploaded", data);
+      router.push(`/products/${data[0].id}`);
     } else if (error) {
       console.log(error.message);
     }
-
-    // if user click submit then it will be redirected to group page
-    router.push(`/products/${groupId}`);
   }
 
   function previewHandler(display) {
@@ -124,6 +137,14 @@ function ProductUpload(props) {
             id="item-description"
             name="item-description"
             ref={description}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="item-description">Pick-up point</label>
+          <CurrentLocation
+            postcode={(postcode) => setPostcode(postcode)}
+            value={postcode}
           />
         </div>
 
