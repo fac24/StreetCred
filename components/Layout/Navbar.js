@@ -4,13 +4,19 @@ import { useRouter } from "next/router";
 
 import Image from "next/image";
 import logo from "../../public/full-logo.svg";
+import { useAuthContext } from "../../context/auth";
 
 function Navbar() {
   const router = useRouter();
+  const { user } = useAuthContext();
 
   async function handleLogOut() {
     const { error } = await supabase.auth.signOut();
     router.push("/login");
+  }
+
+  if (!user) {
+    return null;
   }
 
   return (
