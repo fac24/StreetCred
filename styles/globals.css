@@ -28,6 +28,55 @@ a {
   box-sizing: border-box;
 }
 
+/* LAYOUT */
+
+/* Navigation */
+
+.navigation-web {
+  padding-left: 250px;
+  padding-right: 0;
+}
+
+.menu-item {
+  color: var(--off-white);
+  font-size: 1.1em;
+  font-weight: 400;
+  word-spacing: 1.5px;
+  padding: 0 40px;
+}
+
+.menu-item:hover {
+  color: var(--light-pink);
+}
+
+/* Navigation Mobile */
+
+.navigation-mobile {
+  width: 100%; /* 390px */
+  height: 80px;
+  background-color: var(--light-grey);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+}
+
+.mobile-menu-item {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--aubergine);
+}
+
+.mobile-menu-icon {
+  font-size: 2.3em;
+}
+
 /* LANDING PAGE */
 
 /* Web - landing */
@@ -59,6 +108,7 @@ a {
 }
 
 .web-login-button {
+  cursor: pointer;
   padding: 8px 40px;
   color: var(--off-white);
   background-color: var(--purple);
@@ -71,13 +121,6 @@ a {
 
 .web-login-button:hover {
   color: var(--mustard);
-}
-
-.menu-item {
-  color: var(--off-white);
-  font-size: 1.2em;
-  font-weight: 600;
-  word-spacing: 1.5px;
 }
 
 /* About section */
@@ -428,6 +471,8 @@ img {
 }
 
 .groups-list-members-avatar {
+  max-width: 35px;
+  max-height: 35px;
   width: 35px;
   height: 35px;
   object-fit: cover;
