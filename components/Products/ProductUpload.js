@@ -35,7 +35,7 @@ function ProductUpload(props) {
 
     const formData = new FormData();
     formData.append("file", selectedProduct);
-    formData.append("upload_preset", "user_avatar");
+    formData.append("upload_preset", "product");
 
     // upload picture to cloudinary
     const API_ENDPOINT =
@@ -194,6 +194,46 @@ function ProductUpload(props) {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="form-div">
+            <label htmlFor="item-description">Description*</label>
+            <textarea
+              placeholder="Tell us about this item."
+              id="item-description"
+              name="item-description"
+              ref={description}
+              required
+            />
+          </div>
+
+          <div className="form-div">
+            <label htmlFor="condition">Item&apos;s condition*</label>
+            group-page-lists
+            <select name="condition" id="condition" ref={condition} required>
+              <option value="poor">Poor</option>
+              <option value="good">Good</option>
+              <option value="brand new">Brand New</option>
+            </select>
+          </div>
+
+          <div className="form-div">
+            <label htmlFor="item-img">Product image*</label>
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              id="item-img"
+              name="item-img"
+              ref={productImg}
+              onChange={previewHandler}
+              required
+            />
+
+            <img
+              src={imageSrc}
+              alt="preview uploaded image"
+              className="img-preview"
+            />
           </div>
 
           <button type="submit" value="submit">

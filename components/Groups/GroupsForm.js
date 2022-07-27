@@ -54,7 +54,7 @@ function GroupsForm() {
       },
     ]);
 
-    router.push(`/${data[0].id}`);
+    router.push(`/groups/${data[0].id}`);
   }
 
   return (
