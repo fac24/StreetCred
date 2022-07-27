@@ -9,29 +9,17 @@ import { useEffect, useState } from "react";
 
 function Navbar() {
   const router = useRouter();
-  // const { user } = useAuthContext();
-  const [user, setUser] = useState("");
+  const { user } = useAuthContext();
 
   const { width } = useViewport();
   const breakpoint = 620;
 
-  useEffect(() => {
-    checkUser();
-  }, [user]);
-
-  async function checkUser() {
-    const user = await supabase.auth.user();
-    if (user) {
-      setUser(user.id);
-    } else {
-      console.log("no user");
-    }
-  }
+  console.log(user);
 
   return width < breakpoint ? (
-    <NavMobile userId={user} />
+    <NavMobile userId={user?.id} />
   ) : (
-    <NavWeb userId={user} />
+    <NavWeb userId={user?.id} />
   );
 }
 

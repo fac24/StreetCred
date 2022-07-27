@@ -20,7 +20,7 @@ function NavMobile(props) {
         </a>
       </Link>
 
-      <Link href={`/profiles/${props.user}`}>
+      <Link href={`/profiles/${props.userId}`}>
         <a className="mobile-menu-item">
           <CgProfile className="mobile-menu-icon" />
           <span>Profile</span>

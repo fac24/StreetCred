@@ -30,7 +30,7 @@ function NavWeb(props) {
           <a className="menu-item">Messages</a>
         </Link>
 
-        <Link href={`/profiles/${props.user}`}>
+        <Link href={`/profiles/${props.userId}`}>
           <a className="menu-item">Profile</a>
         </Link>
       </nav>
