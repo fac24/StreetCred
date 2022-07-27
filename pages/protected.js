@@ -1,7 +1,6 @@
 import supabase from "../utils/supabaseClient";
 
-function Protected({ user }) {
-  console.log({ user });
+function Protected(props) {
   return (
     <div>
       <h2>Protected route</h2>
@@ -10,14 +9,12 @@ function Protected({ user }) {
 }
 
 export async function getServerSideProps({ req }) {
-  /* check to see if a user is set */
   const { user } = await supabase.auth.api.getUserByCookie(req);
 
   if (!user) {
     return { props: {}, redirect: { destination: "/login" } };
   }
 
-  /* if a user is set, pass it to the page via props */
   return { props: { user } };
 }
 

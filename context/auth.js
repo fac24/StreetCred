@@ -58,7 +58,6 @@ export function AuthWrapper({ children }) {
   }, []);
 
   useEffect(() => {
-    console.log(user);
     if (user && !user.created) {
       router.push("/create-profile");
     }
