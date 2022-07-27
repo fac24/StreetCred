@@ -21,10 +21,10 @@ function Product(props) {
       const { data: owner, error } = await supabase
         .from("profiles")
         .select()
-        .eq("id", props.product[0].owner);
+        .eq("id", props.product.owner);
 
       setProductOwner(owner[0].name);
-      setProductOwnerId(props.product[0].owner);
+      setProductOwnerId(props.product.owner);
     }
     //console.log(window.location.href);
 
@@ -58,15 +58,16 @@ function Product(props) {
     <>
       <h1>Products Page</h1>
       <div>
-        <h3>{props.product[0].name}</h3>
-        <img src={props.product[0].image} />
-        <p>{props.product[0].description}</p>
-        <p>{props.product[0].location}</p>
-        <p>{props.product[0].created_at}</p>
+        <h3>{props.product.name}</h3>
+        <img src={props.product.image} />
+        <p>{props.product.description}</p>
+        <p>{props.product.location}</p>
+        <p>Distance: {props.distance} km</p>
+        <p>{props.product.created_at}</p>
         <ProductAvailability
-          availability={props.product[0].availability}
-          producId={props.product[0].id}
-          productOwner={props.product[0].owner}
+          availability={props.product.availability}
+          producId={props.product.id}
+          productOwner={props.product.owner}
         />
         <button onClick={createConversation}>Contact {productOwner}!</button>
       </div>
@@ -76,22 +77,13 @@ function Product(props) {
   );
 }
 
-export async function getStaticPaths() {
-  const { data, error } = await supabase.from("products").select();
-  const products = data ? data : ["022a7185-2aea-4d50-83e2-64229cd0f367"];
+export async function getServerSideProps({ req, params }) {
+  const { user } = await supabase.auth.api.getUserByCookie(req);
 
-  const paths = products?.map((product) => ({
-    params: { id: `${product.id}` },
-  }));
-
-  return { paths, fallback: true };
-}
-
-export async function getStaticProps(context) {
   const { data, error } = await supabase
     .from("products")
     .select()
-    .eq("id", context.params.id);
+    .eq("id", params.id);
 
   // return { props: { product: data } };
 
