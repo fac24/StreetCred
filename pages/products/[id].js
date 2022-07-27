@@ -62,6 +62,7 @@ function Product(props) {
         <p>{props.product[0].location}</p>
         <p>{props.product[0].create_at}</p>
         <p>{props.product[0].availability}</p>
+        <p>Distance: {props.distance} kms</p>
         <button onClick={createConversation}>Contact {productOwner}</button>
       </div>
       <ShareLink />
@@ -87,7 +88,50 @@ export async function getStaticProps(context) {
     .select()
     .eq("id", context.params.id);
 
-  return { props: { product: data } };
+  // return { props: { product: data } };
+
+  const userRequest = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", user.id);
+
+  const distance = calcDistance(
+    userRequest.data[0].latitude,
+    userRequest.data[0].longitude,
+    data[0].latitude,
+    data[0].longitude,
+    "K"
+  );
+  console.log(distance);
+
+  return { props: { product: data[0], distance: Math.round(distance) } };
 }
 
 export default Product;
+
+function calcDistance(lat1, lon1, lat2, lon2, unit) {
+  if (lat1 == lat2 && lon1 == lon2) {
+    return 0;
+  } else {
+    var radlat1 = (Math.PI * lat1) / 180;
+    var radlat2 = (Math.PI * lat2) / 180;
+    var theta = lon1 - lon2;
+    var radtheta = (Math.PI * theta) / 180;
+    var dist =
+      Math.sin(radlat1) * Math.sin(radlat2) +
+      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    if (dist > 1) {
+      dist = 1;
+    }
+    dist = Math.acos(dist);
+    dist = (dist * 180) / Math.PI;
+    dist = dist * 60 * 1.1515;
+    if (unit == "K") {
+      dist = dist * 1.609344;
+    }
+    if (unit == "N") {
+      dist = dist * 0.8684;
+    }
+    return dist;
+  }
+}
