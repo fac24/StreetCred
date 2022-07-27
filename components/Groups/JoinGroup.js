@@ -5,7 +5,7 @@ import supabase from "../../utils/supabaseClient";
 function JoinGroup(props) {
   const [joined, setJoined] = useState(false);
 
-  const user = supabase.auth.user();
+  const { user } = useAuthContext();
   const groupId = props.groupId;
   const members = props.members;
 
