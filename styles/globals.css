@@ -760,6 +760,74 @@ img {
   border-radius: 20px;
 }
 
+/* GROUP ID PAGE */
+
+.group-id-section {
+  background-color: var(--light-grey);
+  margin-top: 100px;
+  max-width: 800px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.group-page-avatar {
+  margin-top: 50px;
+  width: 120px;
+  object-fit: cover;
+  vertical-align: middle;
+  height: 120px;
+  border: 3px var(--mustard) solid;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
+.group-id-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.group-id-title h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+#group-id-desc {
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+.group-page-members {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.group-page-member {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.group-page-members-avatar {
+  max-width: 120px;
+  max-height: 120px;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
 /* CHAT PAGE */
 
 .chat-container {
