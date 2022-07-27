@@ -68,7 +68,7 @@ function Product(props) {
           producId={props.product[0].id}
           productOwner={props.product[0].owner}
         />
-        <button onClick={createConversation}>Contact {productOwner}</button>
+        <button onClick={createConversation}>Contact {productOwner}!</button>
       </div>
       <ShareLink />
       <SocialShare />
