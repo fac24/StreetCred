@@ -6,11 +6,11 @@ import supabase from "../../utils/supabaseClient";
 
 function Groups(props) {
   return (
-    <div>
+    <main className="groups-main">
       <FilterMyGroups groups={props.groups} />
       {/* <ListGroups groups={props.groups} /> */}
       <AddNewGroupButton />
-    </div>
+    </main>
   );
 }
 

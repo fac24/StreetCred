@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
+import RandomKey from "../Hooks/RandomKey";
 import supabase from "../../utils/supabaseClient";
 
 function MembersAvatars(props) {
   const [avatars, setAvatars] = useState([]);
-  const array = [];
 
   useEffect(() => {
+    const array = [];
+
     async function getAvatar(memberId) {
       const { data, error } = await supabase
         .from("profiles")
         .select("avatar_url")
         .eq("id", memberId);
 
-      //console.log(data);
       array.push(data[0]);
-      setAvatars(array);
+
+      setAvatars(array.slice(0, 3));
     }
 
     props.members.map((member) => {
@@ -23,13 +25,20 @@ function MembersAvatars(props) {
   }, []);
 
   return (
-    <div>
-      <ul>
-        {avatars.map((avatar) => {
-          console.log(avatar);
-        })}
-      </ul>
-    </div>
+    <ul className="groups-list-members">
+      {avatars.map((avatar) => {
+        const url = avatar === undefined ? "/only-logo.svg" : avatar.avatar_url;
+        return (
+          <li key={RandomKey()} className="groups-list-member">
+            <img
+              src={url}
+              alt="group member avatar"
+              className="groups-list-members-avatar"
+            />
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 

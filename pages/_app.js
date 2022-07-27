@@ -21,7 +21,6 @@ function MyApp({ Component, pageProps }) {
         handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
           setAuthenticatedState("authenticated");
-          router.push("/groups");
         }
         if (event === "SIGNED_OUT") {
           setAuthenticatedState("not-authenticated");

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import RandomKey from "../Hooks/RandomKey";
 import MembersAvatars from "./MembersAvatars";
+import GroupItems from "./GroupItems";
 
 import supabase from "../../utils/supabaseClient";
 
@@ -47,7 +48,6 @@ function FilterMyGroups(props) {
                     </p>
                     <div className="group-card-header-members">
                       <div>
-                        <h4>Members</h4>
                         <MembersAvatars members={group.members} />
                       </div>
                       <Link href={href}>
@@ -56,8 +56,9 @@ function FilterMyGroups(props) {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className="group-list-products-container">
                   <h4>Items</h4>
+                  <GroupItems id={group.id} />
                 </div>
               </li>
             );
@@ -65,7 +66,7 @@ function FilterMyGroups(props) {
         </ul>
       </div>
 
-      <div>
+      <div className="members-of-groups-div">
         <h2 className="group-list-title">Member of groups</h2>
         <ul className="group-list-container">
           {joinedGroups.map((group) => {
@@ -77,12 +78,12 @@ function FilterMyGroups(props) {
                   <div className="group-card-header-title">
                     <h3 className="group-name-title">{group.name}</h3>
                     <p className="group-title-location">
-                      {group.location}{" "}
+                      {group.location ? group.location : "No location set"}
                       {/* should be: Admin location XY miles away */}
                     </p>
                     <div className="group-card-header-members">
                       <div>
-                        <h4>Members</h4>
+                        <MembersAvatars members={group.members} />
                       </div>
                       <Link href={href}>
                         <button className="open-group-button">See Group</button>
@@ -91,8 +92,9 @@ function FilterMyGroups(props) {
                   </div>
                 </div>
 
-                <div>
+                <div className="group-list-products-container">
                   <h4>Items</h4>
+                  <GroupItems id={group.id} />
                 </div>
               </li>
             );
