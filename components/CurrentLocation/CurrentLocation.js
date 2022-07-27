@@ -57,7 +57,7 @@ function CurrentLocation(props) {
         onChange={(event) => updatePostcode(event.target.value)}
       ></input>
       <button type="button" onClick={locator}>
-        Use my current postcode
+        Use my current location
       </button>
     </>
   );

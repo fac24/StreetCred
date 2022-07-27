@@ -29,12 +29,13 @@ function ListMembers(props) {
     <section>
       <h3>Members ({members.length})</h3>
       <ul>
-        {members?.map((member) => {
-          const avatar = member.avatar_url;
+        {members.map((member) => {
+          const avatar =
+            member === undefined ? "/only-logo.svg" : member.avatar_url;
           return (
             <li key={RandomKey()}>
               <img src={avatar} alt="image" />
-              <p>{member.name}</p>
+              <p>{member === undefined ? "Deleted user" : member.name}</p>
             </li>
           );
         })}
