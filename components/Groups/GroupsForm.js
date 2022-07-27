@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import supabase from "../../utils/supabaseClient";
 import CurrentLocation from "../CurrentLocation/CurrentLocation";
+import Link from "next/link";
+import { BsArrowLeftCircle } from "react-icons/bs";
 
 function GroupsForm() {
   const [groupName, setGroupName] = useState("");
@@ -56,42 +58,65 @@ function GroupsForm() {
   }
 
   return (
-    <>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="group-name">Your group&apos;s name</label>
-        <input
-          type="text"
-          id="group-name"
-          name="group-name"
-          placeholder="e.g. N16 Cyclists"
-          value={groupName}
-          onChange={(event) => setGroupName(event.target.value)}
-          required
-        />
-        <label htmlFor="group-location">Group Location</label>
-        <CurrentLocation postcode={(postcode) => setGroupLocation(postcode)} />
+    <main className="upload-section">
+      <Link href="/groups">
+        <a>
+          <BsArrowLeftCircle />
+          Back to the groups
+        </a>
+      </Link>
+      <h2>Create your group</h2>
+      <form onSubmit={handleFormSubmit} className="upload-form">
+        <div className="form-div">
+          <label htmlFor="group-name">Your group&apos;s name*</label>
+          <input
+            type="text"
+            id="group-name"
+            name="group-name"
+            placeholder="e.g. N16 Cyclists"
+            value={groupName}
+            onChange={(event) => setGroupName(event.target.value)}
+            required
+          />
+        </div>
 
-        <label htmlFor="group-description">Description</label>
-        <textarea
-          id="group-description"
-          name="group-description"
-          placeholder="Describe the purpose of your group."
-          value={groupDescription}
-          onChange={(event) => setGroupDescription(event.target.value)}
-          required
-        ></textarea>
+        <div className="form-div">
+          <label htmlFor="group-location">Group Location*</label>
+          <CurrentLocation
+            postcode={(postcode) => setGroupLocation(postcode)}
+          />
+        </div>
 
-        <label htmlFor="group-avatar">Group avatar</label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg, image/jpg"
-          id="group-avatar"
-          name="group-avatar"
-          onChange={handleAvatarChange}
-          required
-        />
-        <img src={avatarPreview} alt="preview" />
+        <div className="form-div">
+          <label htmlFor="group-description">Description*</label>
+          <textarea
+            id="group-description"
+            name="group-description"
+            placeholder="Describe the purpose of your group."
+            value={groupDescription}
+            onChange={(event) => setGroupDescription(event.target.value)}
+            required
+          ></textarea>
+        </div>
 
+        <div className="form-div">
+          <label htmlFor="group-avatar">Group avatar*</label>
+          <div className="form-div-avatar">
+            <input
+              type="file"
+              accept="image/png, image/jpeg, image/jpg"
+              id="group-avatar"
+              name="group-avatar"
+              onChange={handleAvatarChange}
+              required
+            />
+
+            <div className="form-div">
+              <img src={avatarPreview} alt="preview" className="img-preview" />
+            </div>
+          </div>
+        </div>
+        {/* 
         <div>
           <input
             type="radio"
@@ -111,10 +136,11 @@ function GroupsForm() {
           />
           <label htmlFor="public-only">Public</label>
         </div>
+        */}
 
         <button type="submit">Create Group</button>
       </form>
-    </>
+    </main>
   );
 }
 

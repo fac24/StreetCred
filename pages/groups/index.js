@@ -1,16 +1,19 @@
-import ListGroups from "../../components/Groups/ListGroups";
+//import ListGroups from "../../components/Groups/ListGroups";
 import AddNewGroupButton from "../../components/Groups/AddNewGroupButton";
-import FilterGroups from "../../components/Groups/FilterGroups";
+import FilterMyGroups from "../../components/Groups/FilterMyGroups";
 
 import supabase from "../../utils/supabaseClient";
+import { useState, useEffect } from "react";
 
 function Groups(props) {
+  const [groups, setGroups] = useState([]);
+
   return (
-    <div>
-      <FilterGroups />
-      <ListGroups groups={props.groups} />
+    <main className="groups-main">
+      <FilterMyGroups groups={props.groups} />
+      {/* <ListGroups groups={props.groups} /> */}
       <AddNewGroupButton />
-    </div>
+    </main>
   );
 }
 

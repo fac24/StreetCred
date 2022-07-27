@@ -10,7 +10,7 @@ function ListGroups(props) {
 
   return (
     <div className="group-list-main">
-      <h2>My groups</h2>
+      <h2>All groups</h2>
       <ul className="group-list-container">
         {props.groups?.map((group) => {
           const href = `/groups/${group.id}`;

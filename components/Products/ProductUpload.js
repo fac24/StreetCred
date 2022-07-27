@@ -1,9 +1,19 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { BsArrowLeftCircle } from "react-icons/bs";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
+  const [group, setGroup] = useState("");
+
+  useEffect(() => {
+    const storage = localStorage.getItem("group");
+    const initialValue = JSON.parse(storage);
+    setGroup(initialValue || "");
+    console.log(initialValue);
+  }, [group]);
 
   const productImg = useRef();
   const category = useRef();
@@ -20,7 +30,7 @@ function ProductUpload(props) {
     const enteredProductName = productName.current.value.toLowerCase();
     const enteredDescription = description.current.value;
     const enteredCondition = condition.current.value;
-    const groupId = props.groupId;
+    const groupId = group;
     // const altText = `Image of Product ${selectedProduct.name}`;
 
     const formData = new FormData();
@@ -60,6 +70,8 @@ function ProductUpload(props) {
       console.log(error.message);
     }
 
+    localStorage.removeItem("group");
+
     // if user click submit then it will be redirected to group page
     router.push(`/groups/${groupId}`);
   }
@@ -72,11 +84,26 @@ function ProductUpload(props) {
     reader.readAsDataURL(display.target.files[0]);
   }
 
+  function backToGroups() {
+    localStorage.removeItem("group");
+  }
+
   return (
-    <div>
-      <form encType="multipart/form-data" onSubmit={handleProductSubmit}>
-        <div>
-          <h2>Select a category</h2>
+    <main className="upload-section">
+      <Link href={`/groups/${group}`}>
+        <a onClick={backToGroups}>
+          <BsArrowLeftCircle />
+          Back to the group
+        </a>
+      </Link>
+      <h2>Upload a product</h2>
+      <form
+        encType="multipart/form-data"
+        onSubmit={handleProductSubmit}
+        className="upload-form"
+      >
+        <div className="form-div">
+          <p>Select a category*</p>
 
           <input
             type="radio"
@@ -106,39 +133,42 @@ function ProductUpload(props) {
           <label htmlFor="give-away">Give away</label>
         </div>
 
-        <div>
-          <label htmlFor="item-name">Product Name</label>
+        <div className="form-div">
+          <label htmlFor="item-name">Product Name*</label>
           <input
             type="text"
             id="item-name"
             name="item-name"
+            required
             ref={productName}
           />
         </div>
 
-        <div>
-          <label htmlFor="item-description">Description</label>
-          <input
-            type="text"
+        <div className="form-div">
+          <label htmlFor="item-description">Description*</label>
+          <textarea
             placeholder="Tell us about this item."
             id="item-description"
             name="item-description"
             ref={description}
+            required
           />
         </div>
 
-        <div>
-          <label htmlFor="condition">Item&apos;s condition:</label>
+        <div className="form-div">
+          <label htmlFor="condition">Item&apos;s condition*</label>
           group-page-lists
-          <select name="condition" id="condition" ref={condition}>
+
+          <select name="condition" id="condition" ref={condition} required>
+
             <option value="poor">Poor</option>
             <option value="good">Good</option>
             <option value="brand new">Brand New</option>
           </select>
         </div>
 
-        <div>
-          <label htmlFor="item-img">Item Image</label>
+        <div className="form-div">
+          <label htmlFor="item-img">Product image*</label>
           <input
             type="file"
             accept="image/png, image/jpeg, image/jpg"
@@ -146,23 +176,21 @@ function ProductUpload(props) {
             name="item-img"
             ref={productImg}
             onChange={previewHandler}
+            required
           />
-          <p>Preview:</p>
+
           <img
             src={imageSrc}
             alt="preview uploaded image"
-            width={200}
-            height={200}
+            className="img-preview"
           />
         </div>
 
-        <div>
-          <button type="submit" value="submit">
-            Submit
-          </button>
-        </div>
+        <button type="submit" value="submit">
+          Submit
+        </button>
       </form>
-    </div>
+    </main>
   );
 }
 

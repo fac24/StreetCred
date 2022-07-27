@@ -47,7 +47,9 @@ a {
   align-items: center;
   background-color: var(--aubergine);
 }
-
+.margin-top {
+  margin-top: 100px;
+}
 .logo-div {
   width: 200px;
 }
@@ -204,6 +206,7 @@ a {
 }
 
 .landing-next-button {
+  font-family: "Montserrat", sans-serif;
   width: 320px;
   padding: 10px 40px;
   margin-bottom: 20px;
@@ -303,35 +306,82 @@ img {
 
 /* Group List */
 
+.groups-main {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
 .group-list-main {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  width: 90%;
   margin-top: 100px;
   background-color: var(--off-white);
 }
 
+.members-of-groups-div {
+  margin-bottom: 100px;
+}
 .group-list-container {
+  width: 100%;
+  padding: 10px 0%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-evenly;
-  row-gap: 30px;
+  justify-content: flex-start;
+  gap: 20px;
+  row-gap: 25px;
+}
+.group-list-title {
+  padding: 30px 0 0 1%;
+  font-size: 1.5em;
 }
 
 .group-list-elem {
-  width: 450px;
-  height: 400px;
+  width: 420px;
+  height: 300px;
   background-color: var(--light-grey);
   list-style: none;
   border-radius: 10px;
 }
 
+.group-card-header {
+  margin: 20px 20px 10px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: flex-start;
+  gap: 27px;
+}
+
+.group-card-header-title {
+  width: 257px;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-card-header-members {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .list-group-avatar {
-  width: 150px;
+  width: 120px;
+  object-fit: cover;
   vertical-align: middle;
-  height: 150px;
+  height: 120px;
+  border: 3px var(--mustard) solid;
   border-radius: 50%;
   background-color: var(--off-white);
 }
+
 
 /* ADD GROUP PAGE */
 
@@ -349,6 +399,259 @@ img {
   background-color: rgb(243, 150, 150);
 }
 
+
+.group-name-title {
+  margin: 4px 0;
+  font-size: 1.1em;
+}
+
+.group-title-location {
+  margin: 2px 0;
+  font-size: 0.9em;
+}
+
+.open-group-button {
+  cursor: pointer;
+  padding: 10px 13px;
+  height: fit-content;
+  color: var(--off-white);
+  background-color: var(--aubergine);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85em;
+  font-weight: 600;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  border: none;
+}
+
+.open-group-button:hover {
+  color: var(--mustard);
+}
+
+.groups-list-members {
+  padding: 0;
+  width: 130px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.groups-list-member {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.groups-list-members-avatar {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
+.group-list-products-container h4 {
+  margin: 10px 0 7px 0;
+  padding-left: 25px;
+  font-size: 0.95em;
+  font-weight: 600;
+}
+
+.groups-list-products {
+  padding: 0 25px;
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.groups-list-product {
+  list-style: none;
+}
+
+.groups-list-products-image {
+  width: 87px;
+  height: 87px;
+  object-fit: cover;
+  vertical-align: middle;
+  background-color: var(--off-white);
+  border-radius: 7px;
+}
+
+.add-button-container {
+  position: fixed;
+  top: 120px;
+  right: 90px;
+}
+
+.add-new-group-button {
+  cursor: pointer;
+  padding: 13px 40px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 30px;
+  word-spacing: 1.3px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-new-group-button:hover {
+  color: var(--mustard);
+}
+
+.add-new-icon {
+  font-size: 1.3em;
+}
+
+/* PRODUCT UPLOAD PAGE */
+
+.add-new-product-button {
+  cursor: pointer;
+  padding: 13px 40px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-family: "Montserrat", sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 30px;
+  word-spacing: 1.3px;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.add-new-product-button:hover {
+  color: var(--mustard);
+}
+
+.upload-section {
+  width: 100%;
+  height: 100vh;
+  margin-top: 100px;
+  padding: 10px 0px;
+  background: url(../public/illustrations/road-maps/road-pattern-v1.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: 40%;
+  background-position-y: 80%;
+  background-size: 200%;
+  background-blend-mode: screen;
+  background-color: var(--light-pink);
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 17px;
+  width: 100%;
+  padding: 3% 10%;
+}
+
+.form-div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-div label {
+  font-size: 1em;
+  font-weight: 500;
+  padding-left: 20px;
+}
+
+.form-div input {
+  padding: 10px 20px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--aubergine);
+  background-color: var(--off-white);
+  border: 1px solid var(--mustard);
+  border-radius: 20px;
+}
+
+.form-div textarea {
+  padding: 15px 20px;
+  height: 110px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--aubergine);
+  background-color: var(--off-white);
+  border: 1px solid var(--mustard);
+  border-radius: 30px;
+}
+
+.upload-form button {
+  cursor: pointer;
+  align-items: center;
+  padding: 12px 40px;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-size: 0.85em;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.upload-form button:hover {
+  color: var(--mustard);
+}
+
+.form-div button {
+  cursor: pointer;
+  padding: 5px 40px;
+  color: var(--off-white);
+  background-color: var(--mustard);
+  font-size: 0.85em;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.form-div button:hover {
+  color: var(--aubergine);
+}
+
+.img-preview {
+  width: 120px;
+  object-fit: cover;
+  height: 120px;
+  border-radius: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-div-avatar {
+  padding: 15px 20px;
+
+  font-family: "Montserrat", sans-serif;
+  color: var(--aubergine);
+  background-color: var(--off-white);
+  border: 1px solid var(--mustard);
+  border-radius: 30px;
+}
+
 /* CHAT PAGE */
 
 .chat-container {
@@ -364,9 +667,28 @@ img {
 /* ----------- iPhone X ----------- */
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+  .group-list-container {
+    width: 510px;
+    justify-content: center;
+  }
+
+  .add-button-container {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+  }
 }
 
 /* ----------- iPad Pro 10.5" ----------- */
 
 @media only screen and (min-device-width: 834px) and (max-device-width: 1112px) and (-webkit-min-device-pixel-ratio: 2) {
+  .group-list-container {
+    width: 850px;
+    justify-content: center;
+  }
+  .add-button-container {
+    position: fixed;
+    bottom: 80px;
+    right: 80px;
+  }
 }
