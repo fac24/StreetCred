@@ -13,7 +13,7 @@ function Login() {
         provider: "google",
       },
       {
-        redirectTo: "http://localhost:3000/",
+        redirectTo: "http://localhost:3000/groups",
       }
     );
   }
@@ -24,7 +24,7 @@ function Login() {
         provider: "facebook",
       },
       {
-        redirectTo: "http://localhost:3000/",
+        redirectTo: "http://localhost:3000/groups",
       }
     );
   }
