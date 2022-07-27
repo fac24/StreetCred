@@ -29,14 +29,9 @@ function ListMembers(props) {
     <section>
       <h3>Members ({members.length})</h3>
       <ul>
-<<<<<<< HEAD
         {members.map((member) => {
           const avatar =
             member === undefined ? "/only-logo.svg" : member.avatar_url;
-=======
-        {members?.map((member) => {
-          const avatar = member.avatar_url;
->>>>>>> 109dad571efc721eda90edded4c5b1eaf2078f3f
           return (
             <li key={RandomKey()}>
               <img src={avatar} alt="image" />
