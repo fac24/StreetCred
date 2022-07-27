@@ -57,16 +57,6 @@ export function AuthWrapper({ children }) {
     }
   }, [user]);
 
-  async function handleAuthChange(event, session) {
-    /* sets and removes the Supabase cookie */
-    await fetch("/api/auth", {
-      method: "POST",
-      headers: new Headers({ "Content-Type": "application/json" }),
-      credentials: "same-origin",
-      body: JSON.stringify({ event, session }),
-    });
-  }
-
   let auth = { user, loading };
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
