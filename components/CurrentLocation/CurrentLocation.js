@@ -55,6 +55,7 @@ function CurrentLocation(props) {
         placeholder="Enter your postcode..."
         value={props.value ? props.value : postcode}
         onChange={(event) => updatePostcode(event.target.value)}
+        id="currentLocation"
       ></input>
       <button type="button" onClick={locator}>
         Use my current location

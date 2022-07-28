@@ -31,7 +31,9 @@ function FilterMyGroups(props) {
   return (
     <section className="group-list-main">
       <div>
-        <h2 className="group-list-title">My groups</h2>
+        <h2 className="group-list-title" id="my-groups">
+          My groups
+        </h2>
         <ul className="group-list-container">
           {adminedGroups.map((group) => {
             const href = `/groups/${group.id}`;
@@ -40,7 +42,9 @@ function FilterMyGroups(props) {
                 <div className="group-card-header">
                   <img src={group.avatar} className="list-group-avatar" />
                   <div className="group-card-header-title">
-                    <h3 className="group-name-title">{group.name}</h3>
+                    <h3 className="group-name-title" id="group-title">
+                      {group.name}
+                    </h3>
                     <p className="group-title-location">
                       {group.location}
                       {/* should be: Admin location XY miles away */}
@@ -66,7 +70,9 @@ function FilterMyGroups(props) {
       </div>
 
       <div className="members-of-groups-div">
-        <h2 className="group-list-title">Member of groups</h2>
+        <h2 className="group-list-title" id="member-of-groups">
+          Member of groups
+        </h2>
         <ul className="group-list-container">
           {joinedGroups.map((group) => {
             const href = `/groups/${group.id}`;

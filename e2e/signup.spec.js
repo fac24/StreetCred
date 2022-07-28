@@ -28,18 +28,17 @@ test("Signup and create profile", async ({}) => {
   const login = page.locator("button[name='login']");
   await login.click();
 
-  await expect(page).toHaveURL(/access_token/);
-  await expect(page).toHaveURL(/groups/);
+  await expect(page).toHaveURL(/login-success/);
   await expect(page).toHaveURL(/create-profile/);
 
   const location = page.locator("input#currentLocation");
   await location.type("SE16 4SG");
 
   const bio = page.locator("textarea");
-  await bio.type("this is minju", { delay: 100 });
+  await bio.type("This is minju. Minju is cool.", { delay: 100 });
 
   const create = page.locator("button#create");
   await create.click();
-  // await expect(page.locator('.status')).toHaveText('Submitted');
-  await expect(page.locator("h2")).toHaveText("Joe Valtchanovescu");
+
+  await expect(page.locator("h2")).toHaveText(/Joe Valtchanovescu/);
 });

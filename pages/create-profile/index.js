@@ -51,7 +51,9 @@ function ProfileSettings(props) {
           value={bio}
           onChange={(event) => setBio(event.target.value)}
         ></textarea>
-        <button type="submit">Create your profile</button>
+        <button type="submit" id="create">
+          Create your profile
+        </button>
       </form>
     );
   }

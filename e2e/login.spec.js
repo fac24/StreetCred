@@ -20,22 +20,24 @@ test("Login ", async ({ page }) => {
   const login = page.locator("button[name='login']");
   await login.click();
 
+  await expect(page).toHaveURL(/login-success/);
   await expect(page).toHaveURL(/groups/);
 
   await expect(page.locator("h2#my-groups")).toHaveText(/My/);
   await expect(page.locator("h2#member-of-groups")).toHaveText(/Member/);
 
-  //   await expect(page).toHaveURL(/access_token/);
-  //   await expect(page).toHaveURL(/create-profile/);
+  const profile = page.locator("a#profile");
+  await profile.click();
 
-  //   const location = page.locator("input#currentLocation");
-  //   await location.type("SE16 4SG");
+  await expect(page).toHaveURL(/af0236b7-6bea-4a23-a7f9-87aef14293e2/);
 
-  //   const bio = page.locator("textarea");
-  //   await bio.type("this is minju", { delay: 100 });
+  const messages = page.locator("a#messages");
+  await messages.click();
 
-  //   const create = page.locator("button#create");
-  //   await create.click();
-  //   // await expect(page.locator('.status')).toHaveText('Submitted');
-  //   await expect(page.locator("h2")).toHaveText("Joe Valtchanovescu");
+  await expect(page).toHaveURL(/messages/);
+
+  const logout = page.locator("button#logout");
+  await logout.click();
+
+  await expect(page).toHaveURL(/login/);
 });

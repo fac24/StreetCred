@@ -25,21 +25,27 @@ function NavWeb(props) {
         {props.user && (
           <>
             <Link href="/groups">
-              <a className="menu-item">Groups</a>
+              <a className="menu-item" id="groups">
+                Groups
+              </a>
             </Link>
 
             <Link href="/messages">
-              <a className="menu-item">Messages</a>
+              <a className="menu-item" id="messages">
+                Messages
+              </a>
             </Link>
 
             <Link href={`/profiles/${props.user}`}>
-              <a className="menu-item">Profile</a>
+              <a className="menu-item" id="profile">
+                Profile
+              </a>
             </Link>
           </>
         )}
       </nav>
       {props.user && (
-        <button onClick={handleLogOut} className="web-login-button">
+        <button onClick={handleLogOut} className="web-login-button" id="logout">
           Log Out
         </button>
       )}

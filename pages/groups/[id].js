@@ -38,7 +38,7 @@ function Group(props) {
     <section className="group-id-section">
       <img src={props.group[0].avatar} className="group-page-avatar" />
       <div className="group-id-title">
-        <h2>{props.group[0].name}</h2>
+        <h2 id="groupName">{props.group[0].name}</h2>
 
         <p>({props.group[0].location})</p>
       </div>
