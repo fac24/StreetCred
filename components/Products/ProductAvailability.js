@@ -31,7 +31,7 @@ function ProductAvailability(props) {
           Available
         </p>
       ) : (
-        <p className="product-unavailable width-10rem availability-tag">
+        <p className="product-unavailable unavailable-tag width-10rem">
           Unavailable
         </p>
       )}

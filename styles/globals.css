@@ -880,6 +880,16 @@ img {
   border-radius: 20px;
 }
 
+.unavailable-tag {
+  padding: 10px 13px;
+  height: fit-content;
+  background-color: #ff6961;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85em;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
 
 /* CHAT PAGE */
 
