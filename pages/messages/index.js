@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import GetRequester from "../../components/Chat/GetRequester";
 import GetProduct from "../../components/Chat/GetProduct";
-
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 import supabase from "../../utils/supabaseClient";
 
 function Messages() {
@@ -98,5 +98,7 @@ function Messages() {
     </div>
   );
 }
+
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default Messages;
