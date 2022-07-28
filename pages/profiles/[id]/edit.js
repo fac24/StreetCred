@@ -82,29 +82,37 @@ function ProfileSettings(props) {
   if (user && access) {
     return (
       <section className="">
-      <h2 className="edit-form-heading" >Edit profile</h2>
-      <form className="group-id-section form-div" onSubmit={handleSubmit}>
-        <h3>Hi, {user.name}</h3>
+        <h2 className="edit-form-heading">Edit profile</h2>
+        <form className="group-id-section form-div" onSubmit={handleSubmit}>
+          <div>
+            <h3>Hi, {user.name}</h3>
 
-        <UserPhotoUpload
-          user_id={user.id}
-          avatar={user.avatar_url ? user.avatar_url : avatar}
-          setAvatar={setAvatar}
-        />
+            <h4>Edit your profile photo</h4>
+            <UserPhotoUpload
+              user_id={user.id}
+              avatar={user.avatar_url ? user.avatar_url : avatar}
+              setAvatar={setAvatar}
+            />
 
-        <h4>2. Set your location</h4>
-        <CurrentLocation
-          value={user.location}
-          postcode={(postcode) => setPostcode(postcode)}
-        />
-        <h4>3. Add a short bio</h4>
-        <textarea
-          value={user.user_bio ? user.user_bio : bio}
-          onChange={(event) => setBio(event.target.value)}
-        ></textarea>
-        <br />
-        <button className="add-new-product-button profile-add-new-product-button" type="submit">Update profile</button>
-      </form>
+            <h4>2. Set your location</h4>
+            <CurrentLocation
+              value={user.location}
+              postcode={(postcode) => setPostcode(postcode)}
+            />
+            <h4>3. Add a short bio</h4>
+            <textarea
+              value={user.user_bio ? user.user_bio : bio}
+              onChange={(event) => setBio(event.target.value)}
+            ></textarea>
+            <br />
+            <button
+              className="add-new-product-button profile-add-new-product-button"
+              type="submit"
+            >
+              Update profile
+            </button>
+          </div>
+        </form>
       </section>
     );
   }
