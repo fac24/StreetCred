@@ -977,6 +977,7 @@ img {
 .mess-date {
   font-size: 0.8em;
   text-align: right;
+  font-style: 400;
 }
 .message-sender img {
   width: 50px;
