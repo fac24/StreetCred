@@ -144,7 +144,9 @@ function GroupsForm() {
         </div>
         */}
 
-          <button type="submit">Create Group</button>
+          <button type="submit" id="create-group">
+            Create Group
+          </button>
         </form>
       </div>
     </main>

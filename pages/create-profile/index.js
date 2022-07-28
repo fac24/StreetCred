@@ -56,7 +56,6 @@ function ProfileSettings(props) {
           avatar={avatar}
           setAvatar={setAvatar}
         />
-
         <div className="form-div">
           <h4>2. Set your location</h4>
           <CurrentLocation postcode={(postcode) => setPostcode(postcode)} />
@@ -68,7 +67,8 @@ function ProfileSettings(props) {
             onChange={(event) => setBio(event.target.value)}
           ></textarea>
         </div>
-        <button type="submit">Create your profile</button>
+        <button type="submit" id="create">Create your profile</button>
+
       </form>
     );
   }
