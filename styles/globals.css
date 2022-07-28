@@ -920,11 +920,138 @@ img {
 
 /* CHAT PAGE */
 
+.chat-product-header {
+  width: 100%;
+  background-color: var(--off-white);
+  padding: 10px 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
 .chat-container {
+  width: 500px;
+  background-color: var(--light-grey);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 30px;
+  padding-bottom: 100px;
+}
+
+.chat-background {
+  width: 90%;
+  background-color: rgba(255, 255, 255, 0.583);
+  margin: 0 20px;
+  padding: 0 0;
+  border-radius: 20px;
+  border: 2px solid var(--purple);
+}
+
+.messages-in-chat {
+  width: 100%;
+  margin: 0;
+  padding: 10px 30px;
+  height: 500px;
+  overflow: scroll;
+  background-color: transparent;
+}
+
+.message-sender {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.chat-list-mes {
+  list-style: none;
+}
+
+.message {
+  font-weight: 500;
+  font-size: 1.1em;
+  padding-left: 30px;
+}
+
+.mess-date {
+  font-size: 0.8em;
+  text-align: right;
+}
+.message-sender img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: var(--off-white);
+}
+
+.chat-container h2 {
+  margin-left: 50px;
+}
+.chat-container h3 {
+  margin-top: 60px;
+  margin-left: 50px;
+}
+
+.all-messages-div {
+  font-weight: 600;
+  color: var(--aubergine);
+}
+
+.all-messages-div a {
+  color: var(--aubergine);
+}
+
+.conv-list {
+  list-style: none;
+  width: 90%;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+  padding: 8px;
+  padding-left: 40px;
+  border: 1.5px solid var(--purple);
+  border-radius: 20px;
+  background-color: rgba(245, 245, 245, 0.819);
+}
+
+.conversation-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.conversation-product-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  text-transform: uppercase;
+  color: var(--purple);
 }
 
 .conversation-avatar {
-  width: 80px;
+  max-width: 100px;
+  max-height: 100px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: var(--off-white);
+  border: 2px solid var(--aubergine);
+}
+
+.chat-avatar {
+  max-width: 100px;
+  max-height: 100px;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: var(--off-white);
+  border: 2px solid var(--aubergine);
 }
 
 /* Media Queries for Standard Devices */

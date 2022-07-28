@@ -18,7 +18,7 @@ function GetSender(props) {
   }, []);
 
   return (
-    <div>
+    <div className="message-sender">
       <img src={senderProfile.avatar_url}></img>
       <p>{senderProfile.name}</p>
     </div>
