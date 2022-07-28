@@ -25,14 +25,21 @@ function ProductAvailability(props) {
   }
 
   return (
-    <div>
+    <div className="flexbox">
       {availability ? (
-        <p className="product-available">Available</p>
+        <p className="product-available availability-tag width-10rem">
+          Available
+        </p>
       ) : (
-        <p className="product-unavailable">Unavailable</p>
+        <p className="product-unavailable width-10rem availability-tag">
+          Unavailable
+        </p>
       )}
       {buttonVisibility && (
-        <button onClick={toggleAvaibility}>
+        <button
+          className="open-group-button margin-bottom-sm"
+          onClick={toggleAvaibility}
+        >
           {availability ? "Set to unavailable" : "Set to available"}
         </button>
       )}
