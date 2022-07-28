@@ -81,8 +81,9 @@ function ProfileSettings(props) {
 
   if (user && access) {
     return (
-      <form onSubmit={handleSubmit}>
-        <h2>Edit profile</h2>
+      <section className="">
+      <h2 className="edit-form-heading" >Edit profile</h2>
+      <form className="group-id-section form-div" onSubmit={handleSubmit}>
         <h3>Hi, {user.name}</h3>
 
         <UserPhotoUpload
@@ -102,8 +103,9 @@ function ProfileSettings(props) {
           onChange={(event) => setBio(event.target.value)}
         ></textarea>
         <br />
-        <button type="submit">Update profile</button>
+        <button className="add-new-product-button profile-add-new-product-button" type="submit">Update profile</button>
       </form>
+      </section>
     );
   }
 

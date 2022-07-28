@@ -17,7 +17,6 @@ function ListMembers(props) {
         const { data, error } = await supabase
           .from("profiles")
           .select()
-          .limit(3)
           .eq("id", member);
 
         membersObjects.push(data[0]);
