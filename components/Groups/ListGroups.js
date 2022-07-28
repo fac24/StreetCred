@@ -3,7 +3,6 @@ import RandomKey from "../Hooks/RandomKey";
 import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 import Link from "next/link";
-supabase;
 
 function ListGroups(props) {
   const router = useRouter();
@@ -16,7 +15,7 @@ function ListGroups(props) {
           const href = `/groups/${group.id}`;
           return (
             <li
-              key={RandomKey()}
+              key={group.id}
               className="group-list-elem"
               /* onMouseDown={(event) => {
                 event.preventDefault();

@@ -4,6 +4,7 @@ import CurrentLocation from "../../components/CurrentLocation/CurrentLocation";
 import { useEffect, useState } from "react";
 import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
 import { useAuthContext } from "../../context/auth";
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 
 // 1. To verify user's information (name, avatar_url, location, bio) is 100% filled.
 // 2. if(user information is 100%) then { redirect user to /groups}
@@ -58,5 +59,7 @@ function ProfileSettings(props) {
   // if there is no user information(like null)
   return <div>Loading...</div>;
 }
+
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default ProfileSettings;

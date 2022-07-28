@@ -3,10 +3,10 @@ import AddNewGroupButton from "../../components/Groups/AddNewGroupButton";
 import FilterMyGroups from "../../components/Groups/FilterMyGroups";
 
 import supabase from "../../utils/supabaseClient";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 
 function Groups(props) {
-  const [groups, setGroups] = useState([]);
   const [userId, setUserId] = useState(props.user.id);
 
   return (
@@ -18,16 +18,14 @@ function Groups(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = makeGetServerSidePropsWithUser(async () => {
   const groups = await supabase.from("groups").select().eq("public", "true");
 
-  const { user } = await supabase.auth.api.getUserByCookie(context.req);
-
-  if (user === null) {
-    return { props: {}, redirect: { destination: "/login" } };
-  }
-
-  return { props: { user, groups: groups.data } };
-}
+  return {
+    props: {
+      groups: groups.data,
+    },
+  };
+});
 
 export default Groups;

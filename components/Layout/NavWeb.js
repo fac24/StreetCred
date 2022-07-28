@@ -22,21 +22,27 @@ function NavWeb(props) {
         />
       </div>
       <nav className="navigation-web">
-        <Link href="/groups">
-          <a className="menu-item">Groups</a>
-        </Link>
+        {props.user && (
+          <>
+            <Link href="/groups">
+              <a className="menu-item">Groups</a>
+            </Link>
 
-        <Link href="/messages">
-          <a className="menu-item">Messages</a>
-        </Link>
+            <Link href="/messages">
+              <a className="menu-item">Messages</a>
+            </Link>
 
-        <Link href={`/profiles/${props.user}`}>
-          <a className="menu-item">Profile</a>
-        </Link>
+            <Link href={`/profiles/${props.user}`}>
+              <a className="menu-item">Profile</a>
+            </Link>
+          </>
+        )}
       </nav>
-      <button onClick={handleLogOut} className="web-login-button">
-        Log Out
-      </button>
+      {props.user && (
+        <button onClick={handleLogOut} className="web-login-button">
+          Log Out
+        </button>
+      )}
     </header>
   );
 }

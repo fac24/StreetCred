@@ -22,10 +22,10 @@ function GroupItems(props) {
 
   return (
     <ul className="groups-list-products">
-      {productImage.map((image) => {
+      {productImage.map((image, index) => {
         const url = image === undefined ? "/only-logo.svg" : image.image;
         return (
-          <li key={RandomKey()} className="groups-list-product">
+          <li key={`${url}${index}`} className="groups-list-product">
             <img
               src={url}
               alt="image of product"

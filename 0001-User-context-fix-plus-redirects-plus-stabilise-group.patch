@@ -1,0 +1,693 @@
+From 41013bef46e0cebf6edde9412ef219d109cca7f7 Mon Sep 17 00:00:00 2001
+From: Jack Rans <jwrans@gmail.com>
+Date: Thu, 28 Jul 2022 11:14:55 +0100
+Subject: [PATCH] User context fix, plus redirects, plus stabilise group
+ avatars
+
+---
+ components/Groups/FilterMyGroups.js       |  6 +--
+ components/Groups/GroupItems.js           |  4 +-
+ components/Groups/ListGroups.js           |  3 +-
+ components/Groups/ListMembers.js          |  2 +-
+ components/Groups/MembersAvatars.js       | 20 ++++----
+ components/Layout/NavMobile.js            | 40 +++++++++-------
+ components/Layout/NavWeb.js               | 30 +++++++-----
+ components/Layout/Navbar.js               | 28 +++--------
+ components/Products/ListProducts.js       |  2 +-
+ components/UserProfile/UserPhotoUpload.js |  4 +-
+ context/auth.js                           | 35 +++++++-------
+ pages/_app.js                             | 58 +++++++++++++----------
+ pages/create-profile/index.js             |  3 ++
+ pages/groups/index.js                     | 20 ++++----
+ pages/login-success.js                    |  5 ++
+ pages/login.js                            | 27 +++++------
+ pages/protected.js                        | 16 ++-----
+ utils/makeGetServerSidePropsWithUser.js   | 39 +++++++++++++++
+ 18 files changed, 187 insertions(+), 155 deletions(-)
+ create mode 100644 pages/login-success.js
+ create mode 100644 utils/makeGetServerSidePropsWithUser.js
+
+diff --git a/components/Groups/FilterMyGroups.js b/components/Groups/FilterMyGroups.js
+index 68f993d..9f27509 100644
+--- a/components/Groups/FilterMyGroups.js
++++ b/components/Groups/FilterMyGroups.js
+@@ -5,8 +5,6 @@ import RandomKey from "../Hooks/RandomKey";
+ import MembersAvatars from "./MembersAvatars";
+ import GroupItems from "./GroupItems";
+ 
+-import supabase from "../../utils/supabaseClient";
+-
+ function FilterMyGroups(props) {
+   const [joinedGroups, setJoinedGroups] = useState([]);
+   const [adminedGroups, setAdminedGroups] = useState([]);
+@@ -38,7 +36,7 @@ function FilterMyGroups(props) {
+           {adminedGroups.map((group) => {
+             const href = `/groups/${group.id}`;
+             return (
+-              <li key={RandomKey()} className="group-list-elem">
++              <li key={group.id} className="group-list-elem">
+                 <div className="group-card-header">
+                   <img src={group.avatar} className="list-group-avatar" />
+                   <div className="group-card-header-title">
+@@ -73,7 +71,7 @@ function FilterMyGroups(props) {
+           {joinedGroups.map((group) => {
+             const href = `/groups/${group.id}`;
+             return (
+-              <li key={RandomKey()} className="group-list-elem">
++              <li key={group.id} className="group-list-elem">
+                 <div className="group-card-header">
+                   <img src={group.avatar} className="list-group-avatar" />
+                   <div className="group-card-header-title">
+diff --git a/components/Groups/GroupItems.js b/components/Groups/GroupItems.js
+index 62f84f4..1f252b0 100644
+--- a/components/Groups/GroupItems.js
++++ b/components/Groups/GroupItems.js
+@@ -22,10 +22,10 @@ function GroupItems(props) {
+ 
+   return (
+     <ul className="groups-list-products">
+-      {productImage.map((image) => {
++      {productImage.map((image, index) => {
+         const url = image === undefined ? "/only-logo.svg" : image.image;
+         return (
+-          <li key={RandomKey()} className="groups-list-product">
++          <li key={`${url}${index}`} className="groups-list-product">
+             <img
+               src={url}
+               alt="image of product"
+diff --git a/components/Groups/ListGroups.js b/components/Groups/ListGroups.js
+index 9bedb63..8ce7e5e 100644
+--- a/components/Groups/ListGroups.js
++++ b/components/Groups/ListGroups.js
+@@ -3,7 +3,6 @@ import RandomKey from "../Hooks/RandomKey";
+ import { useRouter } from "next/router";
+ import supabase from "../../utils/supabaseClient";
+ import Link from "next/link";
+-supabase;
+ 
+ function ListGroups(props) {
+   const router = useRouter();
+@@ -16,7 +15,7 @@ function ListGroups(props) {
+           const href = `/groups/${group.id}`;
+           return (
+             <li
+-              key={RandomKey()}
++              key={group.id}
+               className="group-list-elem"
+               /* onMouseDown={(event) => {
+                 event.preventDefault();
+diff --git a/components/Groups/ListMembers.js b/components/Groups/ListMembers.js
+index 9e668b3..a0b73d7 100644
+--- a/components/Groups/ListMembers.js
++++ b/components/Groups/ListMembers.js
+@@ -37,7 +37,7 @@ function ListMembers(props) {
+           const url =
+             member === undefined ? "/groups" : `/profiles/${member.id}`;
+           return (
+-            <li key={RandomKey()} className="group-page-member">
++            <li key={member.id} className="group-page-member">
+               <img
+                 src={avatar}
+                 alt="image"
+diff --git a/components/Groups/MembersAvatars.js b/components/Groups/MembersAvatars.js
+index e7c334d..2879557 100644
+--- a/components/Groups/MembersAvatars.js
++++ b/components/Groups/MembersAvatars.js
+@@ -6,30 +6,26 @@ function MembersAvatars(props) {
+   const [avatars, setAvatars] = useState([]);
+ 
+   useEffect(() => {
+-    const array = [];
+-
+-    async function getAvatar(memberId) {
++    async function getAvatars(memberId) {
+       const { data, error } = await supabase
+         .from("profiles")
+         .select("avatar_url")
+-        .eq("id", memberId);
+-
+-      array.push(data[0]);
++        .limit(3)
++        .order("created_at", { ascending: false })
++        .in("id", [props.members]);
+ 
+-      setAvatars(array.slice(0, 3));
++      setAvatars(data);
+     }
+ 
+-    props.members.map((member) => {
+-      getAvatar(member);
+-    });
++    getAvatars();
+   }, []);
+ 
+   return (
+     <ul className="groups-list-members">
+-      {avatars.map((avatar) => {
++      {avatars.map((avatar, index) => {
+         const url = avatar === undefined ? "/only-logo.svg" : avatar.avatar_url;
+         return (
+-          <li key={RandomKey()} className="groups-list-member">
++          <li key={index} className="groups-list-member">
+             <img
+               src={url}
+               alt="group member avatar"
+diff --git a/components/Layout/NavMobile.js b/components/Layout/NavMobile.js
+index 82e9d20..3f34316 100644
+--- a/components/Layout/NavMobile.js
++++ b/components/Layout/NavMobile.js
+@@ -6,26 +6,30 @@ import { CgProfile } from "react-icons/cg";
+ function NavMobile(props) {
+   return (
+     <nav className="navigation-mobile">
+-      <Link href="/groups">
+-        <a className="mobile-menu-item">
+-          <MdOutlineGroups className="mobile-menu-icon" />
+-          <span>Groups</span>
+-        </a>
+-      </Link>
++      {props.user && (
++        <>
++          <Link href="/groups">
++            <a className="mobile-menu-item">
++              <MdOutlineGroups className="mobile-menu-icon" />
++              <span>Groups</span>
++            </a>
++          </Link>
+ 
+-      <Link href="/messages">
+-        <a className="mobile-menu-item">
+-          <TbMessages className="mobile-menu-icon" />
+-          <span>Messages</span>
+-        </a>
+-      </Link>
++          <Link href="/messages">
++            <a className="mobile-menu-item">
++              <TbMessages className="mobile-menu-icon" />
++              <span>Messages</span>
++            </a>
++          </Link>
+ 
+-      <Link href={`/profiles/${props.user}`}>
+-        <a className="mobile-menu-item">
+-          <CgProfile className="mobile-menu-icon" />
+-          <span>Profile</span>
+-        </a>
+-      </Link>
++          <Link href={`/profiles/${props.user}`}>
++            <a className="mobile-menu-item">
++              <CgProfile className="mobile-menu-icon" />
++              <span>Profile</span>
++            </a>
++          </Link>
++        </>
++      )}
+     </nav>
+   );
+ }
+diff --git a/components/Layout/NavWeb.js b/components/Layout/NavWeb.js
+index 90035f6..e96e4ba 100644
+--- a/components/Layout/NavWeb.js
++++ b/components/Layout/NavWeb.js
+@@ -22,21 +22,27 @@ function NavWeb(props) {
+         />
+       </div>
+       <nav className="navigation-web">
+-        <Link href="/groups">
+-          <a className="menu-item">Groups</a>
+-        </Link>
++        {props.user && (
++          <>
++            <Link href="/groups">
++              <a className="menu-item">Groups</a>
++            </Link>
+ 
+-        <Link href="/messages">
+-          <a className="menu-item">Messages</a>
+-        </Link>
++            <Link href="/messages">
++              <a className="menu-item">Messages</a>
++            </Link>
+ 
+-        <Link href={`/profiles/${props.user}`}>
+-          <a className="menu-item">Profile</a>
+-        </Link>
++            <Link href={`/profiles/${props.user}`}>
++              <a className="menu-item">Profile</a>
++            </Link>
++          </>
++        )}
+       </nav>
+-      <button onClick={handleLogOut} className="web-login-button">
+-        Log Out
+-      </button>
++      {props.user && (
++        <button onClick={handleLogOut} className="web-login-button">
++          Log Out
++        </button>
++      )}
+     </header>
+   );
+ }
+diff --git a/components/Layout/Navbar.js b/components/Layout/Navbar.js
+index d8fc006..6000834 100644
+--- a/components/Layout/Navbar.js
++++ b/components/Layout/Navbar.js
+@@ -1,36 +1,20 @@
+-import supabase from "../../utils/supabaseClient";
+-
+-import { useRouter } from "next/router";
+-
+-import { useEffect, useState } from "react";
+ import NavWeb from "./NavWeb";
+ import NavMobile from "./NavMobile";
+ import useViewport from "../Hooks/useViewport";
+-import Link from "next/link";
++import { useAuthContext } from "../../context/auth";
+ 
+ function Navbar(props) {
+-  const [user, setUser] = useState("");
+-
++  const { user } = useAuthContext();
+   const { width } = useViewport();
+   const breakpoint = 620;
++  const userId = user?.id;
+ 
+-  useEffect(() => {
+-    checkUser();
+-  }, [user]);
+-
+-  async function checkUser() {
+-    const user = await supabase.auth.user();
+-    if (user) {
+-      setUser(user.id);
+-    } else {
+-      console.log("no user");
+-    }
+-  }
++  console.log(userId);
+ 
+   return width < breakpoint ? (
+-    <NavMobile userId={user} />
++    <NavMobile user={userId} />
+   ) : (
+-    <NavWeb userId={user} />
++    <NavWeb user={userId} />
+   );
+ }
+ 
+diff --git a/components/Products/ListProducts.js b/components/Products/ListProducts.js
+index 725d02a..4ebd0b8 100644
+--- a/components/Products/ListProducts.js
++++ b/components/Products/ListProducts.js
+@@ -22,7 +22,7 @@ function ListProducts(props) {
+       {products?.map((product) => {
+         return (
+           <li
+-            key={RandomKey()}
++            key={product.id}
+             onMouseDown={(event) => {
+               event.preventDefault();
+               router.push(`/products/${product.id}`);
+diff --git a/components/UserProfile/UserPhotoUpload.js b/components/UserProfile/UserPhotoUpload.js
+index 3484f1a..a39359e 100644
+--- a/components/UserProfile/UserPhotoUpload.js
++++ b/components/UserProfile/UserPhotoUpload.js
+@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
+ import supabase from "../../utils/supabaseClient";
+ 
+ function UserPhotoUpload({ user_id, avatar, setAvatar }) {
+-  const [user, setUser] = useState(user_id);
++  const [user, setUser] = useState(null);
+   const router = useRouter();
+ 
+   // check user object from user id that is given as prop.
+@@ -61,6 +61,8 @@ function UserPhotoUpload({ user_id, avatar, setAvatar }) {
+     reader.readAsDataURL(event.target.files[0]);
+   }
+ 
++  if (!user) return null;
++
+   return (
+     <>
+       <h4>1. Upload your avatar</h4>
+diff --git a/context/auth.js b/context/auth.js
+index f103cac..9ac7f00 100644
+--- a/context/auth.js
++++ b/context/auth.js
+@@ -4,19 +4,23 @@ import supabase from "../utils/supabaseClient";
+ 
+ const AuthContext = createContext();
+ 
+-export function AuthWrapper({ children }) {
+-  const [user, setUser] = useState(null);
++export const getUser = async (userId) => {
++  const { data, error } = await supabase
++    .from("profiles")
++    .select()
++    .eq("id", userId);
++
++  return data?.[0] ?? null;
++};
++
++export function AuthWrapper({ children, user: initialUser, authenticated }) {
++  const [user, setUser] = useState(initialUser);
+   const [loading, setLoading] = useState(true);
+ 
+   const router = useRouter();
+ 
+   async function fetchUser(userId) {
+-    const { data, error } = await supabase
+-      .from("profiles")
+-      .select()
+-      .eq("id", userId);
+-
+-    setUser(data[0]);
++    setUser(await getUser(userId));
+     setLoading(false);
+   }
+ 
+@@ -47,18 +51,13 @@ export function AuthWrapper({ children }) {
+     };
+   }, []);
+ 
+-  useEffect(() => {
+-    if (user && !user.created) {
+-      router.push("/create-profile");
+-    }
+-
+-    if (user && user.created) {
+-    }
+-  }, [user]);
++  const auth = { user, loading, authenticated };
+ 
+-  let auth = { user, loading };
++  const canShowUserProtectedContent = true;
+ 
+-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
++  return canShowUserProtectedContent ? (
++    <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
++  ) : null;
+ }
+ 
+ export function useAuthContext() {
+diff --git a/pages/_app.js b/pages/_app.js
+index 337d544..149fcba 100755
+--- a/pages/_app.js
++++ b/pages/_app.js
+@@ -2,34 +2,37 @@ import "../styles/globals.css";
+ 
+ import Layout from "../components/Layout/Layout";
+ import Navbar from "../components/Layout/Navbar";
+-import useViewport from "../components/Hooks/useViewport";
+-import NavWeb from "../components/Layout/NavWeb";
+-import NavMobile from "../components/Layout/NavMobile";
+ 
+ import { useState, useEffect } from "react";
+ import { useRouter } from "next/router";
+ import Link from "next/link";
+ 
+ import supabase from "../utils/supabaseClient";
+-import { AuthWrapper, useAuthContext } from "../context/auth";
++import { AuthWrapper } from "../context/auth";
+ 
+-function MyApp({ Component, pageProps }) {
+-  const [user, setUser] = useState();
++const LOGIN_SUCCESS_ROUTE = "/login-success";
++
++const useAuthWatch = () => {
++  const router = useRouter();
+   const [authenticatedState, setAuthenticatedState] =
+     useState("not-authenticated");
++  const isLoginSuccessRoute = router.pathname === LOGIN_SUCCESS_ROUTE;
+ 
+-  const { width } = useViewport();
+-  const breakpoint = 620;
+-
+-  const router = useRouter();
++  const onAuthenticated = () => {
++    setAuthenticatedState("authenticated");
++    if (isLoginSuccessRoute) {
++      router.push(router.query.redirectTo ?? "/groups");
++    }
++  };
++  const session = supabase.auth.session();
+ 
+   useEffect(() => {
+     /* fires when a user signs in or out */
+     const { data: authListener } = supabase.auth.onAuthStateChange(
+-      (event, session) => {
+-        handleAuthChange(event, session);
++      async (event, session) => {
++        await handleAuthChange(event, session);
+         if (event === "SIGNED_IN") {
+-          setAuthenticatedState("authenticated");
++          onAuthenticated();
+         }
+         if (event === "SIGNED_OUT") {
+           setAuthenticatedState("not-authenticated");
+@@ -38,20 +41,21 @@ function MyApp({ Component, pageProps }) {
+       }
+     );
+ 
+-    checkUser();
+     return () => {
+       authListener.unsubscribe();
+     };
+-  }, []);
++  }, [isLoginSuccessRoute]);
+ 
+-  async function checkUser() {
+-    /* when the component loads, checks user to show or hide Sign In link */
+-    const user = await supabase.auth.user();
+-    if (user) {
+-      setUser(user);
+-      setAuthenticatedState("authenticated");
++  const syncExistingSession = async () => {
++    if (session) {
++      await handleAuthChange("SIGNED_IN", session);
++      onAuthenticated();
+     }
+-  }
++  };
++
++  useEffect(() => {
++    syncExistingSession();
++  }, [session, isLoginSuccessRoute]);
+ 
+   async function handleAuthChange(event, session) {
+     /* sets and removes the Supabase cookie */
+@@ -63,10 +67,16 @@ function MyApp({ Component, pageProps }) {
+     });
+   }
+ 
++  return authenticatedState === "authenticated";
++};
++
++function MyApp({ Component, pageProps }) {
++  const authenticated = useAuthWatch();
++
+   return (
+-    <AuthWrapper>
++    <AuthWrapper user={pageProps?.user ?? null} authenticated={authenticated}>
+       <Layout>
+-        <Navbar user={user}>
++        <Navbar>
+           <Link href="/protected">
+             <a>Protected</a>
+           </Link>
+diff --git a/pages/create-profile/index.js b/pages/create-profile/index.js
+index 85996c6..2180ac4 100644
+--- a/pages/create-profile/index.js
++++ b/pages/create-profile/index.js
+@@ -4,6 +4,7 @@ import CurrentLocation from "../../components/CurrentLocation/CurrentLocation";
+ import { useEffect, useState } from "react";
+ import UserPhotoUpload from "../../components/UserProfile/UserPhotoUpload";
+ import { useAuthContext } from "../../context/auth";
++import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
+ 
+ // 1. To verify user's information (name, avatar_url, location, bio) is 100% filled.
+ // 2. if(user information is 100%) then { redirect user to /groups}
+@@ -59,4 +60,6 @@ function ProfileSettings(props) {
+   return <div>Loading...</div>;
+ }
+ 
++export const getServerSideProps = makeGetServerSidePropsWithUser();
++
+ export default ProfileSettings;
+diff --git a/pages/groups/index.js b/pages/groups/index.js
+index d8a71d0..01c84ce 100644
+--- a/pages/groups/index.js
++++ b/pages/groups/index.js
+@@ -3,10 +3,10 @@ import AddNewGroupButton from "../../components/Groups/AddNewGroupButton";
+ import FilterMyGroups from "../../components/Groups/FilterMyGroups";
+ 
+ import supabase from "../../utils/supabaseClient";
+-import { useState, useEffect } from "react";
++import { useState } from "react";
++import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
+ 
+ function Groups(props) {
+-  const [groups, setGroups] = useState([]);
+   const [userId, setUserId] = useState(props.user.id);
+ 
+   return (
+@@ -18,16 +18,14 @@ function Groups(props) {
+   );
+ }
+ 
+-export async function getServerSideProps(context) {
++export const getServerSideProps = makeGetServerSidePropsWithUser(async () => {
+   const groups = await supabase.from("groups").select().eq("public", "true");
+ 
+-  const { user } = await supabase.auth.api.getUserByCookie(context.req);
+-
+-  if (user === null) {
+-    return { props: {}, redirect: { destination: "/login" } };
+-  }
+-
+-  return { props: { user, groups: groups.data } };
+-}
++  return {
++    props: {
++      groups: groups.data,
++    },
++  };
++});
+ 
+ export default Groups;
+diff --git a/pages/login-success.js b/pages/login-success.js
+new file mode 100644
+index 0000000..99272d0
+--- /dev/null
++++ b/pages/login-success.js
+@@ -0,0 +1,5 @@
++function LoginSuccess() {
++  return <div className="margin-top">Logging in...</div>; // Could put a little note while logging in plus a manual redirect link
++}
++
++export default LoginSuccess;
+diff --git a/pages/login.js b/pages/login.js
+index cd1889a..8da871e 100644
+--- a/pages/login.js
++++ b/pages/login.js
+@@ -5,29 +5,26 @@ import logoText from "../public/logo-text.svg";
+ import { FaFacebook, FaGoogle } from "react-icons/fa";
+ 
+ import supabase from "../utils/supabaseClient.js";
++import { useRouter } from "next/router";
+ 
+ function Login() {
+-  async function handleGoogleLogin(event) {
+-    const { user, session, error } = await supabase.auth.signIn(
+-      {
+-        provider: "google",
+-      },
+-      {
+-        redirectTo: "http://localhost:3000/",
+-      }
+-    );
+-  }
++  const router = useRouter();
++  const { redirectTo } = router.query;
+ 
+-  async function handleFacebookLogin(event) {
+-    const { user, session, error } = await supabase.auth.signIn(
++  const createLoginHandler = (provider) => (event) =>
++    supabase.auth.signIn(
+       {
+-        provider: "facebook",
++        provider: provider,
+       },
+       {
+-        redirectTo: "http://localhost:3000/",
++        redirectTo: `${window.location.origin}/login-success?redirectTo=${
++          redirectTo || "/groups"
++        }`,
+       }
+     );
+-  }
++
++  const handleGoogleLogin = createLoginHandler("google");
++  const handleFacebookLogin = createLoginHandler("facebook");
+ 
+   return (
+     <div className="login-page">
+diff --git a/pages/protected.js b/pages/protected.js
+index 49ac4e9..0e29500 100644
+--- a/pages/protected.js
++++ b/pages/protected.js
+@@ -1,21 +1,13 @@
+-import supabase from "../utils/supabaseClient";
++import makeGetServerSidePropsWithUser from "../utils/makeGetServerSidePropsWithUser";
+ 
+-function Protected(props) {
++function Protected() {
+   return (
+-    <div>
++    <div className="margin-top">
+       <h2>Protected route</h2>
+     </div>
+   );
+ }
+ 
+-export async function getServerSideProps({ req }) {
+-  const { user } = await supabase.auth.api.getUserByCookie(req);
+-
+-  if (!user) {
+-    return { props: {}, redirect: { destination: "/login" } };
+-  }
+-
+-  return { props: { user } };
+-}
++export const getServerSideProps = makeGetServerSidePropsWithUser();
+ 
+ export default Protected;
+diff --git a/utils/makeGetServerSidePropsWithUser.js b/utils/makeGetServerSidePropsWithUser.js
+new file mode 100644
+index 0000000..6536161
+--- /dev/null
++++ b/utils/makeGetServerSidePropsWithUser.js
+@@ -0,0 +1,39 @@
++import { getUser } from "../context/auth";
++import supabase from "./supabaseClient";
++
++const CREATE_PROFILE_ROUTE = "/create-profile";
++const GROUPS_ROUTE = "/groups";
++
++const makeGetServerSidePropsWithUser = (getServerSideProps) => async (args) => {
++  const { req, resolvedUrl } = args;
++  const isCreateProfile = resolvedUrl.startsWith(CREATE_PROFILE_ROUTE);
++  /* check to see if a user is set */
++  const { user: cookieUser } = await supabase.auth.api.getUserByCookie(req);
++  const user = (cookieUser?.id && (await getUser(cookieUser.id))) ?? null;
++
++  if (!user) {
++    return {
++      props: {},
++      redirect: { destination: `/login?redirectTo=${resolvedUrl}` },
++    };
++  }
++
++  if (user && !user.created && !isCreateProfile) {
++    return {
++      props: {},
++      redirect: {
++        destination: `${CREATE_PROFILE_ROUTE}?redirectTo=${resolvedUrl}`,
++      },
++    };
++  }
++  if (user && user.created && isCreateProfile) {
++    return { props: {}, redirect: { destination: GROUPS_ROUTE } };
++  }
++
++  const res = (await getServerSideProps?.(user, args)) ?? {};
++
++  /* if a user is set, pass it to the page via props */
++  return { ...res, props: { ...res.props, user } };
++};
++
++export default makeGetServerSidePropsWithUser;
+-- 
+2.32.1 (Apple Git-133)
+

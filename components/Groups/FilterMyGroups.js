@@ -5,8 +5,6 @@ import RandomKey from "../Hooks/RandomKey";
 import MembersAvatars from "./MembersAvatars";
 import GroupItems from "./GroupItems";
 
-import supabase from "../../utils/supabaseClient";
-
 function FilterMyGroups(props) {
   const [joinedGroups, setJoinedGroups] = useState([]);
   const [adminedGroups, setAdminedGroups] = useState([]);
@@ -38,7 +36,7 @@ function FilterMyGroups(props) {
           {adminedGroups.map((group) => {
             const href = `/groups/${group.id}`;
             return (
-              <li key={RandomKey()} className="group-list-elem">
+              <li key={group.id} className="group-list-elem">
                 <div className="group-card-header">
                   <img src={group.avatar} className="list-group-avatar" />
                   <div className="group-card-header-title">
@@ -73,7 +71,7 @@ function FilterMyGroups(props) {
           {joinedGroups.map((group) => {
             const href = `/groups/${group.id}`;
             return (
-              <li key={RandomKey()} className="group-list-elem">
+              <li key={group.id} className="group-list-elem">
                 <div className="group-card-header">
                   <img src={group.avatar} className="list-group-avatar" />
                   <div className="group-card-header-title">

@@ -5,29 +5,26 @@ import logoText from "../public/logo-text.svg";
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 import supabase from "../utils/supabaseClient.js";
+import { useRouter } from "next/router";
 
 function Login() {
-  async function handleGoogleLogin(event) {
-    const { user, session, error } = await supabase.auth.signIn(
-      {
-        provider: "google",
-      },
-      {
-        redirectTo: "http://localhost:3000/",
-      }
-    );
-  }
+  const router = useRouter();
+  const { redirectTo } = router.query;
 
-  async function handleFacebookLogin(event) {
-    const { user, session, error } = await supabase.auth.signIn(
+  const createLoginHandler = (provider) => (event) =>
+    supabase.auth.signIn(
       {
-        provider: "facebook",
+        provider: provider,
       },
       {
-        redirectTo: "http://localhost:3000/",
+        redirectTo: `${window.location.origin}/login-success?redirectTo=${
+          redirectTo || "/groups"
+        }`,
       }
     );
-  }
+
+  const handleGoogleLogin = createLoginHandler("google");
+  const handleFacebookLogin = createLoginHandler("facebook");
 
   return (
     <div className="login-page">

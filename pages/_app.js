@@ -2,34 +2,37 @@ import "../styles/globals.css";
 
 import Layout from "../components/Layout/Layout";
 import Navbar from "../components/Layout/Navbar";
-import useViewport from "../components/Hooks/useViewport";
-import NavWeb from "../components/Layout/NavWeb";
-import NavMobile from "../components/Layout/NavMobile";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 import supabase from "../utils/supabaseClient";
-import { AuthWrapper, useAuthContext } from "../context/auth";
+import { AuthWrapper } from "../context/auth";
 
-function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState();
+const LOGIN_SUCCESS_ROUTE = "/login-success";
+
+const useAuthWatch = () => {
+  const router = useRouter();
   const [authenticatedState, setAuthenticatedState] =
     useState("not-authenticated");
+  const isLoginSuccessRoute = router.pathname === LOGIN_SUCCESS_ROUTE;
 
-  const { width } = useViewport();
-  const breakpoint = 620;
-
-  const router = useRouter();
+  const onAuthenticated = () => {
+    setAuthenticatedState("authenticated");
+    if (isLoginSuccessRoute) {
+      router.push(router.query.redirectTo ?? "/groups");
+    }
+  };
+  const session = supabase.auth.session();
 
   useEffect(() => {
     /* fires when a user signs in or out */
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        handleAuthChange(event, session);
+      async (event, session) => {
+        await handleAuthChange(event, session);
         if (event === "SIGNED_IN") {
-          setAuthenticatedState("authenticated");
+          onAuthenticated();
         }
         if (event === "SIGNED_OUT") {
           setAuthenticatedState("not-authenticated");
@@ -38,20 +41,21 @@ function MyApp({ Component, pageProps }) {
       }
     );
 
-    checkUser();
     return () => {
       authListener.unsubscribe();
     };
-  }, []);
+  }, [isLoginSuccessRoute]);
 
-  async function checkUser() {
-    /* when the component loads, checks user to show or hide Sign In link */
-    const user = await supabase.auth.user();
-    if (user) {
-      setUser(user);
-      setAuthenticatedState("authenticated");
+  const syncExistingSession = async () => {
+    if (session) {
+      await handleAuthChange("SIGNED_IN", session);
+      onAuthenticated();
     }
-  }
+  };
+
+  useEffect(() => {
+    syncExistingSession();
+  }, [session, isLoginSuccessRoute]);
 
   async function handleAuthChange(event, session) {
     /* sets and removes the Supabase cookie */
@@ -63,10 +67,16 @@ function MyApp({ Component, pageProps }) {
     });
   }
 
+  return authenticatedState === "authenticated";
+};
+
+function MyApp({ Component, pageProps }) {
+  const authenticated = useAuthWatch();
+
   return (
-    <AuthWrapper>
+    <AuthWrapper user={pageProps?.user ?? null} authenticated={authenticated}>
       <Layout>
-        <Navbar user={user}>
+        <Navbar>
           <Link href="/protected">
             <a>Protected</a>
           </Link>

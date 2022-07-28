@@ -17,6 +17,7 @@ function ListMembers(props) {
         const { data, error } = await supabase
           .from("profiles")
           .select()
+          .limit(3)
           .eq("id", member);
 
         membersObjects.push(data[0]);
@@ -37,7 +38,7 @@ function ListMembers(props) {
           const url =
             member === undefined ? "/groups" : `/profiles/${member.id}`;
           return (
-            <li key={RandomKey()} className="group-page-member">
+            <li key={member.id} className="group-page-member">
               <img
                 src={avatar}
                 alt="image"

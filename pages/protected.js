@@ -1,21 +1,13 @@
-import supabase from "../utils/supabaseClient";
+import makeGetServerSidePropsWithUser from "../utils/makeGetServerSidePropsWithUser";
 
-function Protected(props) {
+function Protected() {
   return (
-    <div>
+    <div className="margin-top">
       <h2>Protected route</h2>
     </div>
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const { user } = await supabase.auth.api.getUserByCookie(req);
-
-  if (!user) {
-    return { props: {}, redirect: { destination: "/login" } };
-  }
-
-  return { props: { user } };
-}
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default Protected;

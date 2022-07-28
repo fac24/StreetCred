@@ -1,36 +1,20 @@
-import supabase from "../../utils/supabaseClient";
-
-import { useRouter } from "next/router";
-
-import { useEffect, useState } from "react";
 import NavWeb from "./NavWeb";
 import NavMobile from "./NavMobile";
 import useViewport from "../Hooks/useViewport";
-import Link from "next/link";
+import { useAuthContext } from "../../context/auth";
 
 function Navbar(props) {
-  const [user, setUser] = useState("");
-
+  const { user } = useAuthContext();
   const { width } = useViewport();
   const breakpoint = 620;
+  const userId = user?.id;
 
-  useEffect(() => {
-    checkUser();
-  }, [user]);
-
-  async function checkUser() {
-    const user = await supabase.auth.user();
-    if (user) {
-      setUser(user.id);
-    } else {
-      console.log("no user");
-    }
-  }
+  console.log(userId);
 
   return width < breakpoint ? (
-    <NavMobile userId={user} />
+    <NavMobile user={userId} />
   ) : (
-    <NavWeb userId={user} />
+    <NavWeb user={userId} />
   );
 }
 

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 
 function UserPhotoUpload({ user_id, avatar, setAvatar }) {
-  const [user, setUser] = useState(user_id);
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
   // check user object from user id that is given as prop.
@@ -60,6 +60,8 @@ function UserPhotoUpload({ user_id, avatar, setAvatar }) {
     };
     reader.readAsDataURL(event.target.files[0]);
   }
+
+  if (!user) return null;
 
   return (
     <>

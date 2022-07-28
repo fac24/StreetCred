@@ -4,19 +4,23 @@ import supabase from "../utils/supabaseClient";
 
 const AuthContext = createContext();
 
-export function AuthWrapper({ children }) {
-  const [user, setUser] = useState(null);
+export const getUser = async (userId) => {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select()
+    .eq("id", userId);
+
+  return data?.[0] ?? null;
+};
+
+export function AuthWrapper({ children, user: initialUser, authenticated }) {
+  const [user, setUser] = useState(initialUser);
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
 
   async function fetchUser(userId) {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select()
-      .eq("id", userId);
-
-    setUser(data[0]);
+    setUser(await getUser(userId));
     setLoading(false);
   }
 
@@ -47,18 +51,13 @@ export function AuthWrapper({ children }) {
     };
   }, []);
 
-  useEffect(() => {
-    if (user && !user.created) {
-      router.push("/create-profile");
-    }
+  const auth = { user, loading, authenticated };
 
-    if (user && user.created) {
-    }
-  }, [user]);
+  const canShowUserProtectedContent = true;
 
-  let auth = { user, loading };
-
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+  return canShowUserProtectedContent ? (
+    <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+  ) : null;
 }
 
 export function useAuthContext() {

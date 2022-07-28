@@ -6,30 +6,26 @@ function MembersAvatars(props) {
   const [avatars, setAvatars] = useState([]);
 
   useEffect(() => {
-    const array = [];
-
-    async function getAvatar(memberId) {
+    async function getAvatars(memberId) {
       const { data, error } = await supabase
         .from("profiles")
         .select("avatar_url")
-        .eq("id", memberId);
+        .limit(3)
+        .order("created_at", { ascending: false })
+        .in("id", [props.members]);
 
-      array.push(data[0]);
-
-      setAvatars(array.slice(0, 3));
+      setAvatars(data);
     }
 
-    props.members.map((member) => {
-      getAvatar(member);
-    });
+    getAvatars();
   }, []);
 
   return (
     <ul className="groups-list-members">
-      {avatars.map((avatar) => {
+      {avatars.map((avatar, index) => {
         const url = avatar === undefined ? "/only-logo.svg" : avatar.avatar_url;
         return (
-          <li key={RandomKey()} className="groups-list-member">
+          <li key={index} className="groups-list-member">
             <img
               src={url}
               alt="group member avatar"

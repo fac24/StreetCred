@@ -22,7 +22,7 @@ function ListProducts(props) {
       {products?.map((product) => {
         return (
           <li
-            key={RandomKey()}
+            key={product.id}
             onMouseDown={(event) => {
               event.preventDefault();
               router.push(`/products/${product.id}`);
