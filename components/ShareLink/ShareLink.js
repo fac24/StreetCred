@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
- function ShareLink() {
+function ShareLink() {
   const [copied, setCopied] = useState(false);
 
   function copy() {
@@ -10,7 +10,9 @@ import React, { useState } from "react";
 
   return (
     <div className="share-link">
-      <button onClick={copy}>{!copied ? "Copy Link" : "Link Copied!"}</button>
+      <button className="open-group-button" onClick={copy}>
+        {!copied ? "Copy Link" : "Link Copied!"}
+      </button>
     </div>
   );
 }

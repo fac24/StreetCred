@@ -49,11 +49,9 @@ function ListMembers(props) {
             </li>
           );
         })}
-        <Link href="">
-          <li className="group-page-member see-more-button">
-            <p>...</p>
-          </li>
-        </Link>
+        <li className="group-page-member see-more-button">
+          <p>...</p>
+        </li>
       </ul>
     </section>
   );
