@@ -17,6 +17,8 @@ function Group(props) {
       const { data: admin, error } = await supabase
         .from("profiles")
         .select()
+        .limit(5)
+        .order("created_at", { ascending: false })
         .eq("id", props.group[0].admin);
 
       setGroupAdmin(admin[0]);

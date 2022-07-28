@@ -18,22 +18,24 @@ function ListProducts(props) {
   }, [groupId]);
 
   return (
-    <ul>
-      {products?.map((product) => {
-        return (
-          <li
-            key={product.id}
-            onMouseDown={(event) => {
-              event.preventDefault();
-              router.push(`/products/${product.id}`);
-            }}
-          >
-            <p>{product.name}</p>
-            <img src={product.image} />
-          </li>
-        );
-      })}
-    </ul>
+    <div>
+      <ul className="products-div">
+        {products?.map((product) => {
+          return (
+            <li
+              key={product.id}
+              onMouseDown={(event) => {
+                event.preventDefault();
+                router.push(`/products/${product.id}`);
+              }}
+            >
+              <p>{product.name}</p>
+              <img src={product.image} />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 

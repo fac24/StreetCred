@@ -3,6 +3,7 @@ import RandomKey from "../Hooks/RandomKey";
 import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
+import Link from "next/link";
 
 function ListMembers(props) {
   const [members, setMembers] = useState([]);
@@ -17,11 +18,10 @@ function ListMembers(props) {
         const { data, error } = await supabase
           .from("profiles")
           .select()
-          .limit(3)
           .eq("id", member);
 
         membersObjects.push(data[0]);
-        setMembers(membersObjects);
+        setMembers(membersObjects.slice(0, 3));
       });
     }
 
@@ -31,14 +31,15 @@ function ListMembers(props) {
   return (
     <section>
       <h3>Members ({members.length})</h3>
+
       <ul className="group-page-members">
-        {members.map((member) => {
+        {members.map((member, index) => {
           const avatar =
             member === undefined ? "/only-logo.svg" : member.avatar_url;
           const url =
             member === undefined ? "/groups" : `/profiles/${member.id}`;
           return (
-            <li key={member.id} className="group-page-member">
+            <li key={index} className="group-page-member">
               <img
                 src={avatar}
                 alt="image"
@@ -48,6 +49,9 @@ function ListMembers(props) {
             </li>
           );
         })}
+        <li className="group-page-member see-more-button">
+          <p>...</p>
+        </li>
       </ul>
     </section>
   );
