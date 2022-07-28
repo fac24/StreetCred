@@ -19,9 +19,9 @@ function SetHeader(props) {
   }, []);
 
   return (
-    <div>
+    <div className="chat-product-header">
       <p>{productDetails.name}</p>
-      <img src={productDetails.image} className="conversation-avatar" />
+      <img src={productDetails.image} className="chat-avatar" />
     </div>
   );
 

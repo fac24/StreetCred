@@ -49,18 +49,19 @@ function CurrentLocation(props) {
     );
   }
   return (
-    <>
+    <div id="item-name">
       <input
         type="search"
         placeholder="Enter your postcode..."
         value={props.value ? props.value : postcode}
         onChange={(event) => updatePostcode(event.target.value)}
         id="currentLocation"
+        className="margin-bottom"
       ></input>
       <button type="button" onClick={locator}>
         Use my current location
       </button>
-    </>
+    </div>
   );
 }
 export default CurrentLocation;

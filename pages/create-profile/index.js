@@ -18,6 +18,16 @@ function ProfileSettings(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    const postcodeRequest = await fetch(
+      `https://api.postcodes.io/postcodes/${postcode}`
+    );
+    const postcodeDetails = await postcodeRequest.json();
+
+    if (postcodeDetails.status !== 200) {
+      console.error("Postcode invalid");
+      return;
+    }
     const { data, error } = await supabase
       .from("profiles")
       .update({
@@ -25,6 +35,8 @@ function ProfileSettings(props) {
         location: postcode,
         created: true,
         avatar_url: avatar,
+        longitude: postcodeDetails.result.longitude,
+        latitude: postcodeDetails.result.latitude,
       })
       .eq("id", user.id);
 
@@ -33,27 +45,30 @@ function ProfileSettings(props) {
 
   if (user) {
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="group-id-section upload-form">
         <h2>Create your profile</h2>
         <h3>Hi, {user.name}</h3>
         <p>To complete the sign up process, follow these steps:</p>
 
+        <h4>1. Set your profile photo</h4>
         <UserPhotoUpload
           user_id={user.id}
           avatar={avatar}
           setAvatar={setAvatar}
         />
+        <div className="form-div">
+          <h4>2. Set your location</h4>
+          <CurrentLocation postcode={(postcode) => setPostcode(postcode)} />
+        </div>
+        <div className="form-div">
+          <h4>3. Add a short bio</h4>
+          <textarea
+            value={bio}
+            onChange={(event) => setBio(event.target.value)}
+          ></textarea>
+        </div>
+        <button type="submit" id="create">Create your profile</button>
 
-        <h4>2. Set your location</h4>
-        <CurrentLocation postcode={(postcode) => setPostcode(postcode)} />
-        <h4>3. Add a short bio</h4>
-        <textarea
-          value={bio}
-          onChange={(event) => setBio(event.target.value)}
-        ></textarea>
-        <button type="submit" id="create">
-          Create your profile
-        </button>
       </form>
     );
   }

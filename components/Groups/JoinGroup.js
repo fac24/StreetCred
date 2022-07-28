@@ -21,7 +21,9 @@ function JoinGroup(props) {
   }
 
   return (
-    <button onClick={handleJoin}>{joined ? "Joined" : "Join the Group"}</button>
+    <button onClick={handleJoin} className="join-grpup">
+      {joined ? "Joined" : "Join the Group"}
+    </button>
   );
 }
 

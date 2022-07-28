@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import GetRequester from "../../components/Chat/GetRequester";
 import GetProduct from "../../components/Chat/GetProduct";
-
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 import supabase from "../../utils/supabaseClient";
 
 function Messages() {
@@ -66,37 +66,43 @@ function Messages() {
     <div className="chat-container">
       <h2>Messages</h2>
 
-      <ul>
-        <h2>Requests received</h2>
-        {requests?.map((request) => {
-          const href = `/messages/${request.id}`;
-          return (
-            <li key={request.id}>
-              <a href={href}>
-                <GetRequester requester={request.requester_id} />
-                <GetProduct product={request.product_id} />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <h3>Requests received</h3>
+        <ul className="all-messages-div">
+          {requests?.map((request) => {
+            const href = `/messages/${request.id}`;
+            return (
+              <li key={request.id} className="conv-list">
+                <a href={href} className="conversation-container">
+                  <GetRequester requester={request.requester_id} />
+                  <GetProduct product={request.product_id} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
 
-      <ul>
-        <h2>Requests sent</h2>
-        {sentMessages?.map((sentmessage) => {
-          const href = `/messages/${sentmessage.id}`;
-          return (
-            <li key={sentmessage.id}>
-              <a href={href}>
-                <GetRequester requester={sentmessage.owner_id} />
-                <GetProduct product={sentmessage.product_id} />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
+      <div>
+        <h3>Requests sent</h3>
+        <ul className="all-messages-div">
+          {sentMessages?.map((sentmessage) => {
+            const href = `/messages/${sentmessage.id}`;
+            return (
+              <li key={sentmessage.id} className="conv-list">
+                <a href={href} className="conversation-container">
+                  <GetRequester requester={sentmessage.owner_id} />
+                  <GetProduct product={sentmessage.product_id} />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
+
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default Messages;

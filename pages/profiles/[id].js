@@ -31,46 +31,48 @@ function Profile(props) {
   }
 
   return (
-    <section>
+    <section className="user-profile">
       <h1>Profile</h1>
-      <img src={props.profile[0].avatar_url} />
+      <img src={props.profile[0].avatar_url} className="profile-avatar"/>
       <br />
       {access ? (
         <Link href={`${props.profile[0].id}/edit`}>
-          <a>Edit</a>
+          <a>Edit Profile</a>
         </Link>
       ) : null}
-
+{/* 
       <button onClick={handleLogOut} className="web-login-button">
         Log Out
-      </button>
+      </button> */}
 
-      <h2>{props.profile[0].name}</h2>
-      <p>{props.profile[0].points} points</p>
+      <div className="profile-about-user">
+      <h2 className="user-profile-name">{props.profile[0].name}</h2>
+      <div className="profile-points-location">
       <p>Location: {props.profile[0].location}</p>
+      <p>Points: {props.profile[0].points}</p>
+      </div>
       <p>Bio: {props.profile[0].user_bio}</p>
+      </div>
 
-      <div>
-        <h3>Groups</h3>
+
+      <div className="profile-groups profile-divs">
+        <h3 className="profile-div-heading">Groups</h3>
         <ul>
-          <li>Group 1</li>
-          <li>Group 2</li>
+          
         </ul>
       </div>
 
-      <div>
-        <h3>Borrowed Products</h3>
+      <div className="profile-borrowed-products profile-divs">
+        <h3 className="profile-div-heading">Borrowed Products</h3>
         <ul>
-          <li>Product 1</li>
-          <li>Product 2</li>
+          
         </ul>
       </div>
 
-      <div>
-        <h3>Posted Products</h3>
+      <div className="profile-posted-products profile-divs">
+        <h3 className="profile-div-heading">Posted Products</h3>
         <ul>
-          <li>Product 1</li>
-          <li>Product 2</li>
+         
         </ul>
       </div>
     </section>

@@ -1,9 +1,10 @@
 import Head from "next/head";
 import { useState } from "react";
+import useViewport from "../Hooks/useViewport";
 
 function Layout({ children }) {
-  const [authenticatedState, setAuthenticatedState] =
-    useState("not-authenticated");
+  const { width } = useViewport();
+  const breakpoint = 620;
 
   return (
     <>
@@ -15,7 +16,11 @@ function Layout({ children }) {
         />
       </Head>
 
-      <main>{children}</main>
+      {width < breakpoint ? (
+        <main className="mobile-margin">{children}</main>
+      ) : (
+        <main className="web-margin">{children}</main>
+      )}
     </>
   );
 }
