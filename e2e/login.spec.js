@@ -29,7 +29,7 @@ test("Login ", async ({ page }) => {
   const profile = page.locator("a#profile");
   await profile.click();
 
-  await expect(page).toHaveURL(/af0236b7-6bea-4a23-a7f9-87aef14293e2/);
+  await expect(page).toHaveURL(/0db05e13-919e-44a2-bf3f-207d2d6ab6fb/);
 
   const messages = page.locator("a#messages");
   await messages.click();
