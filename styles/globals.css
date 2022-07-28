@@ -991,7 +991,7 @@ img {
   margin: 0;
   padding: 10px 30px;
   height: 500px;
-  overflow: scroll;
+  overflow-y: scroll;
   background-color: transparent;
 }
 
@@ -1066,6 +1066,45 @@ img {
   gap: 20px;
   text-transform: uppercase;
   color: var(--purple);
+}
+
+.chat-input-form {
+  width: 90%;
+  margin: 0 10px 10px 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.chat-input-form input {
+  width: 100%;
+  margin: 0;
+  color: var(--aubergine);
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 1em;
+}
+
+.chat-input-form button {
+  width: 20%;
+  margin: 0;
+  color: var(--aubergine);
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+
+  border: none;
+  border-radius: 15px;
+  font-size: 1em;
+
+  cursor: pointer;
+  color: var(--off-white);
+  background-color: var(--purple);
+  font-size: 1em;
+  word-spacing: 1.5px;
 }
 
 

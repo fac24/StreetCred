@@ -16,16 +16,14 @@ function MessageForm(props) {
   }
 
   return (
-    <div>
-      <form onSubmit={sendMessage}>
-        <input
-          type="text"
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-        />
-        <button type="submit">Send</button>
-      </form>
-    </div>
+    <form onSubmit={sendMessage} className="chat-input-form">
+      <input
+        type="text"
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
+      />
+      <button type="submit">Send</button>
+    </form>
   );
 }
 
