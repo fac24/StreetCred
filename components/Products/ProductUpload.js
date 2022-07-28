@@ -3,10 +3,12 @@ import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { BsArrowLeftCircle } from "react-icons/bs";
+import CurrentLocation from "../CurrentLocation/CurrentLocation";
 
 function ProductUpload(props) {
   const [imageSrc, setImageSrc] = useState("");
   const [group, setGroup] = useState("");
+  const [postcode, setPostcode] = useState(null);
 
   useEffect(() => {
     const storage = localStorage.getItem("group");
@@ -51,6 +53,16 @@ function ProductUpload(props) {
     // for image preview
     setImageSrc(cloudinary.secure_url);
 
+    const postcodeRequest = await fetch(
+      `https://api.postcodes.io/postcodes/${postcode}`
+    );
+    const postcodeDetails = await postcodeRequest.json();
+
+    if (postcodeDetails.status !== 200) {
+      console.error("Postcode invalid");
+      return;
+    }
+
     // insert products input to supabase
     const { data, error } = await supabase.from("products").insert([
       {
@@ -61,11 +73,15 @@ function ProductUpload(props) {
         category: enteredCategory,
         condition: enteredCondition,
         group: groupId,
+        location: postcode,
+        longitude: postcodeDetails.result.longitude,
+        latitude: postcodeDetails.result.latitude,
       },
     ]);
 
     if (data) {
       console.log("uploaded");
+      router.push(`/products/${data[0].id}`);
     } else if (error) {
       console.log(error.message);
     }
@@ -160,6 +176,14 @@ function ProductUpload(props) {
           </div>
 
           <div className="form-div">
+            <label htmlFor="item-description">Pick-up point</label>
+            <CurrentLocation
+              postcode={(postcode) => setPostcode(postcode)}
+              value={postcode}
+            />
+          </div>
+
+          <div className="form-div">
             <label htmlFor="condition">Item&apos;s condition*</label>
             <select
               name="condition"
@@ -195,6 +219,7 @@ function ProductUpload(props) {
               </div>
             </div>
           </div>
+
           <button type="submit" value="submit">
             Submit
           </button>
