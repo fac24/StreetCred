@@ -1,5 +1,6 @@
 import React from "react";
 import GroupsForm from "../../components/Groups/GroupsForm";
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 
 function AddGroup() {
   return (
@@ -10,5 +11,7 @@ function AddGroup() {
     </section>
   );
 }
+
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default AddGroup;

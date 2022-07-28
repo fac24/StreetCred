@@ -1,5 +1,5 @@
 import ProductUpload from "../../components/Products/ProductUpload";
-
+import makeGetServerSidePropsWithUser from "../../utils/makeGetServerSidePropsWithUser";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -23,5 +23,7 @@ function Upload(props) {
 
   return <ProductUpload groupId={groupId} />;
 }
+
+export const getServerSideProps = makeGetServerSidePropsWithUser();
 
 export default Upload;
