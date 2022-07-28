@@ -33,19 +33,21 @@ function Conversation(props) {
   return (
     <div className="chat-container">
       <h2>Chat</h2>
-      <SetHeader product={props.conversation[0].product_id} />
-      <ul>
-        {messages?.map((message) => {
-          return (
-            <li key={message.id}>
-              <GetSender sender={message.sender} />
-              <p>{getTheDate(message.created_at)}</p>
-              <p>{message.content}</p>
-            </li>
-          );
-        })}
-      </ul>
-      <MessageForm conversationId={conversationId} />
+      <div className="chat-background">
+        <SetHeader product={props.conversation[0].product_id} />
+        <ul className="messages-in-chat">
+          {messages?.map((message) => {
+            return (
+              <li key={message.id} className="chat-list-mes">
+                <GetSender sender={message.sender} />
+                <p className="message">{message.content}</p>
+                <p className="mess-date">{getTheDate(message.created_at)}</p>
+              </li>
+            );
+          })}
+        </ul>
+        <MessageForm conversationId={conversationId} />
+      </div>
     </div>
   );
 }

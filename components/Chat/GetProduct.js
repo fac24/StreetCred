@@ -19,9 +19,9 @@ function GetProduct(props) {
   }, []);
 
   return (
-    <div>
-      <p>{productDetails.name}</p>
+    <div className="conversation-product-container">
       <img src={productDetails.image} className="conversation-avatar" />
+      <p>{productDetails.name}</p>
     </div>
   );
 }
