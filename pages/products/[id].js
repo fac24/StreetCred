@@ -68,7 +68,6 @@ function Product(props) {
 
     if (data) {
       setConversationId(data[0].id);
-      console.log(data[0].id);
     } else {
       console.error;
     }
