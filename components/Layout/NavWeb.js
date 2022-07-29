@@ -14,12 +14,14 @@ function NavWeb(props) {
   return (
     <header className="header">
       <div className="logo-div">
-        <Image
-          src={logo}
-          alt="StreetCred logo"
-          layout="intrinsic"
-          className="logo"
-        />
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="StreetCred logo"
+            layout="intrinsic"
+            className="logo"
+          />
+        </Link>
       </div>
       <nav className="navigation-web">
         {props.user && (

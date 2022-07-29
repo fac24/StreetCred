@@ -2,7 +2,8 @@ import router, { useRouter } from "next/router";
 import supabase from "../../../utils/supabaseClient";
 import CurrentLocation from "../../../components/CurrentLocation/CurrentLocation";
 import { useEffect, useState } from "react";
-import UserPhotoUpload from "../../../components/UserProfile/UserPhotoUpload";
+import { FaHouseUser } from "react-icons/fa";
+//import UserPhotoUpload from "../../../components/UserProfile/UserPhotoUpload";
 
 // 1. To verify user's information (name, avatar_url, location, bio) is 100% filled.
 // 2. if(user information is 100%) then { redirect user to /groups}
@@ -72,7 +73,7 @@ function ProfileSettings(props) {
         user_bio: bio,
         location: postcode,
         created: true,
-        avatar_url: avatar,
+        /* avatar_url: avatar, */
       })
       .eq("id", user.id);
 
@@ -81,37 +82,36 @@ function ProfileSettings(props) {
 
   if (user && access) {
     return (
-      <section className="">
-        <h2 className="edit-form-heading">Edit profile</h2>
-        <form className="group-id-section form-div" onSubmit={handleSubmit}>
-          <div>
-            <h3>Hi, {user.name}</h3>
-
-            <h4>Edit your profile photo</h4>
-            <UserPhotoUpload
+      <section className="set-profile-page">
+        <form className="profile-set-form" onSubmit={handleSubmit}>
+          <h2 className="">Edit profile</h2>
+          <h3>Hi {user.name}!</h3>
+          <FaHouseUser className="profile-set-icon" />
+          {/* <h3>Edit your profile photo</h3>
+           <UserPhotoUpload
               user_id={user.id}
               avatar={user.avatar_url ? user.avatar_url : avatar}
               setAvatar={setAvatar}
-            />
-
-            <h4>2. Set your location</h4>
+            /> */}
+          <div className="form-div">
+            <h3>Set your location</h3>
             <CurrentLocation
               value={user.location}
               postcode={(postcode) => setPostcode(postcode)}
             />
-            <h4>3. Add a short bio</h4>
+          </div>
+
+          <div className="form-div">
+            <h3>Edit your bio</h3>
             <textarea
               value={user.user_bio ? user.user_bio : bio}
               onChange={(event) => setBio(event.target.value)}
             ></textarea>
-            <br />
-            <button
-              className="add-new-product-button profile-add-new-product-button"
-              type="submit"
-            >
-              Update profile
-            </button>
           </div>
+
+          <button className="create-profile-button" type="submit">
+            Update profile
+          </button>
         </form>
       </section>
     );

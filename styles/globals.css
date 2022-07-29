@@ -28,6 +28,19 @@ a {
   box-sizing: border-box;
 }
 
+main {
+  background: url("/illustrations/road-maps/road-pattern-v4.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-x: 75%;
+  background-position-y: 40%;
+  background-size: 210%;
+  background-blend-mode: screen;
+  background-color: rgb(196, 196, 196);
+  min-height: 90vh;
+  height: auto;
+}
+
 /* LAYOUT */
 
 /* Navigation */
@@ -107,7 +120,8 @@ a {
   background-color: var(--aubergine);
 }
 
-.margin-top {}
+.margin-top {
+}
 
 .logo-div {
   width: 200px;
@@ -291,7 +305,7 @@ a {
   font-weight: 600;
   font-size: 1.2em;
   width: 100%;
-  height: 100vh;
+  height: 88vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -364,6 +378,7 @@ img {
   padding: 0;
   margin: 0;
   width: 100%;
+  border-radius: 20px;
 }
 
 .group-list-main {
@@ -373,6 +388,13 @@ img {
   padding: 0;
   width: 90%;
   background-color: var(--off-white);
+  border-radius: 20px;
+}
+
+.h2-icons {
+  font-size: 1.2em;
+  margin-right: 10px;
+  margin-left: 20px;
 }
 
 .members-of-groups-div {
@@ -439,7 +461,8 @@ img {
 
 /* ADD GROUP PAGE */
 
-.add-new-group-container {}
+.add-new-group-container {
+}
 
 /* PRODUCT PAGE */
 
@@ -609,6 +632,7 @@ img {
   background-size: 200%;
   background-blend-mode: screen;
   background-color: var(--light-pink);
+  border-radius: 20px;
 }
 
 .upload-section h2 {
@@ -797,6 +821,7 @@ img {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  border-radius: 20px;
 }
 
 .group-page-avatar {
@@ -956,7 +981,6 @@ img {
 
 /* CHAT PAGE */
 
-
 .chat-product-header {
   width: 100%;
   background-color: var(--off-white);
@@ -975,6 +999,7 @@ img {
   margin-right: auto;
   padding-top: 30px;
   padding-bottom: 100px;
+  border-radius: 20px;
 }
 
 .chat-background {
@@ -1107,7 +1132,6 @@ img {
   word-spacing: 1.5px;
 }
 
-
 .conversation-avatar {
   max-width: 100px;
   max-height: 100px;
@@ -1141,19 +1165,21 @@ img {
 }
 
 .profile-avatar {
+  max-width: 100px;
+  max-height: 100px;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  vertical-align: middle;
   border-radius: 50%;
-  background: var(--aubergine);
-  padding: 6px;
-  width: 350px;
-  height: 300px;
-  margin-top: 50px;
+  background-color: var(--off-white);
+  border: 5px solid var(--mustard);
 }
 
 .user-profile-name {
-  font-size: 40px;
+  font-size: 1.2em;
   color: var(--aubergine);
   margin-bottom: 0%;
-
 }
 
 .margin-bottom {
@@ -1163,15 +1189,12 @@ img {
 .profile-about-user {
   font-size: 20px;
   font-weight: 200;
-
-
 }
 
 .profile-points-location {
   display: flex;
   gap: 100px;
   margin-top: 10px;
-
 }
 
 .profile-groups {
@@ -1226,7 +1249,54 @@ img {
   font-size: 30px;
 }
 
-.edit-profile {}
+/* SET PROFILE PAGE */
+
+.set-profile-page {
+  width: 600px;
+  background-color: var(--light-grey);
+  height: auto;
+  min-height: 90vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile-set-form {
+  width: 100%;
+  padding-top: 40px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.create-profile-button {
+  margin-top: 20px;
+  max-width: 500px;
+  width: 320px;
+  cursor: pointer;
+  align-items: center;
+  padding: 12px 40px;
+  color: var(--off-white);
+  background-color: var(--aubergine);
+  font-size: 0.85em;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  word-spacing: 1.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.create-profile-button:hover {
+  color: var(--mustard);
+}
+
+.profile-set-icon {
+  font-size: 5em;
+  color: var(--purple);
+}
 
 /* Media Queries for Standard Devices */
 

@@ -4,6 +4,8 @@ import Link from "next/link";
 import RandomKey from "../Hooks/RandomKey";
 import MembersAvatars from "./MembersAvatars";
 import GroupItems from "./GroupItems";
+import { RiCommunityFill } from "react-icons/ri";
+import { BsFillHouseDoorFill } from "react-icons/bs";
 
 function FilterMyGroups(props) {
   const [joinedGroups, setJoinedGroups] = useState([]);
@@ -32,7 +34,7 @@ function FilterMyGroups(props) {
     <section className="group-list-main">
       <div>
         <h2 className="group-list-title" id="my-groups">
-          My groups
+          <BsFillHouseDoorFill className="h2-icons" /> My groups
         </h2>
         <ul className="group-list-container">
           {adminedGroups.map((group) => {
@@ -71,6 +73,7 @@ function FilterMyGroups(props) {
 
       <div className="members-of-groups-div">
         <h2 className="group-list-title" id="member-of-groups">
+          <RiCommunityFill className="h2-icons" />
           Member of groups
         </h2>
         <ul className="group-list-container">

@@ -64,7 +64,7 @@ function UserPhotoUpload({ user_id, avatar, setAvatar }) {
   if (!user) return null;
 
   return (
-    <>
+    <div>
       <h4>1. Upload your avatar</h4>
       <img
         src={avatar ? avatar : user.avatar_url}
@@ -83,7 +83,7 @@ function UserPhotoUpload({ user_id, avatar, setAvatar }) {
           onChange={previewHandler}
         />
       </form>
-    </>
+    </div>
   );
 }
 
