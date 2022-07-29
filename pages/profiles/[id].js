@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import supabase from "../../utils/supabaseClient";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { BsPencilFill } from "react-icons/bs";
 
 function Profile(props) {
   const router = useRouter();
@@ -33,47 +34,43 @@ function Profile(props) {
   return (
     <section className="user-profile">
       <h1>Profile</h1>
-      <img src={props.profile[0].avatar_url} className="profile-avatar"/>
+      <img src={props.profile[0].avatar_url} className="profile-avatar" />
       <br />
       {access ? (
         <Link href={`${props.profile[0].id}/edit`}>
-          <a>Edit Profile</a>
+          <a>
+            <BsPencilFill />
+            Edit Profile
+          </a>
         </Link>
       ) : null}
-{/* 
+      {/* 
       <button onClick={handleLogOut} className="web-login-button">
         Log Out
       </button> */}
 
       <div className="profile-about-user">
-      <h2 className="user-profile-name">{props.profile[0].name}</h2>
-      <div className="profile-points-location">
-      <p>Location: {props.profile[0].location}</p>
-      <p>Points: {props.profile[0].points}</p>
+        <h3 className="user-profile-name">{props.profile[0].name}</h3>
+        <div className="profile-points-location">
+          <p>Location: {props.profile[0].location}</p>
+          <p>Points: {props.profile[0].points}</p>
+        </div>
+        <p>Bio: {props.profile[0].user_bio}</p>
       </div>
-      <p>Bio: {props.profile[0].user_bio}</p>
-      </div>
-
 
       <div className="profile-groups profile-divs">
         <h3 className="profile-div-heading">Groups</h3>
-        <ul>
-          
-        </ul>
+        <ul></ul>
       </div>
 
       <div className="profile-borrowed-products profile-divs">
         <h3 className="profile-div-heading">Borrowed Products</h3>
-        <ul>
-          
-        </ul>
+        <ul></ul>
       </div>
 
       <div className="profile-posted-products profile-divs">
         <h3 className="profile-div-heading">Posted Products</h3>
-        <ul>
-         
-        </ul>
+        <ul></ul>
       </div>
     </section>
   );

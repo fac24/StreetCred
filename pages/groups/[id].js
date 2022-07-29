@@ -6,6 +6,8 @@ import ListProducts from "../../components/Products/ListProducts";
 import { useState, useEffect } from "react";
 import supabase from "../../utils/supabaseClient";
 import { useRouter } from "next/router";
+import SocialShare from "../../components/ShareLink/SocialShare";
+import ShareLink from "../../components/ShareLink/ShareLink";
 
 function Group(props) {
   const [groupAdmin, setGroupAdmin] = useState("");
@@ -64,6 +66,8 @@ function Group(props) {
           />
           <p>{groupAdmin.name}</p>
         </div>
+        <SocialShare />
+        <ShareLink />
         <ListMembers groupMembers={props.group[0].members} />
       </div>
 
